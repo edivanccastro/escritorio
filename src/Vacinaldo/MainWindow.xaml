@@ -161,12 +161,12 @@
                     <TextBlock Text="&#x2665;" FontSize="18" VerticalAlignment="Center" Margin="0,0,8,0"/>
                     <TextBlock Text="Vacinaldo" Style="{StaticResource TitleBarText}"
                                FontWeight="Bold" FontSize="15"/>
-                    <TextBlock Text=" &#x2014; Proteção do Sistema" Style="{StaticResource TitleBarText}"
+                    <TextBlock Text=" &#x2014; Prote&#xE7;&#xE3;o do Sistema" Style="{StaticResource TitleBarText}"
                                Opacity=".75" FontSize="13"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,16,0">
                     <TextBlock Style="{StaticResource TitleBarText}" Text="Escritorio" Opacity=".7" FontSize="12"/>
-                    <TextBlock Style="{StaticResource TitleBarText}" Text="Edição Comunitária" Opacity=".55" FontSize="9"/>
+                    <TextBlock Style="{StaticResource TitleBarText}" Text="Edi&#xE7;&#xE3;o Comunit&#xE1;ria" Opacity=".55" FontSize="9"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -183,7 +183,7 @@
                 <StackPanel Margin="0,16,0,0">
                     <RadioButton x:Name="NavDashboard" Style="{StaticResource NavButton}"
                                  IsChecked="True" Checked="Nav_Checked">
-                        <TextBlock><Run Text="&#x2302;  "/><Run Text="Início"/></TextBlock>
+                        <TextBlock><Run Text="&#x2302;  "/><Run Text="In&#xED;cio"/></TextBlock>
                     </RadioButton>
                     <RadioButton x:Name="NavScan" Style="{StaticResource NavButton}"
                                  Checked="Nav_Checked">
@@ -195,11 +195,11 @@
                     </RadioButton>
                     <RadioButton x:Name="NavHistory" Style="{StaticResource NavButton}"
                                  Checked="Nav_Checked">
-                        <TextBlock><Run Text="&#x2630;  "/><Run Text="Histórico"/></TextBlock>
+                        <TextBlock><Run Text="&#x2630;  "/><Run Text="Hist&#xF3;rico"/></TextBlock>
                     </RadioButton>
                     <RadioButton x:Name="NavSettings" Style="{StaticResource NavButton}"
                                  Checked="Nav_Checked">
-                        <TextBlock><Run Text="&#x2699;  "/><Run Text="Configurações"/></TextBlock>
+                        <TextBlock><Run Text="&#x2699;  "/><Run Text="Configura&#xE7;&#xF5;es"/></TextBlock>
                     </RadioButton>
                     <RadioButton x:Name="NavEdr" Style="{StaticResource NavButton}"
                                  Checked="Nav_Checked">
@@ -232,12 +232,12 @@
                                     <TextBlock x:Name="StatusTitle" Text="Protegido"
                                                FontSize="22" FontWeight="Bold" Foreground="#2E7D32"/>
                                     <TextBlock x:Name="StatusDesc"
-                                               Text="Seu sistema está protegido. Nenhuma ameaça encontrada."
+                                               Text="Seu sistema est&#xE1; protegido. Nenhuma amea&#xE7;a encontrada."
                                                FontSize="13" Foreground="#4CAF50" Margin="0,4,0,0"/>
-                                    <TextBlock x:Name="LastScanText" Text="Última varredura: nunca"
+                                    <TextBlock x:Name="LastScanText" Text="&#xDA;ltima varredura: nunca"
                                                FontSize="12" Foreground="#888" Margin="0,8,0,0"/>
                                 </StackPanel>
-                                <Button Grid.Column="1" Content="Varredura Rápida"
+                                <Button Grid.Column="1" Content="Varredura R&#xE1;pida"
                                         Style="{StaticResource ActionButton}"
                                         VerticalAlignment="Center"
                                         Click="QuickScan_OnClick"/>
@@ -252,7 +252,7 @@
                                     <TextBlock Text="&#x2705;" FontSize="28"/>
                                     <TextBlock x:Name="RealTimeStatus" Text="Ativa"
                                                FontSize="18" FontWeight="Bold" Foreground="#388E3C" Margin="0,6,0,0"/>
-                                    <TextBlock Text="Proteção em Tempo Real" FontSize="11" Foreground="#888"/>
+                                    <TextBlock Text="Prote&#xE7;&#xE3;o em Tempo Real" FontSize="11" Foreground="#888"/>
                                 </StackPanel>
                             </Border>
                             <Border Background="White" BorderBrush="#E0E0E0" BorderThickness="1"
@@ -276,11 +276,11 @@
                         </UniformGrid>
 
                         <!-- Ações rápidas -->
-                        <TextBlock Text="Ações Rápidas" FontSize="15" FontWeight="Bold"
+                        <TextBlock Text="A&#xE7;&#xF5;es R&#xE1;pidas" FontSize="15" FontWeight="Bold"
                                    Margin="0,0,0,14" Foreground="#333"/>
                         <UniformGrid Columns="3">
                             <Button Style="{StaticResource ActionButton}" Margin="0,0,10,0"
-                                    Content="Varredura Rápida" Click="QuickScan_OnClick"/>
+                                    Content="Varredura R&#xE1;pida" Click="QuickScan_OnClick"/>
                             <Button Style="{StaticResource SecButton}" Margin="5,0,5,0"
                                     Content="Varredura Completa" Click="FullScan_OnClick"/>
                             <Button Style="{StaticResource SecButton}" Margin="10,0,0,0"
@@ -311,8 +311,8 @@
                                 MouseLeftButtonUp="QuickScanCard_Click">
                             <StackPanel>
                                 <TextBlock Text="&#x26A1;" FontSize="28" Margin="0,0,0,8"/>
-                                <TextBlock Text="Varredura Rápida" FontSize="14" FontWeight="Bold"/>
-                                <TextBlock Text="Áreas de alto risco: Desktop, Downloads, Temp"
+                                <TextBlock Text="Varredura R&#xE1;pida" FontSize="14" FontWeight="Bold"/>
+                                <TextBlock Text="&#xC1;reas de alto risco: Desktop, Downloads, Temp"
                                            FontSize="11" Foreground="#888" Margin="0,4,0,12" TextWrapping="Wrap"/>
                                 <Button Style="{StaticResource ActionButton}" Content="Iniciar"
                                         Click="QuickScan_OnClick" HorizontalAlignment="Left"/>
@@ -323,7 +323,7 @@
                             <StackPanel>
                                 <TextBlock Text="&#x2714;" FontSize="28" Margin="0,0,0,8"/>
                                 <TextBlock Text="Varredura Completa" FontSize="14" FontWeight="Bold"/>
-                                <TextBlock Text="Todos os arquivos do usuário e Arquivos de Programas"
+                                <TextBlock Text="Todos os arquivos do usu&#xE1;rio e Arquivos de Programas"
                                            FontSize="11" Foreground="#888" Margin="0,4,0,12" TextWrapping="Wrap"/>
                                 <Button Style="{StaticResource SecButton}" Content="Iniciar"
                                         Click="FullScan_OnClick" HorizontalAlignment="Left"/>
@@ -334,7 +334,7 @@
                             <StackPanel>
                                 <TextBlock Text="&#x2699;" FontSize="28" Margin="0,0,0,8"/>
                                 <TextBlock Text="Varredura Personalizada" FontSize="14" FontWeight="Bold"/>
-                                <TextBlock Text="Escolha uma pasta específica para verificar"
+                                <TextBlock Text="Escolha uma pasta espec&#xED;fica para verificar"
                                            FontSize="11" Foreground="#888" Margin="0,4,0,12" TextWrapping="Wrap"/>
                                 <Button Style="{StaticResource SecButton}" Content="Escolher Pasta"
                                         Click="CustomScan_OnClick" HorizontalAlignment="Left"/>
@@ -394,7 +394,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock x:Name="ThreatCountLabel"
-                                                   Text="Ameaças encontradas: 0"
+                                                   Text="Amea&#xE7;as encontradas: 0"
                                                    FontSize="12" FontWeight="SemiBold" Foreground="#333"/>
                                         <Button Grid.Column="1" x:Name="QuarantineAllBtn"
                                                 Content="Quarentenar Todos"
@@ -410,9 +410,9 @@
                                         <GridView>
                                             <GridViewColumn Header="Arquivo" Width="320"
                                                 DisplayMemberBinding="{Binding FilePath}"/>
-                                            <GridViewColumn Header="Ameaça" Width="180"
+                                            <GridViewColumn Header="Amea&#xE7;a" Width="180"
                                                 DisplayMemberBinding="{Binding ThreatName}"/>
-                                            <GridViewColumn Header="Nível" Width="80"
+                                            <GridViewColumn Header="N&#xED;vel" Width="80"
                                                 DisplayMemberBinding="{Binding LevelLabel}"/>
                                             <GridViewColumn Header="Detectado" Width="140"
                                                 DisplayMemberBinding="{Binding DetectedAtText}"/>
@@ -447,9 +447,9 @@
                                 <GridView>
                                     <GridViewColumn Header="Arquivo Original" Width="300"
                                         DisplayMemberBinding="{Binding OriginalPath}"/>
-                                    <GridViewColumn Header="Ameaça" Width="180"
+                                    <GridViewColumn Header="Amea&#xE7;a" Width="180"
                                         DisplayMemberBinding="{Binding ThreatName}"/>
-                                    <GridViewColumn Header="Nível" Width="80"
+                                    <GridViewColumn Header="N&#xED;vel" Width="80"
                                         DisplayMemberBinding="{Binding LevelLabel}"/>
                                     <GridViewColumn Header="Quarentenado em" Width="160"
                                         DisplayMemberBinding="{Binding DateText}"/>
@@ -466,10 +466,10 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="Histórico de Varreduras" FontSize="22" FontWeight="Bold"
+                    <TextBlock Grid.Row="0" Text="Hist&#xF3;rico de Varreduras" FontSize="22" FontWeight="Bold"
                                Margin="0,0,0,12"/>
                     <Button Grid.Row="1" Style="{StaticResource SecButton}" Margin="0,0,0,14"
-                            Content="Limpar Histórico" Click="ClearHistory_OnClick"
+                            Content="Limpar Hist&#xF3;rico" Click="ClearHistory_OnClick"
                             HorizontalAlignment="Left"/>
                     <Border Grid.Row="2" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="8">
                         <ListView x:Name="HistoryList" BorderThickness="0">
@@ -481,9 +481,9 @@
                                         DisplayMemberBinding="{Binding ScanType}"/>
                                     <GridViewColumn Header="Arquivos" Width="90"
                                         DisplayMemberBinding="{Binding FilesScanned}"/>
-                                    <GridViewColumn Header="Ameaças" Width="90"
+                                    <GridViewColumn Header="Amea&#xE7;as" Width="90"
                                         DisplayMemberBinding="{Binding ThreatsFound}"/>
-                                    <GridViewColumn Header="Duração" Width="100"
+                                    <GridViewColumn Header="Dura&#xE7;&#xE3;o" Width="100"
                                         DisplayMemberBinding="{Binding Duration}"/>
                                 </GridView>
                             </ListView.View>
@@ -495,7 +495,7 @@
                 <ScrollViewer x:Name="PageSettings" Visibility="Collapsed"
                               VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="36,32,36,36">
-                        <TextBlock Text="Configurações" FontSize="22" FontWeight="Bold"
+                        <TextBlock Text="Configura&#xE7;&#xF5;es" FontSize="22" FontWeight="Bold"
                                    Margin="0,0,0,24"/>
 
                         <!-- Proteção em tempo real -->
@@ -507,9 +507,9 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel>
-                                    <TextBlock Text="Proteção em Tempo Real"
+                                    <TextBlock Text="Prote&#xE7;&#xE3;o em Tempo Real"
                                                FontSize="14" FontWeight="SemiBold"/>
-                                    <TextBlock Text="Monitora novos arquivos criados na pasta do usuário"
+                                    <TextBlock Text="Monitora novos arquivos criados na pasta do usu&#xE1;rio"
                                                FontSize="12" Foreground="#888" Margin="0,4,0,0"/>
                                 </StackPanel>
                                 <ToggleButton Grid.Column="1" x:Name="RealTimToggle"
@@ -528,9 +528,9 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel>
-                                    <TextBlock Text="Varredura Rápida ao Iniciar"
+                                    <TextBlock Text="Varredura R&#xE1;pida ao Iniciar"
                                                FontSize="14" FontWeight="SemiBold"/>
-                                    <TextBlock Text="Executa varredura rápida automaticamente ao abrir o Vacinaldo"
+                                    <TextBlock Text="Executa varredura r&#xE1;pida automaticamente ao abrir o Vacinaldo"
                                                FontSize="12" Foreground="#888" Margin="0,4,0,0"/>
                                 </StackPanel>
                                 <ToggleButton Grid.Column="1" x:Name="StartupScanToggle"
@@ -546,14 +546,14 @@
                                 <TextBlock Text="Sobre o Vacinaldo" FontSize="14" FontWeight="SemiBold"
                                            Margin="0,0,0,8"/>
                                 <TextBlock FontSize="12" Foreground="#555" LineHeight="20">
-                                    <Run Text="Vacinaldo v1.0.0 &#x2014; Scanner heurístico de segurança"/>
+                                    <Run Text="Vacinaldo v1.0.0 &#x2014; Scanner heur&#xED;stico de seguran&#xE7;a"/>
                                     <LineBreak/>
-                                    <Run Text="Parte do suite Escritorio · Licença MIT · Software Livre"/>
+                                    <Run Text="Parte do suite Escritorio &#xB7; Licen&#xE7;a MIT &#xB7; Software Livre"/>
                                     <LineBreak/>
-                                    <Run Text="Detecta: EICAR, dupla extensão, executáveis em Temp, nomes suspeitos"/>
+                                    <Run Text="Detecta: EICAR, dupla extens&#xE3;o, execut&#xE1;veis em Temp, nomes suspeitos"/>
                                     <LineBreak/>
                                     <Run FontStyle="Italic" Foreground="#AAA"
-                                         Text="Este software não substitui uma solução antivírus comercial completa."/>
+                                         Text="Este software n&#xE3;o substitui uma solu&#xE7;&#xE3;o antiv&#xED;rus comercial completa."/>
                                 </TextBlock>
                             </StackPanel>
                         </Border>
@@ -576,9 +576,9 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel>
-                                <TextBlock Text="EDR &#x2014; Detecção e Resposta a Incidentes"
+                                <TextBlock Text="EDR &#x2014; Detec&#xE7;&#xE3;o e Resposta a Incidentes"
                                            FontSize="19" FontWeight="Bold" Foreground="White"/>
-                                <TextBlock Text="Monitoramento comportamental em tempo real · análise bayesiana · auditoria imutável"
+                                <TextBlock Text="Monitoramento comportamental em tempo real &#xB7; an&#xE1;lise bayesiana &#xB7; auditoria imut&#xE1;vel"
                                            FontSize="11" Foreground="#90CAF9" Margin="0,4,0,0"/>
                             </StackPanel>
                             <Border Grid.Column="1" Background="#0D47A1" CornerRadius="8"
@@ -605,11 +605,11 @@
                                              IsChecked="True" Checked="EdrTab_Checked"
                                              Content="Processos"/>
                                 <RadioButton x:Name="EdrTabNetwork" Style="{StaticResource EdrTabBtn}"
-                                             Checked="EdrTab_Checked" Content="Conexões"/>
+                                             Checked="EdrTab_Checked" Content="Conex&#xF5;es"/>
                                 <RadioButton x:Name="EdrTabTimeline" Style="{StaticResource EdrTabBtn}"
                                              Checked="EdrTab_Checked" Content="Timeline"/>
                                 <RadioButton x:Name="EdrTabSaif" Style="{StaticResource EdrTabBtn}"
-                                             Checked="EdrTab_Checked" Content="Relatório EDR"/>
+                                             Checked="EdrTab_Checked" Content="Relat&#xF3;rio EDR"/>
                             </StackPanel>
                             <Button Grid.Column="1" Content="Atualizar"
                                     Style="{StaticResource SecButton}"
@@ -628,7 +628,7 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" Margin="0,0,0,8" FontSize="11" Foreground="#666"
-                                Text="Processos em execução &#x2014; ordenados por nível de risco"/>
+                                Text="Processos em execu&#xE7;&#xE3;o &#x2014; ordenados por n&#xED;vel de risco"/>
                             <Border Grid.Row="1" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="8">
                                 <ListView x:Name="EdrProcessList" BorderThickness="0">
                                     <ListView.View>
@@ -639,7 +639,7 @@
                                                 DisplayMemberBinding="{Binding Pid}"/>
                                             <GridViewColumn Header="Risco" Width="90"
                                                 DisplayMemberBinding="{Binding RiskLabel}"/>
-                                            <GridViewColumn Header="Memória" Width="75"
+                                            <GridViewColumn Header="Mem&#xF3;ria" Width="75"
                                                 DisplayMemberBinding="{Binding Memory}"/>
                                             <GridViewColumn Header="Threads" Width="62"
                                                 DisplayMemberBinding="{Binding Threads}"/>
@@ -660,7 +660,7 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" Margin="0,0,0,8" FontSize="11" Foreground="#666"
-                                Text="Conexões TCP ativas &#x2014; conexões suspeitas listadas primeiro"/>
+                                Text="Conex&#xF5;es TCP ativas &#x2014; conex&#xF5;es suspeitas listadas primeiro"/>
                             <Border Grid.Row="1" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="8">
                                 <ListView x:Name="EdrNetworkList" BorderThickness="0">
                                     <ListView.View>
@@ -695,7 +695,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock FontSize="11" Foreground="#666" VerticalAlignment="Center"
-                                    Text="Linha do tempo de eventos de segurança &#x2014; gerados pelo motor EDR em tempo real"/>
+                                    Text="Linha do tempo de eventos de seguran&#xE7;a &#x2014; gerados pelo motor EDR em tempo real"/>
                                 <Button Grid.Column="1" Content="Limpar Timeline"
                                         Style="{StaticResource SecButton}" Padding="12,3"
                                         FontSize="11" Click="EdrClearTimeline_Click"/>
@@ -712,9 +712,9 @@
                                                 DisplayMemberBinding="{Binding RiskLabel}"/>
                                             <GridViewColumn Header="MITRE" Width="65"
                                                 DisplayMemberBinding="{Binding Mitre}"/>
-                                            <GridViewColumn Header="Tática" Width="120"
+                                            <GridViewColumn Header="T&#xE1;tica" Width="120"
                                                 DisplayMemberBinding="{Binding Tactic}"/>
-                                            <GridViewColumn Header="Descrição" Width="310"
+                                            <GridViewColumn Header="Descri&#xE7;&#xE3;o" Width="310"
                                                 DisplayMemberBinding="{Binding Description}"/>
                                         </GridView>
                                     </ListView.View>
@@ -727,10 +727,10 @@
                                       VerticalScrollBarVisibility="Auto">
                             <StackPanel Margin="24,16,24,24">
 
-                                <TextBlock Text="Vacinaldo EDR &#x2014; Arquitetura do Motor de Detecção"
+                                <TextBlock Text="Vacinaldo EDR &#x2014; Arquitetura do Motor de Detec&#xE7;&#xE3;o"
                                            FontSize="15" FontWeight="Bold" Margin="0,0,0,4"/>
                                 <TextBlock Foreground="#888" FontSize="11" Margin="0,0,0,20"
-                                    Text="6 princípios de segurança implementados no motor de varredura e no motor EDR do Vacinaldo"/>
+                                    Text="6 princ&#xED;pios de seguran&#xE7;a implementados no motor de varredura e no motor EDR do Vacinaldo"/>
 
                                 <!-- Princípios de segurança - linha 1 -->
                                 <UniformGrid Columns="3" Margin="0,0,0,12">
@@ -740,16 +740,16 @@
                                             <TextBlock Text="Explicabilidade" FontSize="13" FontWeight="Bold"
                                                        Foreground="#2E7D32" Margin="0,6,0,3"/>
                                             <TextBlock FontSize="11" Foreground="#444" TextWrapping="Wrap"
-                                                Text="Cada detecção inclui sinais individuais, evidências e técnica de ataque classificada."/>
+                                                Text="Cada detec&#xE7;&#xE3;o inclui sinais individuais, evid&#xEA;ncias e t&#xE9;cnica de ataque classificada."/>
                                         </StackPanel>
                                     </Border>
                                     <Border Background="#E3F2FD" CornerRadius="10" Padding="16,14" Margin="3,0,3,0">
                                         <StackPanel>
                                             <TextBlock Text="&#x2714;" FontSize="22"/>
-                                            <TextBlock Text="Risco Mensurável" FontSize="13" FontWeight="Bold"
+                                            <TextBlock Text="Risco Mensur&#xE1;vel" FontSize="13" FontWeight="Bold"
                                                        Foreground="#1565C0" Margin="0,6,0,3"/>
                                             <TextBlock FontSize="11" Foreground="#444" TextWrapping="Wrap"
-                                                Text="Score de confiança 0-100 com acumulação bayesiana."/>
+                                                Text="Score de confian&#xE7;a 0-100 com acumula&#xE7;&#xE3;o bayesiana."/>
                                         </StackPanel>
                                     </Border>
                                     <Border Background="#FFF8E1" CornerRadius="10" Padding="16,14" Margin="6,0,0,0">
@@ -758,7 +758,7 @@
                                             <TextBlock Text="Trilha de Auditoria" FontSize="13" FontWeight="Bold"
                                                        Foreground="#E65100" Margin="0,6,0,3"/>
                                             <TextBlock FontSize="11" Foreground="#444" TextWrapping="Wrap"
-                                                Text="Log JSONL append-only imutável com timestamp, fonte, técnica de ataque e desfecho."/>
+                                                Text="Log JSONL append-only imut&#xE1;vel com timestamp, fonte, t&#xE9;cnica de ataque e desfecho."/>
                                         </StackPanel>
                                     </Border>
                                 </UniformGrid>
@@ -771,7 +771,7 @@
                                             <TextBlock Text="Robustez Adversarial" FontSize="13" FontWeight="Bold"
                                                        Foreground="#6A1B9A" Margin="0,6,0,3"/>
                                             <TextBlock FontSize="11" Foreground="#444" TextWrapping="Wrap"
-                                                Text="Detecção de masquerading, LOLBAS, executáveis em Temp, dupla extensão e stub droppers."/>
+                                                Text="Detec&#xE7;&#xE3;o de masquerading, LOLBAS, execut&#xE1;veis em Temp, dupla extens&#xE3;o e stub droppers."/>
                                         </StackPanel>
                                     </Border>
                                     <Border Background="#FCE4EC" CornerRadius="10" Padding="16,14" Margin="3,0,3,0">
@@ -780,16 +780,16 @@
                                             <TextBlock Text="Controle de Falso Positivo" FontSize="13" FontWeight="Bold"
                                                        Foreground="#880E4F" Margin="0,6,0,3"/>
                                             <TextBlock FontSize="11" Foreground="#444" TextWrapping="Wrap"
-                                                Text="FP risk calculado por número de sinais, peso médio e contexto."/>
+                                                Text="FP risk calculado por n&#xFA;mero de sinais, peso m&#xE9;dio e contexto."/>
                                         </StackPanel>
                                     </Border>
                                     <Border Background="#E0F2F1" CornerRadius="10" Padding="16,14" Margin="6,0,0,0">
                                         <StackPanel>
                                             <TextBlock Text="&#x2714;" FontSize="22"/>
-                                            <TextBlock Text="Classificação de Técnicas" FontSize="13" FontWeight="Bold"
+                                            <TextBlock Text="Classifica&#xE7;&#xE3;o de T&#xE9;cnicas" FontSize="13" FontWeight="Bold"
                                                        Foreground="#00695C" Margin="0,6,0,3"/>
                                             <TextBlock FontSize="11" Foreground="#444" TextWrapping="Wrap"
-                                                Text="15 categorias comportamentais: execução, persistência, evasão, C2, escalada de privilégio e mais."/>
+                                                Text="15 categorias comportamentais: execu&#xE7;&#xE3;o, persist&#xEA;ncia, evas&#xE3;o, C2, escalada de privil&#xE9;gio e mais."/>
                                         </StackPanel>
                                     </Border>
                                 </UniformGrid>
@@ -827,7 +827,7 @@
                                                     DisplayMemberBinding="{Binding Confidence}"/>
                                                 <GridViewColumn Header="Desfecho" Width="90"
                                                     DisplayMemberBinding="{Binding Outcome}"/>
-                                                <GridViewColumn Header="Descrição" Width="210"
+                                                <GridViewColumn Header="Descri&#xE7;&#xE3;o" Width="210"
                                                     DisplayMemberBinding="{Binding Description}"/>
                                             </GridView>
                                         </ListView.View>
@@ -852,7 +852,7 @@
                 <TextBlock x:Name="StatusText" Text="Pronto" VerticalAlignment="Center"
                            FontSize="11" Foreground="#666"/>
                 <TextBlock Grid.Column="1" x:Name="RtpStatusBar"
-                           Text="&#x2705; Proteção: Ativa" VerticalAlignment="Center"
+                           Text="&#x2705; Prote&#xE7;&#xE3;o: Ativa" VerticalAlignment="Center"
                            FontSize="11" Foreground="#388E3C"/>
             </Grid>
         </Border>

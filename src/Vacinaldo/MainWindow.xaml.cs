@@ -354,7 +354,7 @@ public partial class MainWindow : Window
         var red   = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(198, 40, 40));
         RealTimeStatus.Text       = on ? "Ativa"    : "Inativa";
         RealTimeStatus.Foreground = on ? green      : red;
-        RtpStatusBar.Text         = on ? "�Y>� Proteção: Ativa" : "⚠  Proteção: Inativa";
+        RtpStatusBar.Text         = on ? "\u2714   Proteção: Ativa" : "⚠  Proteção: Inativa";
         RtpStatusBar.Foreground   = on ? green      : red;
     }
 
@@ -369,8 +369,8 @@ public partial class MainWindow : Window
         QuarantineCount.Text = quarCount.ToString();
         ScanCount.Text       = histCount.ToString();
         LastScanText.Text    = lastScan is null
-            ? "�sltima varredura: nunca"
-            : $"�sltima varredura: {lastScan.StartedAt:dd/MM/yyyy HH:mm} ({lastScan.ScanType})";
+            ? "Última varredura: nunca"
+            : $"Última varredura: {lastScan.StartedAt:dd/MM/yyyy HH:mm} ({lastScan.ScanType})";
 
         var orange = System.Windows.Media.Color.FromRgb(230, 81,   0);
         var green  = System.Windows.Media.Color.FromRgb( 46, 125, 50);
@@ -380,7 +380,7 @@ public partial class MainWindow : Window
         if (quarCount > 0)
         {
             StatusCard.Background  = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 243, 224));
-            StatusIcon.Text        = "&#x26A0;";
+            StatusIcon.Text        = "\u26A0";
             StatusTitle.Text       = "Atenção";
             StatusTitle.Foreground = new System.Windows.Media.SolidColorBrush(orange);
             StatusDesc.Text        = $"{quarCount} arquivo(s) em quarentena. Revise a quarentena.";
@@ -389,7 +389,7 @@ public partial class MainWindow : Window
         else
         {
             StatusCard.Background  = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(232, 245, 233));
-            StatusIcon.Text        = "&#x2714;";
+            StatusIcon.Text        = "\u2714";
             StatusTitle.Text       = "Protegido";
             StatusTitle.Foreground = new System.Windows.Media.SolidColorBrush(green);
             StatusDesc.Text        = "Seu sistema está protegido. Nenhuma ameaça encontrada.";
@@ -456,9 +456,9 @@ public sealed class ProcessVm(ProcessSnapshot p)
     private static string RiskTag(EdrRisk r) => r switch
     {
         EdrRisk.Critical => " --  Crítico",
-        EdrRisk.High     => " -- � Alto",
-        EdrRisk.Medium   => "�YY� Médio",
-        EdrRisk.Low      => "�YY� Baixo",
+        EdrRisk.High     => "\u26A0  Alto",
+        EdrRisk.Medium   => " Médio",
+        EdrRisk.Low      => " Baixo",
         _                => "✓  Info"
     };
 }
@@ -485,9 +485,9 @@ public sealed class EventVm(SecurityEvent ev)
     private static string RiskTag(EdrRisk r) => r switch
     {
         EdrRisk.Critical => " --  Crítico",
-        EdrRisk.High     => " -- � Alto",
-        EdrRisk.Medium   => "�YY� Médio",
-        EdrRisk.Low      => "�YY� Baixo",
+        EdrRisk.High     => "\u26A0  Alto",
+        EdrRisk.Medium   => " Médio",
+        EdrRisk.Low      => " Baixo",
         _                => "✓  Info"
     };
 }
