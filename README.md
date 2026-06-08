@@ -1,4 +1,4 @@
-[![Escritório CE — Clique para baixar](flyer.jpg?v=2)](https://github.com/edivanccastro/escritorio/releases/latest)
+[![Escritório CE — Clique para baixar](flyer-ce.jpg)](https://github.com/edivanccastro/escritorio/releases/latest)
 
 <div align="center">
 
@@ -109,7 +109,7 @@ installer/
 site/
   index.html             Site de apresentação da suíte
 build-installer.ps1      Publica os apps e gera o instalador
-flyer.jpg                Flyer de apresentação profissional
+flyer-ce.jpg             Flyer de apresentação profissional
 THIRD-PARTY-NOTICES.txt  Atribuições de licenças de terceiros
 ```
 
