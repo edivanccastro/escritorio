@@ -1,4 +1,4 @@
-[![Escritorio PCE — Clique para baixar](flyer.jpg)](https://github.com/edivanccastro/escritorio/releases/latest)
+[![Escritorio CE — Clique para baixar](flyer.jpg)](https://github.com/edivanccastro/escritorio/releases/latest)
 
 <div align="center">
 
@@ -6,7 +6,7 @@
 
 </div>
 
-# Escritorio PCE
+# Escritorio CE — Community Edition
 
 > **Produtividade Completa para o Escritório** — suíte open source em C# (.NET 8 + WPF) com 6 aplicativos independentes, instalador profissional e identidade visual própria.
 
