@@ -1,10 +1,10 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.IO;
 using Microsoft.Win32;
 
 namespace ZeFaxina;
 
-// â”€â”€â”€ Programas de InicializaÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// �"?�"?�"? Programas de Inicialização �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
 public sealed record StartupEntry(
     string Name,
@@ -12,7 +12,7 @@ public sealed record StartupEntry(
     string Location,   // "HKCU Run" | "HKLM Run" | "Startup Folder"
     bool   Enabled);
 
-// â”€â”€â”€ Programas Instalados â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// �"?�"?�"? Programas Instalados �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
 public sealed record InstalledProgram(
     string Name,
@@ -22,7 +22,7 @@ public sealed record InstalledProgram(
     string UninstallCommand,
     long   SizeBytes);
 
-// â”€â”€â”€ Problemas de Registro â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// �"?�"?�"? Problemas de Registro �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
 public enum RegistryIssueType { MissingFileRef, InvalidStartup, OrphanedUninstall, InvalidFont }
 
@@ -32,11 +32,11 @@ public sealed record RegistryIssue(
     string Description,
     RegistryIssueType Type);
 
-// â”€â”€â”€ Engine de Ferramentas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// �"?�"?�"? Engine de Ferramentas �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
 public static class ToolsEngine
 {
-    // â”€â”€ InicializaÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Inicialização �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     public static List<StartupEntry> GetStartupEntries()
     {
@@ -70,7 +70,7 @@ public static class ToolsEngine
     }
 
     private static IEnumerable<StartupEntry> ReadDisabledKey(RegistryHive _)
-        => [];  // Binary approval flags â€” not parsed in this version
+        => [];  // Binary approval flags  --  not parsed in this version
 
     private static IEnumerable<StartupEntry> ReadStartupFolders()
     {
@@ -82,7 +82,7 @@ public static class ToolsEngine
         foreach (var folder in folders.Where(Directory.Exists))
         {
             foreach (var f in Directory.GetFiles(folder, "*.lnk"))
-                yield return new StartupEntry(Path.GetFileNameWithoutExtension(f), f, "Pasta de InicializaÃ§Ã£o", true);
+                yield return new StartupEntry(Path.GetFileNameWithoutExtension(f), f, "Pasta de Inicialização", true);
         }
     }
 
@@ -110,7 +110,7 @@ public static class ToolsEngine
         catch { }
     }
 
-    // â”€â”€ Programas Instalados â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Programas Instalados �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     public static List<InstalledProgram> GetInstalledPrograms()
     {
@@ -174,7 +174,7 @@ public static class ToolsEngine
         catch { }
     }
 
-    // â”€â”€ Scanner de Registro â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Scanner de Registro �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     public static async Task<List<RegistryIssue>> ScanRegistryAsync(
         IProgress<string> progress,
@@ -184,15 +184,15 @@ public static class ToolsEngine
         await Task.Run(() =>
         {
             ct.ThrowIfCancellationRequested();
-            progress.Report("Verificando entradas de inicializaÃ§Ã£oâ€¦");
+            progress.Report("Verificando entradas de inicialização�?�");
             issues.AddRange(ScanStartupRefs());
 
             ct.ThrowIfCancellationRequested();
-            progress.Report("Verificando desinstaladoresâ€¦");
+            progress.Report("Verificando desinstaladores�?�");
             issues.AddRange(ScanOrphanedUninstall());
 
             ct.ThrowIfCancellationRequested();
-            progress.Report("Verificando fontesâ€¦");
+            progress.Report("Verificando fontes�?�");
             issues.AddRange(ScanFonts());
         }, ct);
         return issues;
@@ -217,7 +217,7 @@ public static class ToolsEngine
                 var exe = ExtractExePath(cmd);
                 if (exe is not null && !File.Exists(exe))
                     yield return new RegistryIssue(path, name,
-                        $"Arquivo nÃ£o encontrado: {exe}", RegistryIssueType.MissingFileRef);
+                        $"Arquivo não encontrado: {exe}", RegistryIssueType.MissingFileRef);
             }
             root.Dispose();
         }
@@ -247,7 +247,7 @@ public static class ToolsEngine
                     var exe = ExtractExePath(uninstall);
                     if (exe is not null && !File.Exists(exe))
                         yield return new RegistryIssue(path + @"\" + sub, "UninstallString",
-                            $"Desinstalador nÃ£o encontrado para: {name}", RegistryIssueType.OrphanedUninstall);
+                            $"Desinstalador não encontrado para: {name}", RegistryIssueType.OrphanedUninstall);
                 }
                 key.Dispose();
             }
@@ -286,7 +286,7 @@ public static class ToolsEngine
         catch { }
     }
 
-    // â”€â”€ Utilidades â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Utilidades �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private static string? ExtractExePath(string cmd)
     {

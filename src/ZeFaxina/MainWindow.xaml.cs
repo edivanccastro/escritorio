@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.Windows;
 using WpfCheckBox = System.Windows.Controls.CheckBox;
 using WpfMsgBox = System.Windows.MessageBox;
@@ -7,7 +7,7 @@ namespace ZeFaxina;
 
 public partial class MainWindow : Window
 {
-    // â”€â”€ Estado â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Estado �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private readonly CleanEngine _engine = new();
     private CancellationTokenSource? _cts;
@@ -24,7 +24,7 @@ public partial class MainWindow : Window
     private readonly ObservableCollection<ProgramVm>      _programFilter = [];
     private readonly ObservableCollection<HistoryVm>      _historyItems  = [];
 
-    // â”€â”€ Construtor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Construtor �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     public MainWindow()
     {
@@ -42,7 +42,7 @@ public partial class MainWindow : Window
         RefreshHistory();
     }
 
-    // â”€â”€ Painel de Limpeza â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Painel de Limpeza �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private void BuildCleanPanel()
     {
@@ -75,18 +75,18 @@ public partial class MainWindow : Window
             .Where(c => c.IsChecked == true)
             .Select(c => (CleanCategory)c.Tag!);
 
-    // â”€â”€ Analisar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Analisar �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private async void Analyze_OnClick(object sender, RoutedEventArgs e)
     {
         var cats = SelectedCategories().ToList();
-        if (cats.Count == 0) { WpfMsgBox.Show("Selecione ao menos uma categoria.", "ZÃ© Faxina"); return; }
+        if (cats.Count == 0) { WpfMsgBox.Show("Selecione ao menos uma categoria.", "Zé Faxina"); return; }
 
-        SetBusy(true, "Analisandoâ€¦");
+        SetBusy(true, "Analisando�?�");
         _cleanResults.Clear();
         _lastResults.Clear();
         CleanBtn.IsEnabled = false;
-        SummaryFiles.Text = SummarySize.Text = SummaryCategories.Text = "â€¦";
+        SummaryFiles.Text = SummarySize.Text = SummaryCategories.Text = "�?�";
 
         _cts = new CancellationTokenSource();
         var progress = new Progress<CleanProgress>(p =>
@@ -107,23 +107,23 @@ public partial class MainWindow : Window
             SummarySize.Text       = CleanEngine.FormatSize(totalBytes);
             SummaryCategories.Text = results.Count(r => r.FilesFound > 0).ToString();
 
-            ProgressLabel.Text  = $"AnÃ¡lise concluÃ­da â€” {CleanEngine.FormatSize(totalBytes)} a liberar.";
+            ProgressLabel.Text  = $"Análise concluída  --  {CleanEngine.FormatSize(totalBytes)} a liberar.";
             ProgressDetail.Text = "";
-            StatusText.Text     = $"AnÃ¡lise: {totalFiles} arquivos, {CleanEngine.FormatSize(totalBytes)}";
+            StatusText.Text     = $"Análise: {totalFiles} arquivos, {CleanEngine.FormatSize(totalBytes)}";
             CleanBtn.IsEnabled = totalBytes > 0;
         }
         catch (OperationCanceledException)
         {
-            ProgressLabel.Text = "AnÃ¡lise cancelada.";
+            ProgressLabel.Text = "Análise cancelada.";
         }
         catch (Exception ex)
         {
-            WpfMsgBox.Show($"Erro durante anÃ¡lise:\n{ex.Message}", "ZÃ© Faxina");
+            WpfMsgBox.Show($"Erro durante análise:\n{ex.Message}", "Zé Faxina");
         }
         finally { SetBusy(false, null); }
     }
 
-    // â”€â”€ Limpar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Limpar �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private async void Clean_OnClick(object sender, RoutedEventArgs e)
     {
@@ -132,17 +132,17 @@ public partial class MainWindow : Window
         {
             long bytes = _lastResults.Sum(r => r.BytesFound);
             var resp = WpfMsgBox.Show(
-                $"Isso vai excluir {CleanEngine.FormatSize(bytes)} de arquivos temporÃ¡rios.\n\nDeseja continuar?",
-                "ZÃ© Faxina â€” Confirmar Limpeza",
+                $"Isso vai excluir {CleanEngine.FormatSize(bytes)} de arquivos temporários.\n\nDeseja continuar?",
+                "Zé Faxina  --  Confirmar Limpeza",
                 MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (resp != MessageBoxResult.Yes) return;
         }
 
         var cats = SelectedCategories().ToList();
-        SetBusy(true, "Limpandoâ€¦");
+        SetBusy(true, "Limpando�?�");
         _cleanResults.Clear();
         CleanBtn.IsEnabled = false;
-        SummaryFiles.Text = SummarySize.Text = SummaryCategories.Text = "â€¦";
+        SummaryFiles.Text = SummarySize.Text = SummaryCategories.Text = "�?�";
 
         _cts = new CancellationTokenSource();
         var progress = new Progress<CleanProgress>(p =>
@@ -165,12 +165,12 @@ public partial class MainWindow : Window
             SummarySize.Text       = CleanEngine.FormatSize(freed);
             SummaryCategories.Text = results.Count(r => r.FilesFound > 0).ToString();
 
-            ProgressLabel.Text  = $"Limpeza concluÃ­da â€” {CleanEngine.FormatSize(freed)} liberados!";
+            ProgressLabel.Text  = $"Limpeza concluída  --  {CleanEngine.FormatSize(freed)} liberados!";
             ProgressDetail.Text = "";
-            StatusText.Text     = $"Limpeza: {deleted} arquivos excluÃ­dos, {CleanEngine.FormatSize(freed)} liberados";
-            TotalFreedText.Text = $"Total liberado nesta sessÃ£o: {CleanEngine.FormatSize(_sessionFreed)}";
+            StatusText.Text     = $"Limpeza: {deleted} arquivos excluídos, {CleanEngine.FormatSize(freed)} liberados";
+            TotalFreedText.Text = $"Total liberado nesta sessão: {CleanEngine.FormatSize(_sessionFreed)}";
 
-            // Salva no histÃ³rico
+            // Salva no histórico
             var catNames = string.Join(", ", cats.Select(c =>
                 CleanEngine.AllTargets.FirstOrDefault(t => t.Category == c)?.Label ?? c.ToString()));
             CleanEngine.AppendHistory(new CleanHistoryEntry(
@@ -184,14 +184,14 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            WpfMsgBox.Show($"Erro durante limpeza:\n{ex.Message}", "ZÃ© Faxina");
+            WpfMsgBox.Show($"Erro durante limpeza:\n{ex.Message}", "Zé Faxina");
         }
         finally { SetBusy(false, null); }
     }
 
     private void StopClean_OnClick(object sender, RoutedEventArgs e) => _cts?.Cancel();
 
-    // â”€â”€ Registro â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Registro �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private async void ScanRegistry_OnClick(object sender, RoutedEventArgs e)
     {
@@ -210,8 +210,8 @@ public partial class MainWindow : Window
                 _regIssues.Add(new RegIssueVm(i));
 
             RegResultLabel.Text = issues.Count == 0
-                ? "âœ… Nenhum problema encontrado!"
-                : $"âš  {issues.Count} problema(s) encontrado(s)";
+                ? "�o. Nenhum problema encontrado!"
+                : $"�s� {issues.Count} problema(s) encontrado(s)";
             FixRegBtn.IsEnabled = issues.Count > 0;
         }
         catch (Exception ex)
@@ -230,12 +230,12 @@ public partial class MainWindow : Window
         var selected = RegistryIssueList.SelectedItems.Cast<RegIssueVm>().ToList();
         if (selected.Count == 0)
         {
-            WpfMsgBox.Show("Selecione ao menos um item para corrigir.", "ZÃ© Faxina");
+            WpfMsgBox.Show("Selecione ao menos um item para corrigir.", "Zé Faxina");
             return;
         }
         var r = WpfMsgBox.Show(
-            $"Isso irÃ¡ remover {selected.Count} entrada(s) do registro.\nEssa aÃ§Ã£o nÃ£o pode ser desfeita facilmente.\n\nDeseja continuar?",
-            "ZÃ© Faxina â€” Confirmar", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            $"Isso irá remover {selected.Count} entrada(s) do registro.\nEssa ação não pode ser desfeita facilmente.\n\nDeseja continuar?",
+            "Zé Faxina  --  Confirmar", MessageBoxButton.YesNo, MessageBoxImage.Warning);
         if (r != MessageBoxResult.Yes) return;
 
         foreach (var vm in selected)
@@ -243,11 +243,11 @@ public partial class MainWindow : Window
             ToolsEngine.FixRegistryIssue(vm.Issue);
             _regIssues.Remove(vm);
         }
-        RegResultLabel.Text = $"âœ… {selected.Count} entradas corrigidas.";
+        RegResultLabel.Text = $"�o. {selected.Count} entradas corrigidas.";
         FixRegBtn.IsEnabled = _regIssues.Count > 0;
     }
 
-    // â”€â”€ Ferramentas â€“ InicializaÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Ferramentas  --  Inicialização �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private void RefreshStartup_OnClick(object sender, RoutedEventArgs e) => LoadStartup();
 
@@ -256,7 +256,7 @@ public partial class MainWindow : Window
         _startupItems.Clear();
         foreach (var e in ToolsEngine.GetStartupEntries())
             _startupItems.Add(new StartupVm(e));
-        StatusText.Text = $"{_startupItems.Count} entradas de inicializaÃ§Ã£o encontradas.";
+        StatusText.Text = $"{_startupItems.Count} entradas de inicialização encontradas.";
     }
 
     private void DisableStartup_OnClick(object sender, RoutedEventArgs e)
@@ -273,7 +273,7 @@ public partial class MainWindow : Window
         LoadStartup();
     }
 
-    // â”€â”€ Ferramentas â€“ Desinstalar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Ferramentas  --  Desinstalar �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private List<ProgramVm> _allPrograms = [];
 
@@ -301,12 +301,12 @@ public partial class MainWindow : Window
         if (ProgramList.SelectedItem is not ProgramVm vm) return;
         var r = WpfMsgBox.Show(
             $"Deseja desinstalar:\n{vm.Name} {vm.Version}?",
-            "ZÃ© Faxina", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            "Zé Faxina", MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (r == MessageBoxResult.Yes)
             ToolsEngine.UninstallProgram(vm.Program);
     }
 
-    // â”€â”€ HistÃ³rico â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Histórico �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private void RefreshHistory()
     {
@@ -319,10 +319,10 @@ public partial class MainWindow : Window
     {
         CleanEngine.ClearHistory();
         _historyItems.Clear();
-        StatusText.Text = "HistÃ³rico limpo.";
+        StatusText.Text = "Histórico limpo.";
     }
 
-    // â”€â”€ NavegaÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Navegação �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private void Nav_Checked(object sender, RoutedEventArgs e)
     {
@@ -358,7 +358,7 @@ public partial class MainWindow : Window
         if (sender == ToolTabUninstall) ToolPageUninstall.Visibility = Visibility.Visible;
     }
 
-    // â”€â”€ UtilitÃ¡rios de UI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Utilitários de UI �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private void SetBusy(bool busy, string? label)
     {
@@ -369,7 +369,7 @@ public partial class MainWindow : Window
     }
 }
 
-// â”€â”€â”€ ViewModels â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// �"?�"?�"? ViewModels �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
 internal sealed class CleanResultVm
 {
@@ -402,9 +402,9 @@ internal sealed class RegIssueVm
     public string TypeLabel          => Issue.Type switch
     {
         RegistryIssueType.MissingFileRef     => "Arquivo ausente",
-        RegistryIssueType.InvalidStartup     => "InicializaÃ§Ã£o invÃ¡lida",
-        RegistryIssueType.OrphanedUninstall  => "Desinstalador Ã³rfÃ£o",
-        RegistryIssueType.InvalidFont        => "Fonte invÃ¡lida",
+        RegistryIssueType.InvalidStartup     => "Inicialização inválida",
+        RegistryIssueType.OrphanedUninstall  => "Desinstalador órfão",
+        RegistryIssueType.InvalidFont        => "Fonte inválida",
         _                                    => Issue.Type.ToString(),
     };
 }
@@ -427,7 +427,7 @@ internal sealed class ProgramVm
     public string Version      => Program.Version;
     public string Publisher    => Program.Publisher;
     public string InstallDate  => Program.InstallDate;
-    public string SizeText     => Program.SizeBytes > 0 ? CleanEngine.FormatSize(Program.SizeBytes) : "â€”";
+    public string SizeText     => Program.SizeBytes > 0 ? CleanEngine.FormatSize(Program.SizeBytes) : " -- ";
 }
 
 internal sealed class HistoryVm

@@ -1,4 +1,4 @@
-﻿<Window x:Class="Letrucio.InsertTableWindow"
+<Window x:Class="Letrucio.InsertTableWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Inserir Tabela"
@@ -13,7 +13,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="80" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="NÃºmero de colunas:" VerticalAlignment="Center" />
+            <TextBlock Text="Número de colunas:" VerticalAlignment="Center" />
             <TextBox x:Name="ColumnsBox" Grid.Column="1" Text="3" Height="24" VerticalContentAlignment="Center" />
         </Grid>
         <Grid Margin="0,0,0,14">
@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="80" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="NÃºmero de linhas:" VerticalAlignment="Center" />
+            <TextBlock Text="Número de linhas:" VerticalAlignment="Center" />
             <TextBox x:Name="RowsBox" Grid.Column="1" Text="3" Height="24" VerticalContentAlignment="Center" />
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

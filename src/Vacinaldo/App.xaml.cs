@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.IO.Pipes;
 using System.Windows;
 using Microsoft.Win32;
@@ -7,49 +7,49 @@ namespace Vacinaldo;
 
 public partial class App : System.Windows.Application
 {
-    // â”€â”€ Constantes de instÃ¢ncia Ãºnica â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Constantes de instância única  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private const string MutexName = "Vacinaldo_SingleInstance_{7A9D4C1E-2F3B-4E8A-B6D2-93C5F0E1A847}";
     private const string PipeName  = "VacinaldoIPC";
 
-    // â”€â”€ Estado â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Estado  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private Mutex?       _mutex;
     private TrayManager? _tray;
     private CancellationTokenSource _pipeCts = new();
 
-    // â”€â”€ Startup â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Startup  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
 
-        // Verifica instÃ¢ncia Ãºnica
+        // Verifica instância única
         _mutex = new Mutex(true, MutexName, out bool isFirstInstance);
 
         if (!isFirstInstance)
         {
-            // JÃ¡ existe uma instÃ¢ncia rodando â€” sinaliza para ela mostrar a janela
+            // Já existe uma instância rodando  --  sinaliza para ela mostrar a janela
             TrySignalExistingInstance();
             Shutdown();
             return;
         }
 
-        // A partir daqui somos a instÃ¢ncia primÃ¡ria
+        // A partir daqui somos a instância primária
         ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-        // Inicia servidor IPC para receber sinal de instÃ¢ncias futuras
+        // Inicia servidor IPC para receber sinal de instâncias futuras
         _ = RunIpcServerAsync(_pipeCts.Token);
 
-        // Registra no inÃ­cio do Windows (uma vez)
+        // Registra no início do Windows (uma vez)
         RegisterStartup();
 
-        // Cria bandeja e inicia proteÃ§Ã£o em segundo plano â€” SEM abrir janela
+        // Cria bandeja e inicia proteção em segundo plano  --  SEM abrir janela
         _tray = new TrayManager(this);
         _tray.Initialize();
     }
 
-    // â”€â”€ Shutdown â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Shutdown  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     protected override void OnExit(ExitEventArgs e)
     {
@@ -60,7 +60,7 @@ public partial class App : System.Windows.Application
         base.OnExit(e);
     }
 
-    // â”€â”€ IPC: servidor (instÃ¢ncia primÃ¡ria) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? IPC: servidor (instância primária)  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private async Task RunIpcServerAsync(CancellationToken ct)
     {
@@ -83,25 +83,25 @@ public partial class App : System.Windows.Application
                     _tray?.ShowWindow();
             }
             catch (OperationCanceledException) { break; }
-            catch { /* pipe resetado â€” aguarda nova conexÃ£o */ }
+            catch { /* pipe resetado  --  aguarda nova conexão */ }
         }
     }
 
-    // â”€â”€ IPC: cliente (instÃ¢ncias subsequentes) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? IPC: cliente (instâncias subsequentes)  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private static void TrySignalExistingInstance()
     {
         try
         {
             using var client = new NamedPipeClientStream(".", PipeName, PipeDirection.Out);
-            client.Connect(timeout: 1500);   // espera atÃ© 1,5 s
+            client.Connect(timeout: 1500);   // espera até 1,5 s
             using var writer = new StreamWriter(client) { AutoFlush = true };
             writer.WriteLine("SHOW");
         }
         catch { }
     }
 
-    // â”€â”€ Registro de inicializaÃ§Ã£o com o Windows â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Registro de inicialização com o Windows  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private static void RegisterStartup()
     {
@@ -114,7 +114,7 @@ public partial class App : System.Windows.Application
                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", writable: true);
             if (key is null) return;
 
-            // SÃ³ registra se ainda nÃ£o estiver lÃ¡ (ou o caminho mudou)
+            // Só registra se ainda não estiver lá (ou o caminho mudou)
             var current = key.GetValue("Vacinaldo")?.ToString();
             if (current != exePath)
                 key.SetValue("Vacinaldo", exePath);

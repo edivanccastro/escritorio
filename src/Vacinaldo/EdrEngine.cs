@@ -1,6 +1,6 @@
-﻿// EDR â€” Endpoint Detection and Response
-// Monitora processos, conexÃµes de rede e alteraÃ§Ãµes de registro em tempo real.
-// Cada evento Ã© classificado pelo framework SAIF com tÃ©cnica MITRE ATT&CK.
+// EDR  --  Endpoint Detection and Response
+// Monitora processos, conexões de rede e alterações de registro em tempo real.
+// Cada evento é classificado pelo framework SAIF com técnica MITRE ATT&CK.
 
 using System.Diagnostics;
 using System.IO;
@@ -10,7 +10,7 @@ using Microsoft.Win32;
 
 namespace Vacinaldo;
 
-// â”€â”€â”€ Modelos de evento â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+//  -- ? -- ? -- ? Modelos de evento  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
 public enum SecurityEventType
 {
@@ -56,11 +56,11 @@ public sealed record NetworkConnection(
     bool    IsSuspicious,
     string? SuspiciousReason);
 
-// â”€â”€â”€ Motor EDR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+//  -- ? -- ? -- ? Motor EDR  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
 public sealed class EdrEngine : IDisposable
 {
-    // Evento disparado quando um alerta de nÃ­vel Medium+ Ã© emitido
+    // Evento disparado quando um alerta de nível Medium+ é emitido
     public event Action<SecurityEvent>? AlertRaised;
 
     private readonly List<SecurityEvent> _timeline = [];
@@ -75,7 +75,7 @@ public sealed class EdrEngine : IDisposable
         get { lock (_lock) return _timeline.TakeLast(500).ToList(); }
     }
 
-    // â”€â”€ Ciclo de vida â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Ciclo de vida  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     public void Start()
     {
@@ -89,7 +89,7 @@ public sealed class EdrEngine : IDisposable
         AuditLogger.Log(new AuditEvent(
             Guid.NewGuid().ToString("N")[..8], DateTime.Now,
             "EdrStarted", "EDR",
-            "Motor EDR iniciado â€” monitoramento comportamental ativo.",
+            "Motor EDR iniciado  --  monitoramento comportamental ativo.",
             null, null, null, "Started"));
     }
 
@@ -102,7 +102,7 @@ public sealed class EdrEngine : IDisposable
 
     public void Dispose() => Stop();
 
-    // â”€â”€ Snapshot de processos (chamada sob demanda pela UI) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Snapshot de processos (chamada sob demanda pela UI)  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     public List<ProcessSnapshot> GetProcessSnapshot()
     {
@@ -128,7 +128,7 @@ public sealed class EdrEngine : IDisposable
         return result.OrderByDescending(p => (int)p.Risk).ThenBy(p => p.Name).ToList();
     }
 
-    // â”€â”€ ConexÃµes de rede (chamada sob demanda pela UI) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Conexões de rede (chamada sob demanda pela UI)  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     public List<NetworkConnection> GetNetworkConnections()
     {
@@ -155,7 +155,7 @@ public sealed class EdrEngine : IDisposable
         return result.OrderByDescending(c => c.IsSuspicious).ToList();
     }
 
-    // â”€â”€ Loop principal de monitoramento â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Loop principal de monitoramento  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private HashSet<int> _seenPids = [];
 
@@ -193,7 +193,7 @@ public sealed class EdrEngine : IDisposable
                     Type:           SecurityEventType.ProcessSuspicious,
                     Risk:           risk,
                     Source:         "ProcessMonitor",
-                    Description:    $"Processo suspeito: {p.ProcessName} (PID {p.Id}) â€” {reason}",
+                    Description:    $"Processo suspeito: {p.ProcessName} (PID {p.Id})  --  {reason}",
                     ProcessName:    p.ProcessName,
                     ProcessId:      p.Id,
                     FilePath:       path,
@@ -207,7 +207,7 @@ public sealed class EdrEngine : IDisposable
         _seenPids = current;
     }
 
-    // MantÃ©m track de conexÃµes suspeitas jÃ¡ reportadas para evitar spam
+    // Mantém track de conexões suspeitas já reportadas para evitar spam
     private readonly HashSet<string> _seenConns = [];
 
     private void CheckConnections()
@@ -231,7 +231,7 @@ public sealed class EdrEngine : IDisposable
                     Type:           SecurityEventType.NetworkSuspicious,
                     Risk:           EdrRisk.Medium,
                     Source:         "NetworkMonitor",
-                    Description:    $"ConexÃ£o suspeita para {remote}: {reason}",
+                    Description:    $"Conexão suspeita para {remote}: {reason}",
                     ProcessName:    null,
                     ProcessId:      null,
                     FilePath:       null,
@@ -244,7 +244,7 @@ public sealed class EdrEngine : IDisposable
         catch { }
     }
 
-    // â”€â”€ Monitoramento de registro (entradas de inicializaÃ§Ã£o) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Monitoramento de registro (entradas de inicialização)  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private async Task MonitorRegistryAsync(CancellationToken ct)
     {
@@ -265,7 +265,7 @@ public sealed class EdrEngine : IDisposable
                     Type:           SecurityEventType.RegistryPersistence,
                     Risk:           EdrRisk.High,
                     Source:         "RegistryMonitor",
-                    Description:    $"Entrada de inicializaÃ§Ã£o nova/modificada: {kv.Key}",
+                    Description:    $"Entrada de inicialização nova/modificada: {kv.Key}",
                     ProcessName:    null,
                     ProcessId:      null,
                     FilePath:       null,
@@ -299,9 +299,9 @@ public sealed class EdrEngine : IDisposable
         catch { }
     }
 
-    // â”€â”€ PontuaÃ§Ã£o de processos â€” SAIF: Robustez Adversarial â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Pontuação de processos  --  SAIF: Robustez Adversarial  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
-    // Living Off the Land Binaries (LOLBAS) â€” usados para proxy de execuÃ§Ã£o
+    // Living Off the Land Binaries (LOLBAS)  --  usados para proxy de execução
     private static readonly HashSet<string> LolbasBins = new(StringComparer.OrdinalIgnoreCase)
     {
         "mshta","wscript","cscript","regsvr32","rundll32","certutil","bitsadmin",
@@ -311,7 +311,7 @@ public sealed class EdrEngine : IDisposable
         "forfiles","syncappvpublishingserver","appsyncpublishingserver","dnscmd",
     };
 
-    // Processos do sistema legÃ­timos â€” usados em masquerading quando fora de Windows
+    // Processos do sistema legítimos  --  usados em masquerading quando fora de Windows
     private static readonly HashSet<string> SystemProcs = new(StringComparer.OrdinalIgnoreCase)
         { "svchost","lsass","winlogon","services","csrss","smss","wininit","explorer" };
 
@@ -324,24 +324,24 @@ public sealed class EdrEngine : IDisposable
             !path.StartsWith(@"C:\Windows", StringComparison.OrdinalIgnoreCase))
             return (EdrRisk.Critical, "T1036", $"Masquerading: '{name}' fora de C:\\Windows");
 
-        // ExecutÃ¡vel em pasta temporÃ¡ria
+        // Executável em pasta temporária
         var tempBase = Path.GetTempPath();
         if (!string.IsNullOrEmpty(path) &&
             path.StartsWith(tempBase, StringComparison.OrdinalIgnoreCase))
-            return (EdrRisk.High, "T1059", "ExecutÃ¡vel rodando de pasta temporÃ¡ria");
+            return (EdrRisk.High, "T1059", "Executável rodando de pasta temporária");
 
-        // LOLBAS â€” proxy de execuÃ§Ã£o do sistema
+        // LOLBAS  --  proxy de execução do sistema
         if (LolbasBins.Contains(name))
-            return (EdrRisk.Medium, "T1218", $"LOLBAS: '{name}' pode ser usado para proxy de execuÃ§Ã£o");
+            return (EdrRisk.Medium, "T1218", $"LOLBAS: '{name}' pode ser usado para proxy de execução");
 
-        // Interpreters de script legÃ­timos mas de risco potencial
+        // Interpreters de script legítimos mas de risco potencial
         if (name is "powershell" or "pwsh" or "cmd")
             return (EdrRisk.Low, "T1059", $"Interpreter de script ativo: {name}");
 
         return (EdrRisk.Info, null, null);
     }
 
-    // â”€â”€ PontuaÃ§Ã£o de conexÃµes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Pontuação de conexões  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     // Portas frequentemente usadas por RATs, backdoors e C2 frameworks
     private static readonly HashSet<int> SuspPorts =
@@ -349,7 +349,7 @@ public sealed class EdrEngine : IDisposable
 
     private static (bool suspicious, string? reason) ScoreConnection(string addr, int port)
     {
-        // Loopback e IPs nÃ£o-roteÃ¡veis sÃ£o seguros
+        // Loopback e IPs não-roteáveis são seguros
         if (addr is "127.0.0.1" or "::1" or "0.0.0.0") return (false, null);
         if (addr.StartsWith("192.168.") || addr.StartsWith("10.") ||
             Regex.IsMatch(addr, @"^172\.(1[6-9]|2\d|3[01])\."))
@@ -357,16 +357,16 @@ public sealed class EdrEngine : IDisposable
 
         // Porta C2 conhecida
         if (SuspPorts.Contains(port))
-            return (true, $"Porta {port} â€” frequentemente usada por RATs e C2 frameworks");
+            return (true, $"Porta {port}  --  frequentemente usada por RATs e C2 frameworks");
 
-        // Porta nÃ£o-padrÃ£o para trÃ¡fego de internet em IP pÃºblico
+        // Porta não-padrão para tráfego de internet em IP público
         if (port is not (80 or 443 or 8080 or 8443 or 53 or 22 or 25 or 465 or 587 or 143 or 993))
-            return (true, $"ConexÃ£o a IP pÃºblico em porta nÃ£o-convencional {port}");
+            return (true, $"Conexão a IP público em porta não-convencional {port}");
 
         return (false, null);
     }
 
-    // â”€â”€ EmissÃ£o de evento â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Emissão de evento  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private void Emit(SecurityEvent evt)
     {
@@ -384,7 +384,7 @@ public sealed class EdrEngine : IDisposable
             null, "Detected"));
     }
 
-    // â”€â”€ Utilidades â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Utilidades  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private static string GetProcessPath(Process p)
     {

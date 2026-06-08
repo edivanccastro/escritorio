@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace Vacinaldo;
 
-// â”€â”€â”€ Modelos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+//  -- ? -- ? -- ? Modelos  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
 public enum ThreatLevel { Low, Medium, High, Critical }
 
@@ -40,14 +40,14 @@ public sealed record ScanHistoryEntry(
     int FilesScanned,
     int ThreatsFound);
 
-// â”€â”€â”€ Motor de varredura â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+//  -- ? -- ? -- ? Motor de varredura  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
 public sealed class ScanEngine
 {
-    // EICAR test string (detectÃ¡vel em arquivos de teste)
+    // EICAR test string (detectável em arquivos de teste)
     private const string EicarSignature = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*";
 
-    // ExtensÃµes duplamente suspeitas (ex: fatura.pdf.exe)
+    // Extensões duplamente suspeitas (ex: fatura.pdf.exe)
     private static readonly string[] DangerousDoubleExts =
         [".exe", ".scr", ".com", ".bat", ".cmd", ".vbs", ".js", ".ps1", ".msi"];
 
@@ -58,18 +58,18 @@ public sealed class ScanEngine
         @"cryptolocker|ransomware|trojan|worm_|spyware|adware_)",
         RegexOptions.Compiled);
 
-    // ExtensÃµes de executÃ¡veis a verificar por heurÃ­stica
+    // Extensões de executáveis a verificar por heurística
     private static readonly HashSet<string> ExecExtensions =
         [".exe", ".dll", ".scr", ".com", ".bat", ".cmd", ".vbs", ".js", ".ps1"];
 
-    // Pastas temporÃ¡rias comuns
+    // Pastas temporárias comuns
     private static readonly string[] TempPaths =
     [
         Path.GetTempPath(),
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Temp"),
     ];
 
-    // Pastas de varredura rÃ¡pida
+    // Pastas de varredura rápida
     public static IEnumerable<string> QuickScanPaths =>
     [
         Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
@@ -87,7 +87,7 @@ public sealed class ScanEngine
         Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
     ];
 
-    // â”€â”€ Varredura assÃ­ncrona â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Varredura assíncrona  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     public async Task<List<ThreatInfo>> ScanAsync(
         IEnumerable<string> roots,
@@ -121,7 +121,7 @@ public sealed class ScanEngine
         return threats;
     }
 
-    // â”€â”€ InspeÃ§Ã£o de arquivo individual (SAIF-compliant) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Inspeção de arquivo individual (SAIF-compliant)  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     public ThreatInfo? InspectFile(string path)
     {
@@ -133,7 +133,7 @@ public sealed class ScanEngine
             var name = fi.Name;
             var ext  = fi.Extension.ToLowerInvariant();
 
-            // 1. EICAR â€” assinatura de teste anti-malware padrÃ£o
+            // 1. EICAR  --  assinatura de teste anti-malware padrão
             if (fi.Length is > 0 and < 512)
             {
                 try
@@ -144,16 +144,16 @@ public sealed class ScanEngine
                         var signals = new List<DetectionSignal>
                         {
                             new("EICAR.Signature",
-                                "Assinatura EICAR encontrada no conteÃºdo do arquivo", 95, "T1204")
+                                "Assinatura EICAR encontrada no conteúdo do arquivo", 95, "T1204")
                         };
                         return MakeThreat(path, "EICAR.TestFile", ThreatLevel.Critical,
-                            "Arquivo de teste padrÃ£o EICAR detectado.", signals);
+                            "Arquivo de teste padrão EICAR detectado.", signals);
                     }
                 }
-                catch { /* arquivo bloqueado ou binÃ¡rio */ }
+                catch { /* arquivo bloqueado ou binário */ }
             }
 
-            // 2. Dupla extensÃ£o â€” tÃ©cnica clÃ¡ssica de ocultamento de tipo real
+            // 2. Dupla extensão  --  técnica clássica de ocultamento de tipo real
             var nameWithoutFirst = Path.GetFileNameWithoutExtension(name);
             var innerExt = Path.GetExtension(nameWithoutFirst).ToLowerInvariant();
             if (DangerousDoubleExts.Contains(ext) && !string.IsNullOrEmpty(innerExt) && innerExt != ext)
@@ -161,15 +161,15 @@ public sealed class ScanEngine
                 var signals = new List<DetectionSignal>
                 {
                     new("DoubleExt.Pattern",
-                        $"Dupla extensÃ£o detectada: '{innerExt}{ext}'", 70, "T1036"),
+                        $"Dupla extensão detectada: '{innerExt}{ext}'", 70, "T1036"),
                     new("DoubleExt.DangerousExt",
-                        $"ExtensÃ£o executÃ¡vel perigosa como extensÃ£o final: '{ext}'", 20, "T1036")
+                        $"Extensão executável perigosa como extensão final: '{ext}'", 20, "T1036")
                 };
                 return MakeThreat(path, "Trojan.DoubleExtension", ThreatLevel.High,
-                    $"Arquivo com dupla extensÃ£o suspeita: {innerExt}{ext}", signals);
+                    $"Arquivo com dupla extensão suspeita: {innerExt}{ext}", signals);
             }
 
-            // 3. Nome corresponde a padrÃ£o de malware
+            // 3. Nome corresponde a padrão de malware
             if (MalwareNamePattern.IsMatch(name))
             {
                 var signals = new List<DetectionSignal>
@@ -178,10 +178,10 @@ public sealed class ScanEngine
                         $"Nome '{name}' corresponde a assinatura de malware conhecido", 65, "T1204")
                 };
                 return MakeThreat(path, "Suspicious.MalwareName", ThreatLevel.Medium,
-                    "Nome do arquivo corresponde a padrÃ£o de malware conhecido.", signals);
+                    "Nome do arquivo corresponde a padrão de malware conhecido.", signals);
             }
 
-            // 4. ExecutÃ¡vel em pasta temporÃ¡ria â€” dropper / stager
+            // 4. Executável em pasta temporária  --  dropper / stager
             if (ExecExtensions.Contains(ext))
             {
                 var fullLower = path.ToLowerInvariant();
@@ -190,25 +190,25 @@ public sealed class ScanEngine
                     var signals = new List<DetectionSignal>
                     {
                         new("TempExe.Location",
-                            $"ExecutÃ¡vel em pasta temporÃ¡ria: {Path.GetDirectoryName(path)}", 60, "T1059"),
+                            $"Executável em pasta temporária: {Path.GetDirectoryName(path)}", 60, "T1059"),
                         new("TempExe.Extension",
-                            $"ExtensÃ£o executÃ¡vel: '{ext}'", 15, "T1059")
+                            $"Extensão executável: '{ext}'", 15, "T1059")
                     };
                     return MakeThreat(path, "PUA.TempExecutable", ThreatLevel.Medium,
-                        "ExecutÃ¡vel encontrado em pasta temporÃ¡ria.", signals);
+                        "Executável encontrado em pasta temporária.", signals);
                 }
             }
 
-            // 5. ExecutÃ¡vel muito pequeno â€” possÃ­vel stub dropper (< 2 KB)
+            // 5. Executável muito pequeno  --  possível stub dropper (< 2 KB)
             if (ext == ".exe" && fi.Length is > 0 and < 2048)
             {
                 var signals = new List<DetectionSignal>
                 {
                     new("TinyExe.Size",
-                        $"Tamanho suspeito: {fi.Length} bytes (executÃ¡vel legÃ­timo tipicamente > 2 KB)", 45, "T1027")
+                        $"Tamanho suspeito: {fi.Length} bytes (executável legítimo tipicamente > 2 KB)", 45, "T1027")
                 };
                 return MakeThreat(path, "Suspicious.TinyExecutable", ThreatLevel.Low,
-                    "ExecutÃ¡vel suspeito: tamanho anormalmente pequeno.", signals);
+                    "Executável suspeito: tamanho anormalmente pequeno.", signals);
             }
 
             return null;
@@ -219,7 +219,7 @@ public sealed class ScanEngine
         }
     }
 
-    // â”€â”€ ConstruÃ§Ã£o SAIF-compliant de ThreatInfo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Construção SAIF-compliant de ThreatInfo  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private static ThreatInfo MakeThreat(
         string path, string name, ThreatLevel level,
@@ -240,7 +240,7 @@ public sealed class ScanEngine
             RecommendedAction: action,
             AnalyzedAt:       DateTime.Now);
 
-        // Log de auditoria imutÃ¡vel (SAIF: trilha de eventos)
+        // Log de auditoria imutável (SAIF: trilha de eventos)
         AuditLogger.Log(new AuditEvent(
             expl.DetectionId, DateTime.Now, "ThreatDetected", "FileScan",
             $"{name}: {desc}", path, technique, confidence, "Detected"));
@@ -248,7 +248,7 @@ public sealed class ScanEngine
         return new ThreatInfo(path, name, level, desc, DateTime.Now, expl);
     }
 
-    // â”€â”€ Quarentena â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Quarentena  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     public static string QuarantineFolder =>
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -282,7 +282,7 @@ public sealed class ScanEngine
             Directory.CreateDirectory(QuarantineFolder);
             var id = Guid.NewGuid().ToString("N")[..8];
             var qPath = Path.Combine(QuarantineFolder, id + ".quar");
-            // XOR simples para "ocultar" o conteÃºdo (nÃ£o Ã© criptografia real, apenas ofuscaÃ§Ã£o)
+            // XOR simples para "ocultar" o conteúdo (não é criptografia real, apenas ofuscação)
             var data = File.ReadAllBytes(threat.FilePath);
             for (int i = 0; i < data.Length; i++) data[i] ^= 0xAB;
             File.WriteAllBytes(qPath, data);
@@ -331,7 +331,7 @@ public sealed class ScanEngine
         catch { return false; }
     }
 
-    // â”€â”€ HistÃ³rico â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Histórico  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private static string HistoryPath =>
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -364,12 +364,12 @@ public sealed class ScanEngine
         if (File.Exists(HistoryPath)) File.Delete(HistoryPath);
     }
 
-    // â”€â”€ ProteÃ§Ã£o em tempo real â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Proteção em tempo real  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private FileSystemWatcher? _watcher;
     public event Action<ThreatInfo>? ThreatDetected;
 
-    /// <summary>Indica se a proteÃ§Ã£o em tempo real estÃ¡ ativa no momento.</summary>
+    /// <summary>Indica se a proteção em tempo real está ativa no momento.</summary>
     public bool IsRealTimeActive => _watcher is { EnableRaisingEvents: true };
 
     public void StartRealTimeProtection()
@@ -402,7 +402,7 @@ public sealed class ScanEngine
             ThreatDetected?.Invoke(threat);
     }
 
-    // â”€â”€ UtilitÃ¡rios â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Utilitários  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private static IEnumerable<string> EnumerateFilesSafe(string root)
     {
@@ -425,9 +425,9 @@ public sealed class ScanEngine
 
     public static string ThreatLevelLabel(ThreatLevel level) => level switch
     {
-        ThreatLevel.Critical => "CrÃ­tica",
+        ThreatLevel.Critical => "Crítica",
         ThreatLevel.High     => "Alta",
-        ThreatLevel.Medium   => "MÃ©dia",
+        ThreatLevel.Medium   => "Média",
         ThreatLevel.Low      => "Baixa",
         _                    => "Desconhecida",
     };

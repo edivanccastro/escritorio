@@ -1,10 +1,10 @@
-﻿using System.IO;
+using System.IO;
 using System.Text.Json;
 using Microsoft.Win32;
 
 namespace ZeFaxina;
 
-// â”€â”€â”€ Modelos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// �"?�"?�"? Modelos �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
 public enum CleanCategory
 {
@@ -33,34 +33,34 @@ public sealed record CleanHistoryEntry(
     int FilesDeleted,
     string Categories);
 
-// â”€â”€â”€ Engine principal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// �"?�"?�"? Engine principal �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
 public sealed class CleanEngine
 {
-    // DefiniÃ§Ã£o de todos os alvos disponÃ­veis
+    // Definição de todos os alvos disponíveis
     public static readonly IReadOnlyList<CleanTarget> AllTargets =
     [
-        new(CleanCategory.WindowsTemp,           "Arquivos TemporÃ¡rios do Sistema",      "Windows"),
-        new(CleanCategory.UserTemp,              "Arquivos TemporÃ¡rios do UsuÃ¡rio",      "Windows"),
+        new(CleanCategory.WindowsTemp,           "Arquivos Temporários do Sistema",      "Windows"),
+        new(CleanCategory.UserTemp,              "Arquivos Temporários do Usuário",      "Windows"),
         new(CleanCategory.RecycleBin,            "Lixeira",                              "Windows"),
         new(CleanCategory.ThumbnailCache,        "Cache de Miniaturas",                  "Windows"),
         new(CleanCategory.Prefetch,              "Cache Prefetch",                       "Windows"),
         new(CleanCategory.RecentFiles,           "Arquivos Recentes",                    "Windows"),
         new(CleanCategory.DeliveryOptimization,  "Cache Windows Update (Delivery)",      "Windows",  false),
         new(CleanCategory.EventLogs,             "Logs de Eventos do Windows",           "Windows",  false),
-        new(CleanCategory.Clipboard,             "Ãrea de TransferÃªncia",                "Windows"),
+        new(CleanCategory.Clipboard,             "Área de Transferência",                "Windows"),
         new(CleanCategory.ChromeCache,           "Cache",                                "Google Chrome"),
-        new(CleanCategory.ChromeHistory,         "HistÃ³rico de NavegaÃ§Ã£o",               "Google Chrome",  false),
+        new(CleanCategory.ChromeHistory,         "Histórico de Navegação",               "Google Chrome",  false),
         new(CleanCategory.ChromeCookies,         "Cookies",                              "Google Chrome",  false),
         new(CleanCategory.FirefoxCache,          "Cache",                                "Mozilla Firefox"),
-        new(CleanCategory.FirefoxHistory,        "HistÃ³rico de NavegaÃ§Ã£o",               "Mozilla Firefox", false),
+        new(CleanCategory.FirefoxHistory,        "Histórico de Navegação",               "Mozilla Firefox", false),
         new(CleanCategory.FirefoxCookies,        "Cookies",                              "Mozilla Firefox", false),
         new(CleanCategory.EdgeCache,             "Cache",                                "Microsoft Edge"),
-        new(CleanCategory.EdgeHistory,           "HistÃ³rico de NavegaÃ§Ã£o",               "Microsoft Edge",  false),
+        new(CleanCategory.EdgeHistory,           "Histórico de Navegação",               "Microsoft Edge",  false),
         new(CleanCategory.EdgeCookies,           "Cookies",                              "Microsoft Edge",  false),
     ];
 
-    // â”€â”€ AnÃ¡lise (apenas mede, nÃ£o deleta) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Análise (apenas mede, não deleta) �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     public async Task<List<CleanResult>> AnalyzeAsync(
         IEnumerable<CleanCategory> categories,
@@ -86,7 +86,7 @@ public sealed class CleanEngine
         return results;
     }
 
-    // â”€â”€ Limpeza real â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Limpeza real �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     public async Task<List<CleanResult>> CleanAsync(
         IEnumerable<CleanCategory> categories,
@@ -112,7 +112,7 @@ public sealed class CleanEngine
         return results;
     }
 
-    // â”€â”€ Medir tamanho por categoria â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Medir tamanho por categoria �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private static CleanResult Measure(CleanCategory cat)
     {
@@ -128,7 +128,7 @@ public sealed class CleanEngine
                 CleanCategory.RecentFiles          => MeasurePaths([Environment.GetFolderPath(Environment.SpecialFolder.Recent)], cat),
                 CleanCategory.DeliveryOptimization => MeasurePaths([@"C:\Windows\SoftwareDistribution\DeliveryOptimization"], cat),
                 CleanCategory.EventLogs            => MeasurePaths([@"C:\Windows\System32\winevt\Logs"], cat, "*.evtx"),
-                CleanCategory.Clipboard            => new CleanResult(cat, "Ãrea de TransferÃªncia", 0, 1),
+                CleanCategory.Clipboard            => new CleanResult(cat, "Área de Transferência", 0, 1),
                 CleanCategory.ChromeCache          => MeasurePaths(ChromeCachePaths(), cat),
                 CleanCategory.ChromeHistory        => MeasureFiles(ChromeProfilePaths("History"), cat),
                 CleanCategory.ChromeCookies        => MeasureFiles(ChromeProfilePaths("Cookies"), cat),
@@ -147,7 +147,7 @@ public sealed class CleanEngine
         }
     }
 
-    // â”€â”€ Executar limpeza por categoria â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Executar limpeza por categoria �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private static CleanResult DoClean(CleanCategory cat)
     {
@@ -224,7 +224,7 @@ public sealed class CleanEngine
         }
     }
 
-    // â”€â”€ Helpers de mediÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Helpers de medição �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private static CleanResult MeasurePaths(IEnumerable<string> paths, CleanCategory cat, string pattern = "*")
     {
@@ -267,7 +267,7 @@ public sealed class CleanEngine
         return new CleanResult(cat, label, bytes, files);
     }
 
-    // â”€â”€ Helpers de deleÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Helpers de deleção �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private static (long freed, int deleted) DeletePaths(IEnumerable<string> paths, string pattern = "*")
     {
@@ -326,7 +326,7 @@ public sealed class CleanEngine
         }
     }
 
-    // â”€â”€ Caminhos de navegadores â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Caminhos de navegadores �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private static string Local => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
     private static string AppData => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -371,7 +371,7 @@ public sealed class CleanEngine
         return profiles.Select(p => Path.Combine(Local, "Microsoft", "Edge", "User Data", p, fileName));
     }
 
-    // â”€â”€ UtilitÃ¡rios de I/O â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Utilitários de I/O �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private static IEnumerable<string> EnumerateFilesSafe(string root, string pattern = "*")
     {
@@ -398,7 +398,7 @@ public sealed class CleanEngine
         catch { return []; }
     }
 
-    // â”€â”€ HistÃ³rico â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Histórico �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     private static string HistoryPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -427,7 +427,7 @@ public sealed class CleanEngine
         if (File.Exists(HistoryPath)) File.Delete(HistoryPath);
     }
 
-    // â”€â”€ FormataÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // �"?�"? Formatação �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
     public static string FormatSize(long bytes) => bytes switch
     {
@@ -438,7 +438,7 @@ public sealed class CleanEngine
     };
 }
 
-// â”€â”€ P/Invoke para esvaziar a Lixeira â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// �"?�"? P/Invoke para esvaziar a Lixeira �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
 
 internal static class NativeMethods
 {

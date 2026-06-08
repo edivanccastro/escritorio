@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
@@ -41,12 +41,12 @@ public partial class FindReplaceWindow : Window
         if (match is null && _searchPosition is not null)
         {
             match = FindFrom(_editor.Document.ContentStart, query);
-            StatusLabel.Text = match is not null ? "Pesquisa reiniciada do comeÃ§o." : string.Empty;
+            StatusLabel.Text = match is not null ? "Pesquisa reiniciada do começo." : string.Empty;
         }
 
         if (match is null)
         {
-            StatusLabel.Text = "Texto nÃ£o encontrado.";
+            StatusLabel.Text = "Texto não encontrado.";
             _searchPosition = null;
             return;
         }
@@ -54,9 +54,9 @@ public partial class FindReplaceWindow : Window
         _editor.Selection.Select(match.Start, match.End);
         _editor.Focus();
         _searchPosition = match.End;
-        if (string.IsNullOrEmpty(StatusLabel.Text) || StatusLabel.Text == "Texto nÃ£o encontrado.")
+        if (string.IsNullOrEmpty(StatusLabel.Text) || StatusLabel.Text == "Texto não encontrado.")
         {
-            StatusLabel.Text = "OcorrÃªncia localizada.";
+            StatusLabel.Text = "Ocorrência localizada.";
         }
     }
 
@@ -93,7 +93,7 @@ public partial class FindReplaceWindow : Window
         }
 
         _searchPosition = null;
-        StatusLabel.Text = $"{count} substituiÃ§Ã£o(Ãµes) realizada(s).";
+        StatusLabel.Text = $"{count} substituição(ões) realizada(s).";
     }
 
     private void Close_OnClick(object sender, RoutedEventArgs e) => Close();

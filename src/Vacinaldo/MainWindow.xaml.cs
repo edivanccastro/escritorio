@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using WpfMsgBox       = System.Windows.MessageBox;
@@ -10,25 +10,25 @@ namespace Vacinaldo;
 
 public partial class MainWindow : Window
 {
-    // â”€â”€ DependÃªncias injetadas pelo TrayManager â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Dependências injetadas pelo TrayManager  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private readonly ScanEngine _engine;
     private readonly EdrEngine  _edr;
     private CancellationTokenSource? _cts;
     private DateTime _scanStarted;
 
-    // ViewModels â€” varredura
+    // ViewModels  --  varredura
     public ObservableCollection<ThreatViewModel>     Threats    { get; } = [];
     public ObservableCollection<QuarantineViewModel> Quarantine { get; } = [];
     public ObservableCollection<HistoryViewModel>    History    { get; } = [];
 
-    // ViewModels â€” EDR
+    // ViewModels  --  EDR
     public ObservableCollection<ProcessVm>  EdrProcesses { get; } = [];
     public ObservableCollection<NetworkVm>  EdrNetwork   { get; } = [];
     public ObservableCollection<EventVm>    EdrTimeline  { get; } = [];
     public ObservableCollection<AuditVm>    EdrAudit     { get; } = [];
 
-    // â”€â”€ Construtor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Construtor  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     public MainWindow(ScanEngine engine, EdrEngine edr)
     {
@@ -58,7 +58,7 @@ public partial class MainWindow : Window
         UpdateDashboard();
     }
 
-    // â”€â”€ SincronizaÃ§Ã£o do estado RTP (chamado pelo TrayManager) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Sincronização do estado RTP (chamado pelo TrayManager)  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     /// <summary>Atualiza o toggle e os labels de status sem disparar o evento.</summary>
     public void SyncRtpState(bool active)
@@ -71,22 +71,22 @@ public partial class MainWindow : Window
         ApplyRtpVisuals(active);
     }
 
-    /// <summary>Chamado pelo TrayManager ao detectar ameaÃ§a em tempo real.</summary>
+    /// <summary>Chamado pelo TrayManager ao detectar ameaça em tempo real.</summary>
     public void OnRealTimeThreatDetected(ThreatInfo threat)
     {
         WpfMsgBox.Show(this,
-            $"âš  AmeaÃ§a detectada em tempo real!\n\nArquivo: {threat.FilePath}\n" +
-            $"AmeaÃ§a: {threat.ThreatName}\nNÃ­vel: {ScanEngine.ThreatLevelLabel(threat.Level)}\n\n" +
+            $"�s� Ameaça detectada em tempo real!\n\nArquivo: {threat.FilePath}\n" +
+            $"Ameaça: {threat.ThreatName}\nNível: {ScanEngine.ThreatLevelLabel(threat.Level)}\n\n" +
             "O arquivo foi quarentenado automaticamente.",
-            "Vacinaldo â€” Alerta",
+            "Vacinaldo  --  Alerta",
             WpfMsgBoxButton.OK, WpfMsgBoxImage.Warning);
 
         RefreshQuarantine();
         UpdateDashboard();
-        StatusText.Text = $"âš  AmeaÃ§a quarentenada: {Path.GetFileName(threat.FilePath)}";
+        StatusText.Text = $"�s� Ameaça quarentenada: {Path.GetFileName(threat.FilePath)}";
     }
 
-    // â”€â”€ NavegaÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Navegação  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private void Nav_Checked(object sender, RoutedEventArgs e)
     {
@@ -107,7 +107,7 @@ public partial class MainWindow : Window
         if (sender == NavEdr)        { PageEdr.Visibility        = Visibility.Visible; RefreshEdr(); }
     }
 
-    // â”€â”€ EDR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? EDR  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private void EdrTab_Checked(object sender, RoutedEventArgs e)
     {
@@ -142,11 +142,11 @@ public partial class MainWindow : Window
         foreach (var ev in _edr.Timeline)
             EdrTimeline.Add(new EventVm(ev));
 
-        // Audit log (sÃ³ carrega quando aba SAIF estÃ¡ visÃ­vel)
+        // Audit log (só carrega quando aba SAIF está visível)
         if (EdrPageSaif?.Visibility == Visibility.Visible)
             RefreshAuditLog();
 
-        StatusText.Text = $"EDR: {EdrProcesses.Count} processos Â· {EdrNetwork.Count} conexÃµes Â· {EdrTimeline.Count} eventos na timeline";
+        StatusText.Text = $"EDR: {EdrProcesses.Count} processos · {EdrNetwork.Count} conexões · {EdrTimeline.Count} eventos na timeline";
     }
 
     private void RefreshAuditLog()
@@ -158,7 +158,7 @@ public partial class MainWindow : Window
 
         var bytes = AuditLogger.GetLogBytes();
         AuditLogSize.Text = bytes > 0
-            ? $"Log: {events.Count} eventos Â· {bytes / 1024} KB"
+            ? $"Log: {events.Count} eventos · {bytes / 1024} KB"
             : "Log de auditoria vazio";
     }
 
@@ -175,11 +175,11 @@ public partial class MainWindow : Window
         StatusText.Text = "Log de auditoria limpo.";
     }
 
-    // â”€â”€ Varredura â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Varredura  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
-    private void QuickScan_OnClick(object sender, RoutedEventArgs e)  => StartScan("Varredura RÃ¡pida",    ScanEngine.QuickScanPaths);
+    private void QuickScan_OnClick(object sender, RoutedEventArgs e)  => StartScan("Varredura Rápida",    ScanEngine.QuickScanPaths);
     private void FullScan_OnClick(object sender, RoutedEventArgs e)   => StartScan("Varredura Completa",  ScanEngine.FullScanPaths);
-    private void QuickScanCard_Click(object sender, System.Windows.Input.MouseButtonEventArgs e) => StartScan("Varredura RÃ¡pida",    ScanEngine.QuickScanPaths);
+    private void QuickScanCard_Click(object sender, System.Windows.Input.MouseButtonEventArgs e) => StartScan("Varredura Rápida",    ScanEngine.QuickScanPaths);
     private void FullScanCard_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)  => StartScan("Varredura Completa",  ScanEngine.FullScanPaths);
     private void CustomScanCard_Click(object sender, System.Windows.Input.MouseButtonEventArgs e) => CustomScan_OnClick(sender, e);
 
@@ -201,12 +201,12 @@ public partial class MainWindow : Window
         _cts = null;
 
         Threats.Clear();
-        ThreatCountLabel.Text       = "AmeaÃ§as encontradas: 0";
+        ThreatCountLabel.Text       = "Ameaças encontradas: 0";
         QuarantineAllBtn.Visibility = Visibility.Collapsed;
-        ScanStatusText.Text = $"Iniciando {scanType}â€¦";
+        ScanStatusText.Text = $"Iniciando {scanType}...";
         ScanProgress.Visibility = Visibility.Visible;
         StopButton.Visibility   = Visibility.Visible;
-        StatusText.Text = $"{scanType} em andamentoâ€¦";
+        StatusText.Text = $"{scanType} em andamento...";
         _scanStarted = DateTime.Now;
 
         _cts = new CancellationTokenSource();
@@ -220,8 +220,8 @@ public partial class MainWindow : Window
                 StopButton.Visibility   = Visibility.Collapsed;
                 ScanFileText.Text       = string.Empty;
                 ScanStatusText.Text = p.ThreatsFound == 0
-                    ? $"âœ… Varredura concluÃ­da â€” {p.FilesScanned} arquivo(s). Nenhuma ameaÃ§a."
-                    : $"âš  Varredura concluÃ­da â€” {p.FilesScanned} arquivo(s), {p.ThreatsFound} ameaÃ§a(s).";
+                    ? $"�o. Varredura concluída  --  {p.FilesScanned} arquivo(s). Nenhuma ameaça."
+                    : $"�s� Varredura concluída  --  {p.FilesScanned} arquivo(s), {p.ThreatsFound} ameaça(s).";
                 StatusText.Text = ScanStatusText.Text;
                 QuarantineAllBtn.Visibility = Threats.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
@@ -234,9 +234,9 @@ public partial class MainWindow : Window
             }
             else
             {
-                ScanStatusText.Text   = $"Verificandoâ€¦ {p.FilesScanned} arquivo(s) | {p.ThreatsFound} ameaÃ§a(s)";
+                ScanStatusText.Text   = $"Verificando�?� {p.FilesScanned} arquivo(s) | {p.ThreatsFound} ameaça(s)";
                 ScanFileText.Text     = p.CurrentFile;
-                ThreatCountLabel.Text = $"AmeaÃ§as encontradas: {p.ThreatsFound}";
+                ThreatCountLabel.Text = $"Ameaças encontradas: {p.ThreatsFound}";
             }
         });
 
@@ -244,13 +244,13 @@ public partial class MainWindow : Window
         {
             var found = await _engine.ScanAsync(paths, progress, token);
             foreach (var t in found) Threats.Add(new ThreatViewModel(t));
-            ThreatCountLabel.Text = $"AmeaÃ§as encontradas: {found.Count}";
+            ThreatCountLabel.Text = $"Ameaças encontradas: {found.Count}";
         }
         catch (OperationCanceledException)
         {
             ScanProgress.Visibility = Visibility.Collapsed;
             StopButton.Visibility   = Visibility.Collapsed;
-            ScanStatusText.Text = "â¹ Varredura interrompida pelo usuÃ¡rio.";
+            ScanStatusText.Text = "⏹ Varredura interrompida pelo usuário.";
             StatusText.Text     = "Varredura interrompida.";
         }
         finally { _cts = null; }
@@ -258,7 +258,7 @@ public partial class MainWindow : Window
 
     private void StopScan_OnClick(object sender, RoutedEventArgs e) => _cts?.Cancel();
 
-    // â”€â”€ Quarentena a partir da lista de ameaÃ§as â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Quarentena a partir da lista de ameaças  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private void QuarantineAll_OnClick(object sender, RoutedEventArgs e)
     {
@@ -271,14 +271,14 @@ public partial class MainWindow : Window
                 count++;
             }
         }
-        ThreatCountLabel.Text = $"AmeaÃ§as encontradas: {Threats.Count}";
+        ThreatCountLabel.Text = $"Ameaças encontradas: {Threats.Count}";
         if (Threats.Count == 0) QuarantineAllBtn.Visibility = Visibility.Collapsed;
         StatusText.Text = $"{count} arquivo(s) quarentenado(s).";
         RefreshQuarantine();
         UpdateDashboard();
     }
 
-    // â”€â”€ Quarentena â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Quarentena  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private void RefreshQuarantine()
     {
@@ -295,7 +295,7 @@ public partial class MainWindow : Window
             StatusText.Text = $"Restaurado: {Path.GetFileName(vm.Entry.OriginalPath)}";
             RefreshQuarantine(); UpdateDashboard();
         }
-        else WpfMsgBox.Show(this, "NÃ£o foi possÃ­vel restaurar o arquivo.", "Vacinaldo",
+        else WpfMsgBox.Show(this, "Não foi possível restaurar o arquivo.", "Vacinaldo",
             WpfMsgBoxButton.OK, WpfMsgBoxImage.Warning);
     }
 
@@ -305,7 +305,7 @@ public partial class MainWindow : Window
         if (WpfMsgBox.Show(this, "Excluir definitivamente o arquivo da quarentena?",
             "Vacinaldo", WpfMsgBoxButton.YesNo, WpfMsgBoxImage.Question) != WpfMsgBoxResult.Yes) return;
         ScanEngine.DeleteQuarantineEntry(vm.Entry);
-        StatusText.Text = "Arquivo excluÃ­do permanentemente.";
+        StatusText.Text = "Arquivo excluído permanentemente.";
         RefreshQuarantine(); UpdateDashboard();
     }
 
@@ -320,7 +320,7 @@ public partial class MainWindow : Window
         StatusText.Text = "Quarentena limpa.";
     }
 
-    // â”€â”€ HistÃ³rico â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Histórico  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private void RefreshHistory()
     {
@@ -333,10 +333,10 @@ public partial class MainWindow : Window
     {
         ScanEngine.ClearHistory();
         RefreshHistory(); UpdateDashboard();
-        StatusText.Text = "HistÃ³rico limpo.";
+        StatusText.Text = "Histórico limpo.";
     }
 
-    // â”€â”€ ConfiguraÃ§Ãµes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Configurações  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private void RealTimeToggle_Changed(object sender, RoutedEventArgs e)
     {
@@ -354,11 +354,11 @@ public partial class MainWindow : Window
         var red   = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(198, 40, 40));
         RealTimeStatus.Text       = on ? "Ativa"    : "Inativa";
         RealTimeStatus.Foreground = on ? green      : red;
-        RtpStatusBar.Text         = on ? "ðŸ›¡ ProteÃ§Ã£o: Ativa" : "âš  ProteÃ§Ã£o: Inativa";
+        RtpStatusBar.Text         = on ? "�Y>� Proteção: Ativa" : "�s� Proteção: Inativa";
         RtpStatusBar.Foreground   = on ? green      : red;
     }
 
-    // â”€â”€ Dashboard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Dashboard  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private void UpdateDashboard()
     {
@@ -369,8 +369,8 @@ public partial class MainWindow : Window
         QuarantineCount.Text = quarCount.ToString();
         ScanCount.Text       = histCount.ToString();
         LastScanText.Text    = lastScan is null
-            ? "Ãšltima varredura: nunca"
-            : $"Ãšltima varredura: {lastScan.StartedAt:dd/MM/yyyy HH:mm} ({lastScan.ScanType})";
+            ? "�sltima varredura: nunca"
+            : $"�sltima varredura: {lastScan.StartedAt:dd/MM/yyyy HH:mm} ({lastScan.ScanType})";
 
         var orange = System.Windows.Media.Color.FromRgb(230, 81,   0);
         var green  = System.Windows.Media.Color.FromRgb( 46, 125, 50);
@@ -380,8 +380,8 @@ public partial class MainWindow : Window
         if (quarCount > 0)
         {
             StatusCard.Background  = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 243, 224));
-            StatusIcon.Text        = "âš ";
-            StatusTitle.Text       = "AtenÃ§Ã£o";
+            StatusIcon.Text        = "&#x26A0;";
+            StatusTitle.Text       = "Atenção";
             StatusTitle.Foreground = new System.Windows.Media.SolidColorBrush(orange);
             StatusDesc.Text        = $"{quarCount} arquivo(s) em quarentena. Revise a quarentena.";
             StatusDesc.Foreground  = new System.Windows.Media.SolidColorBrush(lOrang);
@@ -389,26 +389,26 @@ public partial class MainWindow : Window
         else
         {
             StatusCard.Background  = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(232, 245, 233));
-            StatusIcon.Text        = "âœ…";
+            StatusIcon.Text        = "&#x2714;";
             StatusTitle.Text       = "Protegido";
             StatusTitle.Foreground = new System.Windows.Media.SolidColorBrush(green);
-            StatusDesc.Text        = "Seu sistema estÃ¡ protegido. Nenhuma ameaÃ§a encontrada.";
+            StatusDesc.Text        = "Seu sistema está protegido. Nenhuma ameaça encontrada.";
             StatusDesc.Foreground  = new System.Windows.Media.SolidColorBrush(lGreen);
         }
     }
 
-    // â”€â”€ Fechar: oculta na bandeja â€” nÃ£o encerra o processo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    // O handler real de Closing Ã© registrado pelo TrayManager ao criar a janela.
+    //  -- ? -- ? Fechar: oculta na bandeja  --  não encerra o processo  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
+    // O handler real de Closing é registrado pelo TrayManager ao criar a janela.
     // Este handler aqui serve apenas para cancelar varreduras em andamento.
 
     private void Window_OnClosing(object? sender, System.ComponentModel.CancelEventArgs e)
     {
         _cts?.Cancel();
-        // NÃƒO pÃ¡ra a proteÃ§Ã£o â€” o engine Ã© gerenciado pelo TrayManager/App
+        // N�fO pára a proteção  --  o engine é gerenciado pelo TrayManager/App
     }
 }
 
-// â”€â”€â”€ ViewModels â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+//  -- ? -- ? -- ? ViewModels  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
 public sealed class ThreatViewModel(ThreatInfo t)
 {
@@ -441,7 +441,7 @@ public sealed class HistoryViewModel(ScanHistoryEntry e)
         ts.TotalMinutes >= 1 ? $"{(int)ts.TotalMinutes}m {ts.Seconds}s" : $"{ts.Seconds}s";
 }
 
-// â”€â”€â”€ ViewModels â€” EDR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+//  -- ? -- ? -- ? ViewModels  --  EDR  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
 public sealed class ProcessVm(ProcessSnapshot p)
 {
@@ -450,16 +450,16 @@ public sealed class ProcessVm(ProcessSnapshot p)
     public string RiskLabel { get; } = RiskTag(p.Risk);
     public string Memory    { get; } = $"{p.MemoryMB} MB";
     public int    Threads   { get; } = p.Threads;
-    public string Mitre     { get; } = p.MitreTechnique ?? "â€”";
+    public string Mitre     { get; } = p.MitreTechnique ?? " -- ";
     public string Reason    { get; } = p.RiskReason ?? "Normal";
 
     private static string RiskTag(EdrRisk r) => r switch
     {
-        EdrRisk.Critical => "â›” CrÃ­tico",
-        EdrRisk.High     => "ðŸ”´ Alto",
-        EdrRisk.Medium   => "ðŸŸ  MÃ©dio",
-        EdrRisk.Low      => "ðŸŸ¡ Baixo",
-        _                => "âœ… Info"
+        EdrRisk.Critical => " --  Crítico",
+        EdrRisk.High     => " -- � Alto",
+        EdrRisk.Medium   => "�YY� Médio",
+        EdrRisk.Low      => "�YY� Baixo",
+        _                => "�o. Info"
     };
 }
 
@@ -469,7 +469,7 @@ public sealed class NetworkVm(NetworkConnection c)
     public string RemoteAddr { get; } = c.RemoteAddr;
     public int    RemotePort { get; } = c.RemotePort;
     public string State      { get; } = c.State;
-    public string SuspLabel  { get; } = c.IsSuspicious ? "âš  Sim" : "â€”";
+    public string SuspLabel  { get; } = c.IsSuspicious ? "�s� Sim" : " -- ";
     public string Reason     { get; } = c.SuspiciousReason ?? string.Empty;
 }
 
@@ -478,17 +478,17 @@ public sealed class EventVm(SecurityEvent ev)
     public string Time        { get; } = ev.Timestamp.ToString("HH:mm:ss");
     public string Source      { get; } = ev.Source;
     public string RiskLabel   { get; } = RiskTag(ev.Risk);
-    public string Mitre       { get; } = ev.MitreTechnique ?? "â€”";
-    public string Tactic      { get; } = ev.MitreTactic ?? "â€”";
+    public string Mitre       { get; } = ev.MitreTechnique ?? " -- ";
+    public string Tactic      { get; } = ev.MitreTactic ?? " -- ";
     public string Description { get; } = ev.Description;
 
     private static string RiskTag(EdrRisk r) => r switch
     {
-        EdrRisk.Critical => "â›” CrÃ­tico",
-        EdrRisk.High     => "ðŸ”´ Alto",
-        EdrRisk.Medium   => "ðŸŸ  MÃ©dio",
-        EdrRisk.Low      => "ðŸŸ¡ Baixo",
-        _                => "âœ… Info"
+        EdrRisk.Critical => " --  Crítico",
+        EdrRisk.High     => " -- � Alto",
+        EdrRisk.Medium   => "�YY� Médio",
+        EdrRisk.Low      => "�YY� Baixo",
+        _                => "�o. Info"
     };
 }
 
@@ -497,8 +497,8 @@ public sealed class AuditVm(AuditEvent ev)
     public string Time        { get; } = ev.Timestamp.ToString("dd/MM HH:mm:ss");
     public string EventType   { get; } = ev.EventType;
     public string Source      { get; } = ev.Source;
-    public string Mitre       { get; } = ev.MitreTechnique ?? "â€”";
-    public string Confidence  { get; } = ev.Confidence.HasValue ? $"{ev.Confidence}%" : "â€”";
+    public string Mitre       { get; } = ev.MitreTechnique ?? " -- ";
+    public string Confidence  { get; } = ev.Confidence.HasValue ? $"{ev.Confidence}%" : " -- ";
     public string Outcome     { get; } = ev.Outcome;
     public string Description { get; } = ev.Description;
 }

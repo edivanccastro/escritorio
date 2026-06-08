@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
@@ -7,8 +7,8 @@ using NotifyIcon = System.Windows.Forms.NotifyIcon;
 namespace Vacinaldo;
 
 /// <summary>
-/// Gerencia o Ã­cone na bandeja do sistema, o menu de contexto e
-/// a criaÃ§Ã£o/exibiÃ§Ã£o lazy da janela principal.
+/// Gerencia o ícone na bandeja do sistema, o menu de contexto e
+/// a criação/exibição lazy da janela principal.
 /// </summary>
 internal sealed class TrayManager : IDisposable
 {
@@ -30,14 +30,14 @@ internal sealed class TrayManager : IDisposable
         Edr.AlertRaised       += OnEdrAlert;
     }
 
-    // â”€â”€ InicializaÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Inicialização  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     public void Initialize()
     {
         var icon = LoadIcon();
 
         _openItem = new ToolStripMenuItem("Abrir Vacinaldo", null, (_, _) => ShowWindow());
-        _rtpItem  = new ToolStripMenuItem("ProteÃ§Ã£o em Tempo Real", null, (_, _) => ToggleRtp())
+        _rtpItem  = new ToolStripMenuItem("Proteção em Tempo Real", null, (_, _) => ToggleRtp())
         {
             Checked      = true,
             CheckOnClick = true,
@@ -55,7 +55,7 @@ internal sealed class TrayManager : IDisposable
         _tray = new NotifyIcon
         {
             Icon             = icon,
-            Text             = "Vacinaldo â€” ProteÃ§Ã£o Ativa",
+            Text             = "Vacinaldo  --  Proteção Ativa",
             ContextMenuStrip = menu,
             Visible          = true,
         };
@@ -63,14 +63,14 @@ internal sealed class TrayManager : IDisposable
         _tray.DoubleClick  += (_, _) => ShowWindow();
         _tray.MouseClick   += OnTrayClick;
 
-        // Inicia proteÃ§Ã£o em tempo real e motor EDR
+        // Inicia proteção em tempo real e motor EDR
         Engine.StartRealTimeProtection();
         Edr.Start();
 
-        ShowBalloon("Vacinaldo iniciado", "ProteÃ§Ã£o em tempo real + EDR ativos.", ToolTipIcon.Info);
+        ShowBalloon("Vacinaldo iniciado", "Proteção em tempo real + EDR ativos.", ToolTipIcon.Info);
     }
 
-    // â”€â”€ Clicar uma vez no Ã­cone exibe o menu; duplo-clique abre a janela â”€â”€â”€â”€â”€
+    //  -- ? -- ? Clicar uma vez no ícone exibe o menu; duplo-clique abre a janela  -- ? -- ? -- ? -- ? -- ?
 
     private void OnTrayClick(object? sender, MouseEventArgs e)
     {
@@ -78,7 +78,7 @@ internal sealed class TrayManager : IDisposable
             ShowWindow();
     }
 
-    // â”€â”€ Mostrar / ocultar janela principal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Mostrar / ocultar janela principal  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     public void ShowWindow()
     {
@@ -89,7 +89,7 @@ internal sealed class TrayManager : IDisposable
                 _window = new MainWindow(Engine, Edr);
                 _window.Closing += (_, ce) =>
                 {
-                    ce.Cancel = true;   // nÃ£o fecha â€” oculta na bandeja
+                    ce.Cancel = true;   // não fecha  --  oculta na bandeja
                     _window.Hide();
                 };
             }
@@ -101,7 +101,7 @@ internal sealed class TrayManager : IDisposable
         });
     }
 
-    // â”€â”€ Alternar proteÃ§Ã£o em tempo real â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Alternar proteção em tempo real  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private void ToggleRtp()
     {
@@ -109,14 +109,14 @@ internal sealed class TrayManager : IDisposable
         if (on)
         {
             Engine.StartRealTimeProtection();
-            _tray.Text = "Vacinaldo â€” ProteÃ§Ã£o Ativa";
-            ShowBalloon("Vacinaldo", "ProteÃ§Ã£o em tempo real ativada.", ToolTipIcon.Info);
+            _tray.Text = "Vacinaldo  --  Proteção Ativa";
+            ShowBalloon("Vacinaldo", "Proteção em tempo real ativada.", ToolTipIcon.Info);
         }
         else
         {
             Engine.StopRealTimeProtection();
-            _tray.Text = "Vacinaldo â€” ProteÃ§Ã£o Inativa";
-            ShowBalloon("Vacinaldo", "ProteÃ§Ã£o em tempo real desativada.", ToolTipIcon.Warning);
+            _tray.Text = "Vacinaldo  --  Proteção Inativa";
+            ShowBalloon("Vacinaldo", "Proteção em tempo real desativada.", ToolTipIcon.Warning);
         }
 
         // Atualiza o toggle na janela principal, se estiver aberta
@@ -127,19 +127,19 @@ internal sealed class TrayManager : IDisposable
         });
     }
 
-    // â”€â”€ AmeaÃ§a detectada em tempo real â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Ameaça detectada em tempo real  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private void OnThreatDetected(ThreatInfo threat)
     {
         _app.Dispatcher.Invoke(() =>
         {
-            // NotificaÃ§Ã£o em balÃ£o na bandeja (nÃ£o interrompe o usuÃ¡rio)
+            // Notificação em balão na bandeja (não interrompe o usuário)
             ShowBalloon(
-                "âš  AmeaÃ§a detectada!",
+                "�s� Ameaça detectada!",
                 $"{System.IO.Path.GetFileName(threat.FilePath)}\n{threat.ThreatName}",
                 ToolTipIcon.Warning);
 
-            // Quarentena automÃ¡tica
+            // Quarentena automática
             ScanEngine.QuarantineFile(threat);
 
             // Atualiza janela se estiver aberta
@@ -148,21 +148,21 @@ internal sealed class TrayManager : IDisposable
         });
     }
 
-    // â”€â”€ Alerta EDR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Alerta EDR  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private void OnEdrAlert(SecurityEvent evt)
     {
         if (evt.Risk < EdrRisk.High) return;
         _app.Dispatcher.Invoke(() =>
         {
-            var desc = evt.Description.Length > 100 ? evt.Description[..100] + "â€¦" : evt.Description;
+            var desc = evt.Description.Length > 100 ? evt.Description[..100] + "..." : evt.Description;
             ShowBalloon(
-                $"ðŸŽ¯ EDR {evt.Risk} â€” {evt.MitreTechnique ?? ""}",
+                $"EDR {evt.Risk} -- {evt.MitreTechnique ?? string.Empty}",
                 desc, ToolTipIcon.Warning);
         });
     }
 
-    // â”€â”€ Encerrar aplicaÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Encerrar aplicação  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private void ExitApp()
     {
@@ -172,7 +172,7 @@ internal sealed class TrayManager : IDisposable
         _app.Shutdown();
     }
 
-    // â”€â”€ BalÃ£o de notificaÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Balão de notificação  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     public void ShowBalloon(string title, string text, ToolTipIcon icon = ToolTipIcon.None)
     {
@@ -180,7 +180,7 @@ internal sealed class TrayManager : IDisposable
         catch { }
     }
 
-    // â”€â”€ UtilitÃ¡rio: carrega o Ã­cone do prÃ³prio executÃ¡vel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Utilitário: carrega o ícone do próprio executável  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     private static Icon LoadIcon()
     {
@@ -196,7 +196,7 @@ internal sealed class TrayManager : IDisposable
         return SystemIcons.Shield;
     }
 
-    // â”€â”€ Dispose â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  -- ? -- ? Dispose  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
 
     public void Dispose()
     {
