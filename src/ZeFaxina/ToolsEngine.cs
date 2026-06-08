@@ -184,15 +184,15 @@ public static class ToolsEngine
         await Task.Run(() =>
         {
             ct.ThrowIfCancellationRequested();
-            progress.Report("Verificando entradas de inicialização�?�");
+            progress.Report("Verificando entradas de inicialização...");
             issues.AddRange(ScanStartupRefs());
 
             ct.ThrowIfCancellationRequested();
-            progress.Report("Verificando desinstaladores�?�");
+            progress.Report("Verificando desinstaladores...");
             issues.AddRange(ScanOrphanedUninstall());
 
             ct.ThrowIfCancellationRequested();
-            progress.Report("Verificando fontes�?�");
+            progress.Report("Verificando fontes...");
             issues.AddRange(ScanFonts());
         }, ct);
         return issues;

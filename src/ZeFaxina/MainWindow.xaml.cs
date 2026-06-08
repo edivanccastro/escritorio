@@ -82,11 +82,11 @@ public partial class MainWindow : Window
         var cats = SelectedCategories().ToList();
         if (cats.Count == 0) { WpfMsgBox.Show("Selecione ao menos uma categoria.", "Zé Faxina"); return; }
 
-        SetBusy(true, "Analisando�?�");
+        SetBusy(true, "Analisando...");
         _cleanResults.Clear();
         _lastResults.Clear();
         CleanBtn.IsEnabled = false;
-        SummaryFiles.Text = SummarySize.Text = SummaryCategories.Text = "�?�";
+        SummaryFiles.Text = SummarySize.Text = SummaryCategories.Text = "...";
 
         _cts = new CancellationTokenSource();
         var progress = new Progress<CleanProgress>(p =>
@@ -139,10 +139,10 @@ public partial class MainWindow : Window
         }
 
         var cats = SelectedCategories().ToList();
-        SetBusy(true, "Limpando�?�");
+        SetBusy(true, "Limpando...");
         _cleanResults.Clear();
         CleanBtn.IsEnabled = false;
-        SummaryFiles.Text = SummarySize.Text = SummaryCategories.Text = "�?�";
+        SummaryFiles.Text = SummarySize.Text = SummaryCategories.Text = "...";
 
         _cts = new CancellationTokenSource();
         var progress = new Progress<CleanProgress>(p =>
@@ -210,8 +210,8 @@ public partial class MainWindow : Window
                 _regIssues.Add(new RegIssueVm(i));
 
             RegResultLabel.Text = issues.Count == 0
-                ? "�o. Nenhum problema encontrado!"
-                : $"�s� {issues.Count} problema(s) encontrado(s)";
+                ? "✓  Nenhum problema encontrado!"
+                : $"⚠  {issues.Count} problema(s) encontrado(s)";
             FixRegBtn.IsEnabled = issues.Count > 0;
         }
         catch (Exception ex)
@@ -243,7 +243,7 @@ public partial class MainWindow : Window
             ToolsEngine.FixRegistryIssue(vm.Issue);
             _regIssues.Remove(vm);
         }
-        RegResultLabel.Text = $"�o. {selected.Count} entradas corrigidas.";
+        RegResultLabel.Text = $"✓  {selected.Count} entradas corrigidas.";
         FixRegBtn.IsEnabled = _regIssues.Count > 0;
     }
 

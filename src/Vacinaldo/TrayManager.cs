@@ -135,7 +135,7 @@ internal sealed class TrayManager : IDisposable
         {
             // Notificação em balão na bandeja (não interrompe o usuário)
             ShowBalloon(
-                "�s� Ameaça detectada!",
+                "⚠  Ameaça detectada!",
                 $"{System.IO.Path.GetFileName(threat.FilePath)}\n{threat.ThreatName}",
                 ToolTipIcon.Warning);
 

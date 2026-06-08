@@ -75,7 +75,7 @@ public partial class MainWindow : Window
     public void OnRealTimeThreatDetected(ThreatInfo threat)
     {
         WpfMsgBox.Show(this,
-            $"�s� Ameaça detectada em tempo real!\n\nArquivo: {threat.FilePath}\n" +
+            $"⚠  Ameaça detectada em tempo real!\n\nArquivo: {threat.FilePath}\n" +
             $"Ameaça: {threat.ThreatName}\nNível: {ScanEngine.ThreatLevelLabel(threat.Level)}\n\n" +
             "O arquivo foi quarentenado automaticamente.",
             "Vacinaldo  --  Alerta",
@@ -83,7 +83,7 @@ public partial class MainWindow : Window
 
         RefreshQuarantine();
         UpdateDashboard();
-        StatusText.Text = $"�s� Ameaça quarentenada: {Path.GetFileName(threat.FilePath)}";
+        StatusText.Text = $"⚠  Ameaça quarentenada: {Path.GetFileName(threat.FilePath)}";
     }
 
     //  -- ? -- ? Navegação  -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ? -- ?
@@ -220,8 +220,8 @@ public partial class MainWindow : Window
                 StopButton.Visibility   = Visibility.Collapsed;
                 ScanFileText.Text       = string.Empty;
                 ScanStatusText.Text = p.ThreatsFound == 0
-                    ? $"�o. Varredura concluída  --  {p.FilesScanned} arquivo(s). Nenhuma ameaça."
-                    : $"�s� Varredura concluída  --  {p.FilesScanned} arquivo(s), {p.ThreatsFound} ameaça(s).";
+                    ? $"✓  Varredura concluída  --  {p.FilesScanned} arquivo(s). Nenhuma ameaça."
+                    : $"⚠  Varredura concluída  --  {p.FilesScanned} arquivo(s), {p.ThreatsFound} ameaça(s).";
                 StatusText.Text = ScanStatusText.Text;
                 QuarantineAllBtn.Visibility = Threats.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
@@ -234,7 +234,7 @@ public partial class MainWindow : Window
             }
             else
             {
-                ScanStatusText.Text   = $"Verificando�?� {p.FilesScanned} arquivo(s) | {p.ThreatsFound} ameaça(s)";
+                ScanStatusText.Text   = $"Verificando... {p.FilesScanned} arquivo(s) | {p.ThreatsFound} ameaça(s)";
                 ScanFileText.Text     = p.CurrentFile;
                 ThreatCountLabel.Text = $"Ameaças encontradas: {p.ThreatsFound}";
             }
@@ -354,7 +354,7 @@ public partial class MainWindow : Window
         var red   = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(198, 40, 40));
         RealTimeStatus.Text       = on ? "Ativa"    : "Inativa";
         RealTimeStatus.Foreground = on ? green      : red;
-        RtpStatusBar.Text         = on ? "�Y>� Proteção: Ativa" : "�s� Proteção: Inativa";
+        RtpStatusBar.Text         = on ? "�Y>� Proteção: Ativa" : "⚠  Proteção: Inativa";
         RtpStatusBar.Foreground   = on ? green      : red;
     }
 
@@ -459,7 +459,7 @@ public sealed class ProcessVm(ProcessSnapshot p)
         EdrRisk.High     => " -- � Alto",
         EdrRisk.Medium   => "�YY� Médio",
         EdrRisk.Low      => "�YY� Baixo",
-        _                => "�o. Info"
+        _                => "✓  Info"
     };
 }
 
@@ -469,7 +469,7 @@ public sealed class NetworkVm(NetworkConnection c)
     public string RemoteAddr { get; } = c.RemoteAddr;
     public int    RemotePort { get; } = c.RemotePort;
     public string State      { get; } = c.State;
-    public string SuspLabel  { get; } = c.IsSuspicious ? "�s� Sim" : " -- ";
+    public string SuspLabel  { get; } = c.IsSuspicious ? "⚠  Sim" : " -- ";
     public string Reason     { get; } = c.SuspiciousReason ?? string.Empty;
 }
 
@@ -488,7 +488,7 @@ public sealed class EventVm(SecurityEvent ev)
         EdrRisk.High     => " -- � Alto",
         EdrRisk.Medium   => "�YY� Médio",
         EdrRisk.Low      => "�YY� Baixo",
-        _                => "�o. Info"
+        _                => "✓  Info"
     };
 }
 
