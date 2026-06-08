@@ -39,7 +39,7 @@
                 <TextBlock Grid.Column="1" Style="{StaticResource TitleBarText}"
                            HorizontalAlignment="Center" Text="Slides1 - Slidney" />
                 <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <TextBlock Style="{StaticResource TitleBarText}" Text="Escritorio" Opacity="0.85" FontSize="12"/>
+                    <TextBlock Style="{StaticResource TitleBarText}" Text="Escrit&#xF3;rio" Opacity="0.85" FontSize="12"/>
                     <TextBlock Style="{StaticResource TitleBarText}" Text="Edição Comunitária" Opacity="0.6" FontSize="9"/>
                 </StackPanel>
             </Grid>

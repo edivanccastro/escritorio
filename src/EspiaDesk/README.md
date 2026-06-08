@@ -1,6 +1,6 @@
 # EspiaDesk — Acesso Remoto Seguro
 
-EspiaDesk é um aplicativo de acesso remoto desenvolvido em **C# (.NET 8 + WPF)**, parte da suíte Escritorio PCE.
+EspiaDesk é um aplicativo de acesso remoto desenvolvido em **C# (.NET 8 + WPF)**, parte da suíte Escritório CE.
 
 > Este módulo é experimental. Não utilize em ambientes de produção ou críticos sem avaliação prévia.
 
@@ -60,6 +60,6 @@ dotnet run --project .\src\EspiaDesk\EspiaDesk.csproj
 
 ## Licença
 
-MIT — Copyright (c) 2026 Escritorio. Consulte [LICENSE](../../LICENSE).
+MIT — Copyright (c) 2026 Escritório. Consulte [LICENSE](../../LICENSE).
 
 Dependências de terceiros: [THIRD-PARTY-NOTICES.txt](../../THIRD-PARTY-NOTICES.txt).

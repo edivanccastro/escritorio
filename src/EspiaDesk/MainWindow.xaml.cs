@@ -192,7 +192,7 @@ public partial class MainWindow : Window
 
     private void About_Click(object s, RoutedEventArgs e)
         => MessageBox.Show(
-            "EspiaDesk v1.0\nAcesso Remoto seguro com criptografia E2E\n\nParte da suite Escritorio",
+            "EspiaDesk v1.0\nAcesso Remoto seguro com criptografia E2E\n\nParte da suite Escrit\u00F3rio",
             "Sobre o EspiaDesk", MessageBoxButton.OK, MessageBoxImage.Information);
 
     // ── Recentes ──────────────────────────────────────────────────────────────
