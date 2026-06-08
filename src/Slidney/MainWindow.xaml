@@ -1,0 +1,218 @@
+﻿<Window x:Class="Slidney.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Slides1 - Slidney"
+        Width="1280"
+        Height="800"
+        MinWidth="940"
+        MinHeight="620"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource CanvasBrush}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Barra de titulo + acesso rapido -->
+        <Border Grid.Row="0" Background="{DynamicResource AccentBrush}" Padding="10,5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Width="22" Height="22" CornerRadius="3" Background="White" Margin="0,0,8,0">
+                        <TextBlock Text="S" FontWeight="Bold" FontSize="14"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource AccentBrush}" />
+                    </Border>
+                    <Button Style="{StaticResource QuickAccessButton}" Content="&#xE74E;" ToolTip="Salvar" Click="Save_OnClick" />
+                    <Button Style="{StaticResource QuickAccessButton}" Content="&#xE768;" ToolTip="Apresentar" Click="Present_OnClick" />
+                </StackPanel>
+                <TextBlock Grid.Column="1" Style="{StaticResource TitleBarText}"
+                           HorizontalAlignment="Center" Text="Slides1 - Slidney" />
+                <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource TitleBarText}" Text="Escritorio" Opacity="0.85" FontSize="12"/>
+                    <TextBlock Style="{StaticResource TitleBarText}" Text="Edição Comunitária" Opacity="0.6" FontSize="9"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Faixa de opcoes -->
+        <TabControl Grid.Row="1" Style="{StaticResource RibbonTabControl}" SelectedIndex="1">
+            <TabItem Style="{StaticResource RibbonTabItem}" Header="Arquivo">
+                <StackPanel Orientation="Horizontal" Height="92">
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Apresentação">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE7C3;" Content="Novo" Click="New_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE8E5;" Content="Abrir" Click="Open_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE74E;" Content="Salvar" Click="Save_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Style="{StaticResource RibbonTabItem}" Header="Início">
+                <StackPanel Orientation="Horizontal" Height="96">
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Slides">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE710;" Content="Novo Slide" Click="AddSlide_OnClick" />
+                            <StackPanel VerticalAlignment="Center">
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE8C8;" Content="Duplicar" Click="DuplicateSlide_OnClick" />
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE74D;" Content="Excluir" Click="RemoveSlide_OnClick" />
+                            </StackPanel>
+                            <StackPanel VerticalAlignment="Center">
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE70E;" Content="Mover acima" Click="MoveUp_OnClick" />
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE70D;" Content="Mover abaixo" Click="MoveDown_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Layout">
+                        <StackPanel VerticalAlignment="Center">
+                            <Button Style="{StaticResource RibbonButton}" Tag="&#xE8A1;" Content="Título e Conteúdo" Click="LayoutBoth_OnClick" />
+                            <Button Style="{StaticResource RibbonButton}" Tag="&#xE8A1;" Content="Só Título" Click="LayoutTitle_OnClick" />
+                            <Button Style="{StaticResource RibbonButton}" Tag="&#xE8A1;" Content="Em Branco" Click="LayoutBlank_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Fonte">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="2,2,2,4">
+                                <ToggleButton x:Name="BoldToggle" Style="{StaticResource RibbonToggle}" Content="&#xE8DD;" ToolTip="Negrito" Click="Bold_OnClick" />
+                                <Button Style="{StaticResource RibbonIconButton}" FontSize="16" Content="&#xE8E8;" ToolTip="Aumentar fonte" Click="GrowFont_OnClick" />
+                                <Button Style="{StaticResource RibbonIconButton}" FontSize="13" Content="&#xE8E7;" ToolTip="Diminuir fonte" Click="ShrinkFont_OnClick" />
+                                <Button x:Name="TextColorButton" Style="{StaticResource RibbonIconButton}" Content="&#xE8D3;" ToolTip="Cor do texto" Click="TextColor_OnClick" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="2,0">
+                                <Button Style="{StaticResource RibbonIconButton}" Content="&#xE8E4;" ToolTip="Esquerda" Click="AlignLeft_OnClick" />
+                                <Button Style="{StaticResource RibbonIconButton}" Content="&#xE8E3;" ToolTip="Centro" Click="AlignCenter_OnClick" />
+                                <Button Style="{StaticResource RibbonIconButton}" Content="&#xE8E2;" ToolTip="Direita" Click="AlignRight_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Tema">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <WrapPanel x:Name="ThemeGrid" Width="150" />
+                            <Button Style="{StaticResource RibbonButton}" Tag="&#xE790;" Content="Próxima cor" Click="SlideColor_OnClick" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Style="{StaticResource RibbonTabItem}" Header="Apresentar">
+                <StackPanel Orientation="Horizontal" Height="92">
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Iniciar">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE768;" Content="Do Início" Click="PresentFromStart_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE768;" Content="Slide Atual" Click="Present_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+        <!-- Area de edicao -->
+        <Grid Grid.Row="2" Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Miniaturas -->
+            <Border Grid.Column="0" Background="#FAFAFA" BorderBrush="{StaticResource RibbonBorderBrush}" BorderThickness="0,0,1,0">
+                <ListBox x:Name="SlidesList" BorderThickness="0" Background="Transparent"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         SelectionChanged="SlidesList_OnSelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="6" Padding="0" CornerRadius="2" Background="White"
+                                    BorderBrush="#C8C8C8" BorderThickness="1" Width="170" Height="96">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="6" ShadowDepth="0" Opacity="0.18" />
+                                </Border.Effect>
+                                <Grid>
+                                    <Border Background="{Binding BackgroundBrush}" CornerRadius="2" />
+                                    <StackPanel Margin="8" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="12"
+                                                   Foreground="White" TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Text="{Binding Content}" FontSize="9" Foreground="#EEEEEE"
+                                                   TextTrimming="CharacterEllipsis" MaxHeight="44" TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+
+            <!-- Editor do slide -->
+            <Grid Grid.Column="1" Margin="24">
+                <Viewbox Stretch="Uniform">
+                    <Border Width="800" Height="450" CornerRadius="4"
+                            Background="{Binding ElementName=SlidesList, Path=SelectedItem.BackgroundBrush}">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="18" ShadowDepth="0" Opacity="0.25" />
+                        </Border.Effect>
+                        <Grid Margin="60,48">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBox x:Name="SlideTitleBox" Grid.Row="0"
+                                     Background="Transparent" BorderThickness="0"
+                                     Foreground="{Binding ElementName=SlidesList, Path=SelectedItem.ForegroundBrush}"
+                                     FontSize="{Binding ElementName=SlidesList, Path=SelectedItem.TitleFontSize}"
+                                     FontWeight="Bold"
+                                     Visibility="{Binding ElementName=SlidesList, Path=SelectedItem.TitleVisibility}"
+                                     CaretBrush="White"
+                                     Text="Título"
+                                     TextChanged="SlideField_OnTextChanged" />
+                            <TextBox x:Name="SlideContentBox" Grid.Row="1" Margin="0,18,0,0"
+                                     Background="Transparent" BorderThickness="0"
+                                     Foreground="{Binding ElementName=SlidesList, Path=SelectedItem.ForegroundBrush}"
+                                     FontSize="{Binding ElementName=SlidesList, Path=SelectedItem.ContentFontSize}"
+                                     FontWeight="{Binding ElementName=SlidesList, Path=SelectedItem.ContentFontWeight}"
+                                     TextAlignment="{Binding ElementName=SlidesList, Path=SelectedItem.ContentAlignment}"
+                                     Visibility="{Binding ElementName=SlidesList, Path=SelectedItem.ContentVisibility}"
+                                     CaretBrush="White"
+                                     AcceptsReturn="True" TextWrapping="Wrap"
+                                     VerticalScrollBarVisibility="Auto"
+                                     Text="Conteúdo do slide"
+                                     TextChanged="SlideField_OnTextChanged" />
+                        </Grid>
+                    </Border>
+                </Viewbox>
+            </Grid>
+        </Grid>
+
+        <!-- Barra de status -->
+        <Border Grid.Row="3" Style="{StaticResource StatusBarStyle}">
+            <Grid>
+                <TextBlock x:Name="StatusText" Style="{StaticResource StatusBarText}" Text="Pronto" />
+                <TextBlock x:Name="SlideCountText" Style="{StaticResource StatusBarText}"
+                           HorizontalAlignment="Right" Text="Slide 1 de 1" />
+            </Grid>
+        </Border>
+
+        <Popup x:Name="TextColorPopup" StaysOpen="False" Placement="Bottom" PlacementTarget="{Binding ElementName=TextColorButton}" AllowsTransparency="True">
+            <Border Background="White" BorderBrush="#C8C8C8" BorderThickness="1" Padding="8" CornerRadius="3">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.25" />
+                </Border.Effect>
+                <StackPanel>
+                    <TextBlock Text="Cor do texto" FontWeight="SemiBold" Margin="2,0,0,6" Foreground="#444" />
+                    <WrapPanel x:Name="TextColorGrid" Width="160" />
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</Window>

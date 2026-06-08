@@ -1,0 +1,1292 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escritorio — Professional Community Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:   #107C41;
+      --green-l: #16a34a;
+      --green-d: #0a5c30;
+      --blue:    #2B579A;
+      --orange:  #C43E1C;
+      --red:     #C62828;
+      --amber:   #E65100;
+      --purple:  #7B2D8B;
+      --dark:    #0d1117;
+      --dark2:   #161b22;
+      --gray1:   #f6f8fa;
+      --gray2:   #e8ecf0;
+      --gray3:   #8b949e;
+      --text:    #1a1f2e;
+      --radius:  14px;
+      --shadow:  0 4px 32px rgba(0,0,0,.10);
+      --shadow-lg: 0 12px 60px rgba(0,0,0,.18);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: var(--text); background: #fff; overflow-x: hidden; }
+
+    /* ─── Utility ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; padding: 5px 12px;
+      border-radius: 99px; margin-bottom: 18px;
+    }
+    .badge-green { background: #d1fae5; color: var(--green); }
+    .badge-blue  { background: #dbeafe; color: var(--blue);  }
+    .badge-dark  { background: rgba(255,255,255,.12); color: #fff; }
+    .badge-pce   { background: linear-gradient(90deg,#1d4ed8,#7c3aed); color:#fff; }
+    .section-title { font-size: clamp(28px,4vw,42px); font-weight:800; line-height:1.15; letter-spacing:-.02em; }
+    .section-sub { font-size:17px; color:var(--gray3); line-height:1.7; max-width:560px; margin-top:12px; }
+    section { padding: 96px 0; }
+    .btn {
+      display:inline-flex; align-items:center; gap:8px;
+      text-decoration:none; font-weight:600; font-size:14px;
+      border-radius:9px; padding:10px 20px; transition:all .2s;
+      border:none; cursor:pointer;
+    }
+    .btn-primary { background:var(--green); color:#fff; }
+    .btn-primary:hover { background:var(--green-l); transform:translateY(-1px); box-shadow:0 6px 20px rgba(16,124,65,.35); }
+    .btn-ghost { background:transparent; color:var(--text); border:1.5px solid var(--gray2); }
+    .btn-ghost:hover { border-color:var(--green); color:var(--green); }
+    .btn-lg { font-size:16px; padding:14px 28px; border-radius:11px; }
+    .btn-xl { font-size:17px; padding:16px 34px; border-radius:12px; }
+    .btn-white { background:#fff; color:var(--green); font-weight:700; box-shadow:0 4px 20px rgba(0,0,0,.15); }
+    .btn-white:hover { background:#f0fdf4; transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,0,0,.2); }
+    .btn-outline-white { background:transparent; color:#fff; border:2px solid rgba(255,255,255,.4); font-weight:700; }
+    .btn-outline-white:hover { border-color:#fff; background:rgba(255,255,255,.1); }
+
+    /* ─── NAV ─── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:999;
+      background:rgba(255,255,255,.9); backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--gray2); height:64px;
+      display:flex; align-items:center;
+    }
+    .nav-inner { display:flex; align-items:center; justify-content:space-between; width:100%; }
+    .logo { display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text); font-size:18px; font-weight:800; letter-spacing:-.02em; }
+    .logo-mark { width:34px; height:34px; border-radius:8px; background:linear-gradient(135deg,var(--green),#1fcd6a); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:900; font-size:15px; }
+    .logo-pce { font-size:10px; font-weight:600; color:#7c3aed; background:#ede9fe; padding:2px 7px; border-radius:99px; margin-left:4px; }
+    .nav-links { display:flex; align-items:center; gap:28px; list-style:none; }
+    .nav-links a { text-decoration:none; font-size:14px; font-weight:500; color:#4a5568; transition:color .2s; }
+    .nav-links a:hover { color:var(--green); }
+
+    /* ─── HERO ─── */
+    #hero { padding:130px 0 72px; background:linear-gradient(160deg,#0d1117 0%,#0f2d1a 55%,#0d1117 100%); position:relative; overflow:hidden; }
+    #hero::before { content:''; position:absolute; top:-200px; right:-200px; width:700px; height:700px; background:radial-gradient(circle,rgba(16,124,65,.25) 0%,transparent 70%); border-radius:50%; }
+    #hero::after  { content:''; position:absolute; bottom:-100px; left:-100px; width:500px; height:500px; background:radial-gradient(circle,rgba(43,87,154,.18) 0%,transparent 70%); border-radius:50%; }
+    .hero-content { position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+    .hero-eyebrow { font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#4ade80; margin-bottom:16px; }
+    .hero-pce { display:inline-flex; align-items:center; gap:8px; background:rgba(124,58,237,.2); border:1px solid rgba(124,58,237,.35); border-radius:99px; padding:4px 14px; font-size:11px; font-weight:700; color:#c4b5fd; letter-spacing:.06em; text-transform:uppercase; margin-bottom:20px; }
+    .hero-title { font-size:clamp(36px,5vw,58px); font-weight:900; line-height:1.08; letter-spacing:-.03em; color:#fff; }
+    .hero-title span { color:#4ade80; }
+    .hero-sub { font-size:17px; color:#94a3b8; line-height:1.7; margin-top:18px; max-width:500px; }
+    .hero-actions { display:flex; gap:14px; margin-top:32px; flex-wrap:wrap; }
+    .hero-stats { display:flex; gap:32px; margin-top:40px; padding-top:32px; border-top:1px solid rgba(255,255,255,.08); }
+    .stat { display:flex; flex-direction:column; }
+    .stat-num { font-size:26px; font-weight:900; color:#fff; }
+    .stat-lbl { font-size:12px; color:#64748b; margin-top:2px; }
+
+    /* Hero window mockup */
+    .hero-visual { position:relative; z-index:1; }
+    .hero-window { background:#1e2533; border-radius:12px; border:1px solid rgba(255,255,255,.08); box-shadow:0 32px 80px rgba(0,0,0,.6); overflow:hidden; }
+    .hw-titlebar { background:#161b22; height:32px; display:flex; align-items:center; padding:0 14px; gap:7px; border-bottom:1px solid rgba(255,255,255,.06); }
+    .hw-dot { width:11px; height:11px; border-radius:50%; }
+    .hw-ribbon { background:#107C41; height:24px; display:flex; align-items:center; padding:0 10px; gap:18px; }
+    .hw-rb-item { font-size:9px; color:rgba(255,255,255,.8); font-weight:600; letter-spacing:.04em; }
+    .hw-body { padding:8px; }
+
+    /* ─── PCE STRIPE ─── */
+    #pce {
+      padding: 0;
+      background: linear-gradient(90deg, #1d4ed8 0%, #7c3aed 50%, #be185d 100%);
+      color: #fff;
+    }
+    .pce-inner {
+      display: flex; align-items: center; justify-content: center;
+      gap: 40px; padding: 20px 24px; flex-wrap: wrap; text-align: center;
+    }
+    .pce-badge { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.8; }
+    .pce-title { font-size:18px; font-weight:900; letter-spacing:-.01em; }
+    .pce-desc { font-size:13px; opacity:.8; line-height:1.5; max-width:400px; }
+
+    /* ─── APPS ─── */
+    #apps { padding:80px 0; background:var(--gray1); }
+    .apps-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:48px; }
+    @media(max-width:900px){ .apps-grid { grid-template-columns:repeat(2,1fr); } }
+    @media(max-width:600px){ .apps-grid { grid-template-columns:1fr; } }
+    .app-pill { background:#fff; border-radius:var(--radius); border:1px solid var(--gray2); padding:28px 22px; transition:all .25s; position:relative; overflow:hidden; }
+    .app-pill:hover { transform:translateY(-4px); box-shadow:var(--shadow-lg); border-color:transparent; }
+    .app-icon { width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:16px; font-weight:900; color:#fff; }
+    .app-name { font-size:19px; font-weight:800; margin-bottom:5px; }
+    .app-alias { font-size:11px; font-weight:600; color:var(--gray3); text-transform:uppercase; letter-spacing:.06em; margin-bottom:10px; }
+    .app-desc { font-size:13px; color:#555; line-height:1.6; }
+    .app-tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:14px; }
+    .app-tag { font-size:11px; font-weight:600; padding:2px 8px; border-radius:99px; border:1px solid var(--gray2); color:#666; }
+
+    /* ─── FEATURES BENTO ─── */
+    #features { background:#fff; }
+    .bento { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:56px; }
+    .bento-card { background:var(--gray1); border:1px solid var(--gray2); border-radius:var(--radius); padding:28px; transition:all .25s; }
+    .bento-card:hover { background:#fff; box-shadow:var(--shadow-lg); border-color:transparent; transform:translateY(-2px); }
+    .bento-card.span2 { grid-column:span 2; }
+    .bento-card.span3 { grid-column:span 3; }
+    .bento-card.wide  { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; }
+    .bento-card.dark-bento { background:var(--dark2); border-color:rgba(255,255,255,.07); color:#fff; }
+    .bento-card.dark-bento .bento-text { color:#8b949e; }
+    .bento-icon { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:16px; }
+    .bento-icon.g { background:#d1fae5; }
+    .bento-icon.b { background:#dbeafe; }
+    .bento-icon.o { background:#fee2e2; }
+    .bento-icon.p { background:#ede9fe; }
+    .bento-icon.a { background:#fce7f3; }
+    .bento-title { font-size:16px; font-weight:700; margin-bottom:8px; }
+    .bento-text  { font-size:13.5px; color:#666; line-height:1.65; }
+
+    /* ─── DEEP DIVE ─── */
+    #deep { background:var(--gray1); }
+    .deep-block { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; padding:64px 0; border-bottom:1px solid var(--gray2); }
+    .deep-block:last-child { border-bottom:none; }
+    .deep-block.flip { direction:rtl; }
+    .deep-block.flip > * { direction:ltr; }
+    .deep-eyebrow { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:12px; }
+    .deep-eyebrow.blue   { color:var(--blue); }
+    .deep-eyebrow.green  { color:var(--green); }
+    .deep-eyebrow.orange { color:var(--orange); }
+    .deep-eyebrow.red    { color:var(--red); }
+    .deep-eyebrow.amber  { color:var(--amber); }
+    .deep-eyebrow.purple { color:var(--purple); }
+    .deep-title { font-size:clamp(24px,3vw,34px); font-weight:800; line-height:1.2; letter-spacing:-.02em; margin-bottom:16px; }
+    .deep-desc { font-size:15px; color:#555; line-height:1.75; }
+    .deep-feats { list-style:none; margin-top:24px; display:flex; flex-direction:column; gap:10px; }
+    .deep-feats li { display:flex; align-items:flex-start; gap:10px; font-size:14px; color:#444; }
+    .deep-feats li::before { content:'✓'; width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0; margin-top:1px; }
+    .deep-feats.blue   li::before { background:#dbeafe; color:var(--blue); }
+    .deep-feats.green  li::before { background:#d1fae5; color:var(--green); }
+    .deep-feats.orange li::before { background:#fee2e2; color:var(--orange); }
+    .deep-feats.red    li::before { background:#fce7f3; color:var(--red); }
+    .deep-feats.amber  li::before { background:#fff3cd; color:var(--amber); }
+    .deep-feats.purple li::before { background:#ede9fe; color:var(--purple); }
+
+    /* mockup frames */
+    .mock-frame { background:#fff; border-radius:12px; box-shadow:var(--shadow-lg); border:1px solid var(--gray2); overflow:hidden; }
+    .mf-bar { height:28px; display:flex; align-items:center; padding:0 12px; gap:6px; }
+    .mf-dot { width:9px; height:9px; border-radius:50%; }
+    .mf-ribbon { height:22px; display:flex; align-items:center; padding:0 12px; gap:20px; }
+    .mf-ri { font-size:9px; font-weight:700; letter-spacing:.04em; color:rgba(255,255,255,.85); }
+    .mf-body { padding:10px; }
+
+    /* ─── OPEN SOURCE ─── */
+    #opensource { background:linear-gradient(135deg,#0d1117 0%,#0f2d1a 100%); color:#fff; text-align:center; }
+    #opensource .section-title { color:#fff; }
+    #opensource .section-sub   { color:#94a3b8; margin:0 auto; }
+    .os-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:56px; }
+    .os-card { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); padding:28px 22px; text-align:center; transition:all .25s; }
+    .os-card:hover { background:rgba(255,255,255,.09); transform:translateY(-3px); }
+    .os-card-icon  { font-size:32px; margin-bottom:14px; }
+    .os-card-title { font-size:15px; font-weight:700; margin-bottom:8px; }
+    .os-card-desc  { font-size:13px; color:#8b949e; line-height:1.6; }
+
+    /* ─── FORMATS ─── */
+    #formats { background:var(--gray1); }
+    .fmt-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:48px; }
+    .fmt-card { background:#fff; border:1px solid var(--gray2); border-radius:var(--radius); padding:24px; transition:all .2s; }
+    .fmt-card:hover { box-shadow:var(--shadow); transform:translateY(-2px); }
+    .fmt-card-title { font-size:15px; font-weight:700; margin-bottom:12px; }
+    .fmt-chips { display:flex; flex-wrap:wrap; gap:7px; }
+    .fmt-chip { font-size:12px; font-weight:700; padding:4px 11px; border-radius:6px; font-family:monospace; }
+    .fc-ms  { background:#dbeafe; color:#1d4ed8; }
+    .fc-odf { background:#d1fae5; color:#065f46; }
+    .fc-gen { background:#f3f4f6; color:#374151; }
+
+    /* ─── DOWNLOAD ─── */
+    #download { background:#fff; text-align:center; }
+    .download-box { background:linear-gradient(135deg,var(--green) 0%,#15803d 100%); border-radius:20px; padding:72px 48px; position:relative; overflow:hidden; color:#fff; }
+    .download-box::before { content:''; position:absolute; top:-80px; right:-80px; width:320px; height:320px; background:rgba(255,255,255,.06); border-radius:50%; }
+    .download-box::after  { content:''; position:absolute; bottom:-60px; left:-60px; width:240px; height:240px; background:rgba(255,255,255,.05); border-radius:50%; }
+    .download-box > * { position:relative; z-index:1; }
+    .download-title { font-size:clamp(28px,4vw,44px); font-weight:900; letter-spacing:-.02em; margin-bottom:10px; }
+    .download-pce { font-size:14px; font-weight:600; opacity:.8; margin-bottom:18px; }
+    .download-sub { font-size:17px; opacity:.85; max-width:500px; margin:0 auto 36px; line-height:1.6; }
+    .download-actions { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+    .download-note { font-size:13px; opacity:.6; margin-top:20px; }
+
+    /* ─── FOOTER ─── */
+    footer { background:var(--dark); color:#8b949e; padding:60px 0 32px; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; margin-bottom:48px; }
+    .footer-brand .logo { color:#fff; margin-bottom:8px; display:inline-flex; }
+    .footer-pce { font-size:11px; color:#7c3aed; background:rgba(124,58,237,.2); border:1px solid rgba(124,58,237,.3); padding:2px 9px; border-radius:99px; display:inline-block; margin-bottom:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+    .footer-brand p { font-size:14px; line-height:1.65; max-width:260px; }
+    .footer-col h4 { font-size:13px; font-weight:700; color:#fff; margin-bottom:16px; letter-spacing:.04em; text-transform:uppercase; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer-col ul a { font-size:14px; color:#8b949e; text-decoration:none; transition:color .2s; }
+    .footer-col ul a:hover { color:#4ade80; }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,.08); padding-top:28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+    .footer-bottom p { font-size:13px; }
+    .mit-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:99px; padding:4px 12px; font-size:12px; font-weight:600; color:#4ade80; }
+
+    /* ─── Scroll reveal ─── */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s ease,transform .6s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+
+    /* ─── Responsive ─── */
+    @media(max-width:900px){
+      .hero-content { grid-template-columns:1fr; }
+      .bento { grid-template-columns:1fr; }
+      .bento-card.span2,.bento-card.span3 { grid-column:span 1; }
+      .bento-card.wide { grid-template-columns:1fr; }
+      .deep-block,.deep-block.flip { grid-template-columns:1fr; direction:ltr; }
+      .os-grid   { grid-template-columns:repeat(2,1fr); }
+      .fmt-grid  { grid-template-columns:1fr; }
+      .footer-grid { grid-template-columns:1fr 1fr; }
+      .nav-links { display:none; }
+    }
+    @media(max-width:600px){
+      .os-grid { grid-template-columns:1fr; }
+      .footer-grid { grid-template-columns:1fr; }
+      .download-box { padding:48px 24px; }
+      .pce-inner { gap:16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark">E</div>
+        Escritorio
+        <span class="logo-pce">PCE</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#apps">Aplicativos</a></li>
+        <li><a href="#features">EDR + Segurança</a></li>
+        <li><a href="#espiadesk">EspiaDesk</a></li>
+        <li><a href="#formats">Formatos</a></li>
+        <li><a href="#deep">Deep Dive</a></li>
+        <li><a href="#opensource">Código Aberto</a></li>
+        <li><a href="https://github.com/edivanccastro/escritorio" target="_blank">GitHub</a></li>
+      </ul>
+      <a href="#download" class="btn btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Grátis
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div>
+        <div class="hero-pce">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Professional Community Edition
+        </div>
+        <h1 class="hero-title">
+          A Suite Completa<br>
+          que você<br>
+          <span>merecia.</span>
+        </h1>
+        <p class="hero-sub">
+          Escreva, calcule, apresente, proteja, limpe e acesse remotamente — tudo em um só pacote.
+          Seis apps profissionais com EDR comportamental, proteção inteligente, acesso remoto seguro
+          e suporte amplo a formatos, gratuito e de código aberto sob licença MIT.
+        </p>
+        <div class="hero-actions">
+          <a href="#download" class="btn btn-primary btn-xl">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Baixar v1.0.0 — Grátis
+          </a>
+          <a href="https://github.com/edivanccastro/escritorio" target="_blank" class="btn btn-lg" style="background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.15);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58 0-.28-.01-1.04-.01-2.04-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num">6</span><span class="stat-lbl">Aplicativos</span></div>
+          <div class="stat"><span class="stat-num">EDR</span><span class="stat-lbl">Comportamental</span></div>
+          <div class="stat"><span class="stat-num">MIT</span><span class="stat-lbl">Licença</span></div>
+          <div class="stat"><span class="stat-num">0</span><span class="stat-lbl">Telemetria</span></div>
+        </div>
+      </div>
+      <!-- Mockup -->
+      <div class="hero-visual">
+        <div class="hero-window">
+          <div class="hw-titlebar">
+            <div class="hw-dot" style="background:#ff5f56"></div>
+            <div class="hw-dot" style="background:#ffbd2e"></div>
+            <div class="hw-dot" style="background:#27c93f"></div>
+            <span style="color:#8b949e;font-size:11px;margin-left:12px;font-weight:500">Pasta1 — Planílson</span>
+            <span style="margin-left:auto;color:#7c3aed;font-size:9px;font-weight:700;letter-spacing:.05em">Professional Community Edition</span>
+          </div>
+          <div class="hw-ribbon">
+            <span class="hw-rb-item">ARQUIVO</span>
+            <span class="hw-rb-item" style="color:#fff;background:rgba(255,255,255,.15);padding:2px 8px;border-radius:4px">INÍCIO</span>
+            <span class="hw-rb-item">FÓRMULAS</span>
+          </div>
+          <div class="hw-body">
+            <div style="background:#1a2033;border-radius:6px;overflow:hidden;padding:6px 6px 2px">
+              <div style="display:flex;gap:2px;margin-bottom:2px">
+                <div style="width:28px;height:16px;background:#253050;border-radius:2px"></div>
+                <div style="flex:1;height:16px;background:#107C41;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:700">A</div>
+                <div style="flex:1;height:16px;background:#1e2d4a;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#8b949e;font-weight:700">B</div>
+                <div style="flex:1;height:16px;background:#1e2d4a;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#8b949e;font-weight:700">C</div>
+                <div style="flex:1;height:16px;background:#1e2d4a;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#8b949e;font-weight:700">D</div>
+                <div style="flex:1;height:16px;background:#1e2d4a;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#8b949e;font-weight:700">E</div>
+              </div>
+              <div id="hero-rows"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Floating badges -->
+        <div style="position:absolute;top:-24px;right:-28px;background:#2B579A;border-radius:10px;padding:12px 16px;box-shadow:0 16px 40px rgba(0,0,0,.5);color:#fff;min-width:130px">
+          <div style="font-size:10px;opacity:.7;font-weight:600;letter-spacing:.05em;margin-bottom:3px">LETRÚCIO</div>
+          <div style="font-size:13px;font-weight:700">Editor de Texto</div>
+        </div>
+        <div style="position:absolute;bottom:-16px;right:-16px;background:#C43E1C;border-radius:10px;padding:12px 16px;box-shadow:0 16px 40px rgba(0,0,0,.5);color:#fff;min-width:130px">
+          <div style="font-size:10px;opacity:.7;font-weight:600;letter-spacing:.05em;margin-bottom:3px">SLIDNEY</div>
+          <div style="font-size:13px;font-weight:700">Apresentações</div>
+        </div>
+        <div style="position:absolute;bottom:60px;left:-28px;background:#C62828;border-radius:10px;padding:12px 16px;box-shadow:0 16px 40px rgba(0,0,0,.5);color:#fff;min-width:130px">
+          <div style="font-size:10px;opacity:.7;font-weight:600;letter-spacing:.05em;margin-bottom:3px">VACINALDO</div>
+          <div style="font-size:13px;font-weight:700">🛡 Protegido</div>
+        </div>
+        <div style="position:absolute;top:60px;left:-28px;background:#7B2D8B;border-radius:10px;padding:12px 16px;box-shadow:0 16px 40px rgba(0,0,0,.5);color:#fff;min-width:130px">
+          <div style="font-size:10px;opacity:.7;font-weight:600;letter-spacing:.05em;margin-bottom:3px">ESPIADESK</div>
+          <div style="font-size:13px;font-weight:700">🖥 Acesso Remoto</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PCE STRIPE ═══ -->
+<div id="pce">
+  <div class="pce-inner">
+    <div>
+      <div class="pce-badge">Edição</div>
+      <div class="pce-title">Professional Community Edition</div>
+    </div>
+    <div class="pce-desc">Todos os 6 apps com recursos profissionais disponíveis gratuitamente para a comunidade. Sem versão paga, sem recursos bloqueados — o PCE é o único plano.</div>
+    <a href="#download" class="btn btn-white" style="white-space:nowrap">Baixar grátis →</a>
+  </div>
+</div>
+
+<!-- ═══ APPS ═══ -->
+<section id="apps">
+  <div class="container">
+    <div class="reveal">
+      <span class="badge badge-green">✦ A Suite</span>
+      <h2 class="section-title">Seis aplicativos.<br>Um ecossistema.</h2>
+      <p class="section-sub">Cada app é independente mas integrado — compartilham o mesmo tema visual, a edição PCE e a identidade Escritorio.</p>
+    </div>
+    <div class="apps-grid">
+      <!-- Letrúcio -->
+      <div class="app-pill reveal" style="border-top:3px solid #2B579A">
+        <div class="app-icon" style="background:linear-gradient(135deg,#2B579A,#4a7bc4)">L</div>
+        <div class="app-alias" style="color:#2B579A">Editor de Texto</div>
+        <div class="app-name">Letrúcio</div>
+        <p class="app-desc">Processador de texto completo com ribbon profissional, formatação avançada, localizar &amp; substituir, tabelas e verificação ortográfica.</p>
+        <div class="app-tags">
+          <span class="app-tag">.docx</span><span class="app-tag">.odt</span><span class="app-tag">.rtf</span><span class="app-tag">.txt</span>
+        </div>
+      </div>
+      <!-- Planílson -->
+      <div class="app-pill reveal" style="border-top:3px solid #107C41">
+        <div class="app-icon" style="background:linear-gradient(135deg,#107C41,#1fcd6a)">P</div>
+        <div class="app-alias" style="color:#107C41">Planilha Eletrônica</div>
+        <div class="app-name">Planílson</div>
+        <p class="app-desc">Grade infinita com motor de fórmulas, SOMA, MÉDIA, MÁXIMO, MÍNIMO e formatação de números.</p>
+        <div class="app-tags">
+          <span class="app-tag">.xlsx</span><span class="app-tag">.ods</span><span class="app-tag">.csv</span><span class="app-tag">Grade ∞</span>
+        </div>
+      </div>
+      <!-- Slidney -->
+      <div class="app-pill reveal" style="border-top:3px solid #C43E1C">
+        <div class="app-icon" style="background:linear-gradient(135deg,#C43E1C,#e8622f)">S</div>
+        <div class="app-alias" style="color:#C43E1C">Apresentações</div>
+        <div class="app-name">Slidney</div>
+        <p class="app-desc">Editor de slides com temas, layouts, painel lateral e exportação para os formatos de apresentação mais amplamente suportados no mercado.</p>
+        <div class="app-tags">
+          <span class="app-tag">.pptx</span><span class="app-tag">.odp</span><span class="app-tag">.json</span>
+        </div>
+      </div>
+      <!-- Vacinaldo -->
+      <div class="app-pill reveal" style="border-top:3px solid #C62828">
+        <div class="app-icon" style="background:linear-gradient(135deg,#C62828,#e53935)">V</div>
+        <div class="app-alias" style="color:#C62828">Segurança &amp; EDR</div>
+        <div class="app-name">Vacinaldo</div>
+        <p class="app-desc">EDR com análise comportamental, proteção em tempo real, monitor de processos e conexões, log de auditoria e quarentena automática.</p>
+        <div class="app-tags">
+          <span class="app-tag">EDR</span><span class="app-tag">Comportamental</span><span class="app-tag">Tray</span><span class="app-tag">Quarentena</span><span class="app-tag">Tempo Real</span>
+        </div>
+      </div>
+      <!-- Zé Faxina -->
+      <div class="app-pill reveal" style="border-top:3px solid #E65100">
+        <div class="app-icon" style="background:linear-gradient(135deg,#E65100,#FF8F00);font-size:22px">🧹</div>
+        <div class="app-alias" style="color:#E65100">Limpeza do Sistema</div>
+        <div class="app-name">Zé Faxina</div>
+        <p class="app-desc">Limpeza profunda do sistema: temp, cache de navegadores, lixeira, prefetch, gerenciador de inicialização e scanner de registro.</p>
+        <div class="app-tags">
+          <span class="app-tag">Limpeza</span><span class="app-tag">Registro</span><span class="app-tag">Inicialização</span><span class="app-tag">Navegadores</span>
+        </div>
+      </div>
+      <!-- EspiaDesk -->
+      <div class="app-pill reveal" style="border-top:3px solid #7B2D8B">
+        <div class="app-icon" style="background:linear-gradient(135deg,#7B2D8B,#a855f7)">E</div>
+        <div class="app-alias" style="color:#7B2D8B">Acesso Remoto</div>
+        <div class="app-name">EspiaDesk</div>
+        <p class="app-desc">Acesso remoto seguro: streaming de tela, controle de mouse e teclado, chat em tempo real, transferência de arquivos e criptografia AES-256.</p>
+        <div class="app-tags">
+          <span class="app-tag">AES-256</span><span class="app-tag">RSA 2048</span><span class="app-tag">Chat</span><span class="app-tag">Transferência</span><span class="app-tag">Tempo Real</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES BENTO ═══ -->
+<section id="features">
+  <div class="container">
+    <div class="reveal">
+      <span class="badge badge-blue">✦ Recursos &amp; EDR</span>
+      <h2 class="section-title">Produtividade, proteção<br>e inteligência.</h2>
+      <p class="section-sub">EDR com análise comportamental, motor de fórmulas, ribbon profissional e limpeza do sistema — tudo gratuito, código aberto, sem telemetria.</p>
+    </div>
+    <div class="bento">
+      <!-- Row 1 -->
+      <div class="bento-card reveal">
+        <div class="bento-icon g">📊</div>
+        <div class="bento-title">Grade Infinita</div>
+        <p class="bento-text">Planílson gera colunas e linhas automaticamente ao rolar — infinitamente — sem limite de expansão.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon b">✍️</div>
+        <div class="bento-title">Ribbon Profissional</div>
+        <p class="bento-text">Interface ribbon moderna com abas Arquivo, Início, Inserir, Layout, Revisão e Exibir em todos os apps de produtividade da suite.</p>
+      </div>
+      <div class="bento-card dark-bento reveal">
+        <div class="bento-icon" style="background:rgba(255,255,255,.1)">🔓</div>
+        <div class="bento-title">100% Open Source</div>
+        <p class="bento-text">Licença MIT. Clone, modifique, distribua. Código-fonte completo no GitHub, sem restrições.</p>
+      </div>
+      <!-- Row 2 — wide -->
+      <div class="bento-card wide span2 reveal">
+        <div>
+          <div class="bento-icon g">⚗️</div>
+          <div class="bento-title">Motor de Fórmulas</div>
+          <p class="bento-text">Referências de célula (A1+B2), funções de agregação SOMA, MÉDIA, MÁXIMO, MÍNIMO e CONT com intervalos completos (A1:C10).</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
+            <code style="font-size:12px;background:#d1fae5;color:#065f46;padding:3px 9px;border-radius:6px">=SOMA(A1:A10)</code>
+            <code style="font-size:12px;background:#d1fae5;color:#065f46;padding:3px 9px;border-radius:6px">=MÉDIA(B1:B5)</code>
+            <code style="font-size:12px;background:#d1fae5;color:#065f46;padding:3px 9px;border-radius:6px">=MÁXIMO(C1:C20)</code>
+          </div>
+        </div>
+        <div style="background:#f8fafc;border-radius:10px;overflow:hidden;border:1px solid #e2e8f0">
+          <div style="background:#107C41;height:20px;display:flex;align-items:center;padding:0 10px;gap:14px">
+            <span style="font-size:8px;color:#fff;font-weight:700">INÍCIO</span>
+            <span style="font-size:8px;color:rgba(255,255,255,.7);font-weight:600">FÓRMULAS</span>
+          </div>
+          <div style="padding:8px;">
+            <div style="background:#fff;border:1.5px solid #107C41;border-radius:4px;height:18px;display:flex;align-items:center;padding:0 8px;margin-bottom:6px">
+              <span style="font-size:10px;color:#107C41;font-weight:600">A1</span>
+              <span style="font-size:9px;color:#999;margin:0 6px">fx</span>
+              <span style="font-size:10px;color:#222;font-family:monospace">=SOMA(B1:B6)</span>
+            </div>
+            <div style="display:grid;grid-template-columns:20px repeat(4,1fr);gap:2px;">
+              <div style="height:14px;background:#e8ecf0;border-radius:2px"></div>
+              <div style="height:14px;background:#107C41;border-radius:2px;display:flex;align-items:center;justify-content:center"><span style="font-size:8px;color:#fff;font-weight:700">A</span></div>
+              <div style="height:14px;background:#e8ecf0;border-radius:2px;display:flex;align-items:center;justify-content:center"><span style="font-size:8px;color:#666;font-weight:700">B</span></div>
+              <div style="height:14px;background:#e8ecf0;border-radius:2px;display:flex;align-items:center;justify-content:center"><span style="font-size:8px;color:#666;font-weight:700">C</span></div>
+              <div style="height:14px;background:#e8f4ed;border-radius:2px;display:flex;align-items:center;justify-content:center"><span style="font-size:8px;color:#065f46;font-weight:700">42</span></div>
+              <div style="height:14px;background:#f8f9fa;border-radius:2px"></div>
+              <div style="height:14px;background:#f8f9fa;border-radius:2px"></div>
+              <div style="height:14px;background:#e8f4ed;border-radius:2px;display:flex;align-items:center;justify-content:center"><span style="font-size:8px;color:#065f46;font-weight:700">7</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon o">🎨</div>
+        <div class="bento-title">Temas &amp; Layouts</div>
+        <p class="bento-text">Slidney oferece 12 temas de cores e múltiplos layouts de slide para apresentações com visual profissional.</p>
+      </div>
+      <!-- Row 3 — EDR (destaque) -->
+      <div class="bento-card dark-bento span3 reveal" style="background:linear-gradient(135deg,#1a1a2e,#0d1117);border:1px solid rgba(198,40,40,.25)">
+        <div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
+          <div style="flex:1;min-width:260px">
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(198,40,40,.2);border:1px solid rgba(198,40,40,.35);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#f87171;letter-spacing:.06em;margin-bottom:14px">🎯 EDR Comportamental</div>
+            <div class="bento-title" style="color:#fff;font-size:18px">Vacinaldo — Detecção e Resposta a Incidentes</div>
+            <p class="bento-text" style="color:#94a3b8;margin-top:8px">Motor EDR com monitoramento comportamental em tempo real. Toda detecção é explicada com sinais de evidência, score de confiança bayesiano (0–100) e classificação por técnica de ataque — proteção inteligente sem depender de serviços externos.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
+              <span style="font-size:12px;background:rgba(198,40,40,.2);color:#f87171;padding:3px 10px;border-radius:6px;font-weight:600;border:1px solid rgba(198,40,40,.3)">ProcessMonitor</span>
+              <span style="font-size:12px;background:rgba(13,71,161,.3);color:#90caf9;padding:3px 10px;border-radius:6px;font-weight:600;border:1px solid rgba(13,71,161,.4)">NetworkMonitor</span>
+              <span style="font-size:12px;background:rgba(46,125,50,.3);color:#81c784;padding:3px 10px;border-radius:6px;font-weight:600;border:1px solid rgba(46,125,50,.4)">RegistryMonitor</span>
+              <span style="font-size:12px;background:rgba(106,27,154,.3);color:#ce93d8;padding:3px 10px;border-radius:6px;font-weight:600;border:1px solid rgba(106,27,154,.4)">AuditLogger JSONL</span>
+              <span style="font-size:12px;background:rgba(230,81,0,.3);color:#ffb74d;padding:3px 10px;border-radius:6px;font-weight:600;border:1px solid rgba(230,81,0,.4)">Análise Comportamental</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;min-width:280px;flex:1">
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px">
+              <div style="font-size:20px;margin-bottom:6px">✅</div>
+              <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:4px">Explicabilidade</div>
+              <div style="font-size:11px;color:#8b949e">Sinais, evidências e técnica por detecção</div>
+            </div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px">
+              <div style="font-size:20px;margin-bottom:6px">✅</div>
+              <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:4px">Risco Mensurável</div>
+              <div style="font-size:11px;color:#8b949e">Score bayesiano 0-100 com controle de FP</div>
+            </div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px">
+              <div style="font-size:20px;margin-bottom:6px">✅</div>
+              <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:4px">Trilha de Auditoria</div>
+              <div style="font-size:11px;color:#8b949e">Log JSONL append-only imutável</div>
+            </div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px">
+              <div style="font-size:20px;margin-bottom:6px">✅</div>
+              <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:4px">Robustez Adversarial</div>
+              <div style="font-size:11px;color:#8b949e">LOLBAS, masquerading, dupla extensão</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 4 — Vacinaldo tray + Zé Faxina -->
+      <div class="bento-card reveal" style="border-left:3px solid #C62828">
+        <div class="bento-icon o">🛡️</div>
+        <div class="bento-title">Vacinaldo — Tray Proativo</div>
+        <p class="bento-text">Inicia com o sistema, roda no tray sem abrir janela. Instância única via named pipe IPC. Alertas em balão para ameaças de alto risco.</p>
+      </div>
+      <div class="bento-card reveal" style="border-left:3px solid #E65100">
+        <div class="bento-icon" style="background:#fff3cd">🧹</div>
+        <div class="bento-title">Zé Faxina — Limpeza Profunda</div>
+        <p class="bento-text">18 categorias de limpeza, scanner de registro, gerenciador de inicialização e desinstalador — com histórico persistente.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon b">📦</div>
+        <div class="bento-title">Instalador Seletivo</div>
+        <p class="bento-text">Instale apenas os apps que deseja. 5 perfis: Completo, Produtividade, Somente Proteção, Acesso Remoto e Personalizado.</p>
+      </div>
+      <!-- Row 5 -->
+      <div class="bento-card reveal">
+        <div class="bento-icon p">🔍</div>
+        <div class="bento-title">Localizar &amp; Substituir</div>
+        <p class="bento-text">Localização com filtros de maiúsculas/minúsculas, substituição em lote e navegação passo a passo.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon g">⚗️</div>
+        <div class="bento-title">Motor de Fórmulas</div>
+        <p class="bento-text">Referências de célula (A1+B2), SOMA, MÉDIA, MÁXIMO, MÍNIMO e CONT com intervalos completos (A1:C10).</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon a">✨</div>
+        <div class="bento-title">Professional Community Edition</div>
+        <p class="bento-text">Todos os 6 apps exibem "Professional Community Edition" — sem versão paga, sem recursos bloqueados.</p>
+      </div>
+
+      <!-- Row 6 — EspiaDesk destaque -->
+      <div class="bento-card span3 reveal" style="background:linear-gradient(135deg,#1a0a2e,#2d1054);border:1px solid rgba(123,45,139,.35);color:#fff">
+        <div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
+          <div style="flex:1;min-width:260px">
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.4);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#c4b5fd;letter-spacing:.06em;margin-bottom:14px">🖥 EspiaDesk — Acesso Remoto</div>
+            <div class="bento-title" style="color:#fff;font-size:18px">EspiaDesk — Controle Remoto Seguro e Criptografado</div>
+            <p class="bento-text" style="color:#c4b5fd;margin-top:8px">Acesse qualquer PC da rede com streaming de tela em tempo real, controle total de mouse e teclado, chat, transferência de arquivos e sincronização de área de transferência — tudo criptografado com RSA 2048 + AES-256, sem servidor intermediário.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
+              <span style="font-size:12px;background:rgba(123,45,139,.3);color:#e9d5ff;padding:3px 10px;border-radius:6px;font-weight:600;border:1px solid rgba(123,45,139,.5)">RSA 2048</span>
+              <span style="font-size:12px;background:rgba(123,45,139,.3);color:#e9d5ff;padding:3px 10px;border-radius:6px;font-weight:600;border:1px solid rgba(123,45,139,.5)">AES-256</span>
+              <span style="font-size:12px;background:rgba(123,45,139,.3);color:#e9d5ff;padding:3px 10px;border-radius:6px;font-weight:600;border:1px solid rgba(123,45,139,.5)">Sem servidor</span>
+              <span style="font-size:12px;background:rgba(123,45,139,.3);color:#e9d5ff;padding:3px 10px;border-radius:6px;font-weight:600;border:1px solid rgba(123,45,139,.5)">Chat em tempo real</span>
+              <span style="font-size:12px;background:rgba(123,45,139,.3);color:#e9d5ff;padding:3px 10px;border-radius:6px;font-weight:600;border:1px solid rgba(123,45,139,.5)">Transferência de Arquivos</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;min-width:280px;flex:1">
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(168,85,247,.25);border-radius:10px;padding:14px">
+              <div style="font-size:20px;margin-bottom:6px">🖥️</div>
+              <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:4px">Streaming HD</div>
+              <div style="font-size:11px;color:#a78bfa">JPEG comprimido, FPS configurável e baixa latência</div>
+            </div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(168,85,247,.25);border-radius:10px;padding:14px">
+              <div style="font-size:20px;margin-bottom:6px">🔐</div>
+              <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:4px">Criptografia Ponta a Ponta</div>
+              <div style="font-size:11px;color:#a78bfa">RSA para troca de chaves, AES-256 na sessão</div>
+            </div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(168,85,247,.25);border-radius:10px;padding:14px">
+              <div style="font-size:20px;margin-bottom:6px">⌨️</div>
+              <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:4px">Controle Total</div>
+              <div style="font-size:11px;color:#a78bfa">Mouse, teclado e área de transferência em tempo real</div>
+            </div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(168,85,247,.25);border-radius:10px;padding:14px">
+              <div style="font-size:20px;margin-bottom:6px">📁</div>
+              <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:4px">Transferência de Arquivos</div>
+              <div style="font-size:11px;color:#a78bfa">Envio e recebimento de arquivos durante a sessão</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ESPIADESK SECTION ═══ -->
+<section id="espiadesk" style="padding:80px 0;background:#0d0a1a">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:680px;margin:0 auto 56px">
+      <span class="badge" style="background:rgba(168,85,247,.2);color:#c4b5fd;border:1px solid rgba(168,85,247,.3)">🖥 Acesso Remoto</span>
+      <h2 class="section-title" style="color:#fff">EspiaDesk<br><span style="color:#a855f7">Acesso remoto da Suite.</span></h2>
+      <p class="section-sub" style="color:#94a3b8;margin:12px auto 0">Controle remotamente qualquer PC da rede com criptografia de sessão. Sem servidores de terceiros, sem cadastro — só você e o destino.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center" class="reveal">
+      <!-- Mockup EspiaDesk -->
+      <div>
+        <div style="background:#1e1340;border-radius:14px;border:1px solid rgba(168,85,247,.3);box-shadow:0 32px 80px rgba(123,45,139,.4);overflow:hidden">
+          <!-- Title bar -->
+          <div style="background:#150d30;height:36px;display:flex;align-items:center;padding:0 14px;gap:8px;border-bottom:1px solid rgba(168,85,247,.2)">
+            <div style="width:11px;height:11px;border-radius:50%;background:#ff5f56"></div>
+            <div style="width:11px;height:11px;border-radius:50%;background:#ffbd2e"></div>
+            <div style="width:11px;height:11px;border-radius:50%;background:#27c93f"></div>
+            <span style="color:#a78bfa;font-size:11px;margin-left:12px;font-weight:700">EspiaDesk</span>
+            <span style="margin-left:auto;font-size:9px;color:rgba(168,85,247,.6);font-weight:600">PCE</span>
+          </div>
+          <!-- Ribbon purple -->
+          <div style="background:#7B2D8B;height:26px;display:flex;align-items:center;padding:0 12px;gap:18px">
+            <span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:700;letter-spacing:.04em">ARQUIVO</span>
+            <span style="font-size:9px;color:#fff;font-weight:700;letter-spacing:.04em;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:3px">INÍCIO</span>
+            <span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:700;letter-spacing:.04em">SESSÃO</span>
+            <span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:700;letter-spacing:.04em">TRANSFERIR</span>
+          </div>
+          <!-- Body -->
+          <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <!-- Left panel: local -->
+            <div style="background:#150d30;border-radius:8px;border:1px solid rgba(168,85,247,.2);padding:14px">
+              <div style="font-size:9px;font-weight:700;color:#a78bfa;letter-spacing:.08em;margin-bottom:10px">ESTE COMPUTADOR</div>
+              <div style="background:#7B2D8B;border-radius:6px;padding:10px;text-align:center;margin-bottom:8px">
+                <div style="font-size:20px;font-weight:900;color:#fff;letter-spacing:2px">927 461</div>
+                <div style="font-size:8px;color:rgba(255,255,255,.6);margin-top:2px">Seu ID de Sessão</div>
+              </div>
+              <div style="background:rgba(39,201,63,.1);border:1px solid rgba(39,201,63,.3);border-radius:5px;padding:6px 8px;display:flex;align-items:center;gap:6px">
+                <div style="width:7px;height:7px;border-radius:50%;background:#27c93f"></div>
+                <span style="font-size:9px;color:#4ade80;font-weight:600">Pronto para conexão</span>
+              </div>
+            </div>
+            <!-- Right panel: connect -->
+            <div style="background:#150d30;border-radius:8px;border:1px solid rgba(168,85,247,.2);padding:14px">
+              <div style="font-size:9px;font-weight:700;color:#a78bfa;letter-spacing:.08em;margin-bottom:10px">CONECTAR A</div>
+              <div style="background:#1e1340;border:1px solid rgba(168,85,247,.4);border-radius:5px;padding:6px 8px;margin-bottom:8px;font-size:10px;color:#e9d5ff">192.168.1.42</div>
+              <div style="background:#7B2D8B;border-radius:5px;padding:7px;text-align:center;margin-bottom:6px">
+                <span style="font-size:10px;font-weight:700;color:#fff">🖥 Conectar</span>
+              </div>
+              <div style="font-size:8px;color:#6d28d9;text-align:center">Conexão criptografada AES-256</div>
+            </div>
+          </div>
+          <!-- Session preview -->
+          <div style="margin:0 16px 16px;background:#0f0a20;border-radius:8px;border:1px solid rgba(168,85,247,.15);padding:10px;display:flex;align-items:center;justify-content:center;height:60px">
+            <span style="font-size:11px;color:#4c1d95">Nenhuma sessão ativa · aguardando conexão…</span>
+          </div>
+        </div>
+      </div>
+      <!-- Feature list -->
+      <div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:18px">
+          <li style="display:flex;align-items:flex-start;gap:14px">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(123,45,139,.25);border:1px solid rgba(168,85,247,.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🖥️</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px">Streaming de Tela em Tempo Real</div>
+              <div style="font-size:13px;color:#94a3b8;line-height:1.6">Captura GDI+ com compressão JPEG adaptativa. FPS configurável para equilíbrio perfeito entre qualidade e velocidade.</div>
+            </div>
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:14px">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(123,45,139,.25);border:1px solid rgba(168,85,247,.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🔐</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px">Criptografia Ponta a Ponta</div>
+              <div style="font-size:13px;color:#94a3b8;line-height:1.6">Troca de chaves RSA 2048-bit na autenticação. Sessão inteira protegida por AES-256. Senha com hash SHA-256.</div>
+            </div>
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:14px">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(123,45,139,.25);border:1px solid rgba(168,85,247,.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">💬</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px">Chat &amp; Área de Transferência</div>
+              <div style="font-size:13px;color:#94a3b8;line-height:1.6">Chat em tempo real durante a sessão e sincronização automática da área de transferência entre os dois PCs.</div>
+            </div>
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:14px">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(123,45,139,.25);border:1px solid rgba(168,85,247,.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📁</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px">Transferência de Arquivos</div>
+              <div style="font-size:13px;color:#94a3b8;line-height:1.6">Envie e receba arquivos diretamente durante a sessão remota, sem aplicativos extras ou serviços de nuvem.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DEEP DIVE ═══ -->
+<section id="deep">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto 20px">
+      <span class="badge badge-green">✦ Conheça cada app</span>
+      <h2 class="section-title">Feito com carinho,<br>do zero.</h2>
+    </div>
+
+    <!-- Letrúcio -->
+    <div class="deep-block reveal">
+      <div>
+        <div class="deep-eyebrow blue">Letrúcio — Editor de Texto</div>
+        <h3 class="deep-title">Escreva com a<br>liberdade que merece.</h3>
+        <p class="deep-desc">Processador de texto completo com ribbon profissional, suporte a documentos ricos e compatibilidade com os formatos de documento mais utilizados no mercado.</p>
+        <ul class="deep-feats blue">
+          <li>Formatação: negrito, itálico, sublinhado, tachado, sobrescrito, subscrito</li>
+          <li>Estilos de parágrafo, espaçamento e alinhamento</li>
+          <li>Inserir tabelas, imagens, símbolos e data/hora</li>
+          <li>Verificação ortográfica integrada ao sistema</li>
+          <li>Localizar &amp; Substituir com filtros avançados</li>
+          <li>Contagem de palavras e zoom em tempo real</li>
+          <li>Exporta para .docx, .odt, .rtf e .txt</li>
+        </ul>
+      </div>
+      <div class="mock-frame">
+        <div class="mf-bar" style="background:#e8ecf0">
+          <div class="mf-dot" style="background:#ff5f56"></div>
+          <div class="mf-dot" style="background:#ffbd2e"></div>
+          <div class="mf-dot" style="background:#27c93f"></div>
+          <span style="font-size:10px;color:#666;margin-left:8px;font-weight:500">Documento1 — Letrúcio</span>
+          <span style="margin-left:auto;font-size:9px;color:#7c3aed;font-weight:600">PCE</span>
+        </div>
+        <div class="mf-ribbon" style="background:#2B579A">
+          <span class="mf-ri">ARQUIVO</span>
+          <span class="mf-ri" style="background:rgba(255,255,255,.2);padding:2px 8px;border-radius:3px">INÍCIO</span>
+          <span class="mf-ri">INSERIR</span>
+          <span class="mf-ri">LAYOUT</span>
+        </div>
+        <div style="background:#dce7f5;padding:6px 10px;display:flex;gap:8px;align-items:center;border-bottom:1px solid #c8d9f0">
+          <div style="width:22px;height:22px;background:#fff;border:1px solid #b8cce4;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#2B579A">B</div>
+          <div style="width:22px;height:22px;background:#fff;border:1px solid #b8cce4;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-style:italic;color:#2B579A">I</div>
+          <div style="width:22px;height:22px;background:#fff;border:1px solid #b8cce4;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;text-decoration:underline;color:#2B579A">U</div>
+          <div style="width:1px;height:20px;background:#b8cce4"></div>
+          <div style="font-size:10px;color:#2B579A;font-weight:600">Segoe UI ▾</div>
+          <div style="font-size:10px;color:#2B579A;font-weight:600">12 ▾</div>
+        </div>
+        <div class="mf-body" style="background:#f5f5f5;padding:16px 20px;min-height:160px">
+          <div style="background:#fff;padding:20px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.08)">
+            <div style="width:70%;height:10px;background:#222;border-radius:2px;margin-bottom:14px"></div>
+            <div style="width:100%;height:7px;background:#ddd;border-radius:2px;margin-bottom:6px"></div>
+            <div style="width:95%;height:7px;background:#ddd;border-radius:2px;margin-bottom:6px"></div>
+            <div style="width:60%;height:7px;background:#ddd;border-radius:2px;margin-bottom:14px"></div>
+            <div style="width:40%;height:8px;background:#2B579A;border-radius:2px;margin-bottom:10px"></div>
+            <div style="width:100%;height:7px;background:#ddd;border-radius:2px;margin-bottom:6px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Planílson -->
+    <div class="deep-block flip reveal">
+      <div>
+        <div class="deep-eyebrow green">Planílson — Planilha Eletrônica</div>
+        <h3 class="deep-title">Calcule sem<br>fronteiras.</h3>
+        <p class="deep-desc">Grade de células que se expande infinitamente ao rolar — coluna a coluna, linha a linha — sem limites. Motor de fórmulas completo.</p>
+        <ul class="deep-feats green">
+          <li>Grade infinita: A→Z→AA→AB… até 1024 colunas, 100.000 linhas</li>
+          <li>Fórmulas com referências de célula e intervalos (A1:C10)</li>
+          <li>SOMA, MÉDIA, MÁXIMO, MÍNIMO, CONT</li>
+          <li>Formatação monetária, percentual e decimal</li>
+          <li>Alinhamento por coluna e classificação</li>
+          <li>Exporta para .xlsx, .ods e .csv</li>
+        </ul>
+      </div>
+      <div class="mock-frame">
+        <div class="mf-bar" style="background:#e8ecf0">
+          <div class="mf-dot" style="background:#ff5f56"></div>
+          <div class="mf-dot" style="background:#ffbd2e"></div>
+          <div class="mf-dot" style="background:#27c93f"></div>
+          <span style="font-size:10px;color:#666;margin-left:8px;font-weight:500">Pasta1 — Planílson</span>
+        </div>
+        <div class="mf-ribbon" style="background:#107C41">
+          <span class="mf-ri">ARQUIVO</span>
+          <span class="mf-ri" style="background:rgba(255,255,255,.2);padding:2px 8px;border-radius:3px">INÍCIO</span>
+          <span class="mf-ri">FÓRMULAS</span>
+        </div>
+        <div class="mf-body" style="padding:0">
+          <div style="overflow:hidden">
+            <div style="display:grid;grid-template-columns:28px repeat(6,1fr);background:#f3f4f6;border-bottom:1px solid #ddd">
+              <div style="height:18px;background:#e8ecf0"></div>
+              <div style="height:18px;background:#107C41;display:flex;align-items:center;justify-content:center"><span style="font-size:8px;color:#fff;font-weight:700">A</span></div>
+              <div style="height:18px;background:#e8ecf0;display:flex;align-items:center;justify-content:center"><span style="font-size:8px;color:#555;font-weight:700">B</span></div>
+              <div style="height:18px;background:#e8ecf0;display:flex;align-items:center;justify-content:center"><span style="font-size:8px;color:#555;font-weight:700">C</span></div>
+              <div style="height:18px;background:#e8ecf0;display:flex;align-items:center;justify-content:center"><span style="font-size:8px;color:#555;font-weight:700">D</span></div>
+              <div style="height:18px;background:#e8ecf0;display:flex;align-items:center;justify-content:center"><span style="font-size:8px;color:#555;font-weight:700">E</span></div>
+              <div style="height:18px;background:#e8ecf0;display:flex;align-items:center;justify-content:center"><span style="font-size:8px;color:#555;font-weight:700">F</span></div>
+            </div>
+            <div id="sheet-rows"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slidney -->
+    <div class="deep-block reveal">
+      <div>
+        <div class="deep-eyebrow orange">Slidney — Apresentações</div>
+        <h3 class="deep-title">Apresente com<br>impacto.</h3>
+        <p class="deep-desc">Editor de apresentações com slides, temas de cores, múltiplos layouts e exportação para os formatos de apresentação mais amplamente suportados.</p>
+        <ul class="deep-feats orange">
+          <li>Adicionar, duplicar, remover e reordenar slides</li>
+          <li>Layouts: título+conteúdo, somente título, somente conteúdo</li>
+          <li>12 temas de cores pré-definidos</li>
+          <li>Formatação de texto: negrito, tamanho, cor, alinhamento</li>
+          <li>Painel lateral com preview em tempo real</li>
+          <li>Exporta para .pptx, .odp e .json nativo</li>
+        </ul>
+      </div>
+      <div class="mock-frame">
+        <div class="mf-bar" style="background:#e8ecf0">
+          <div class="mf-dot" style="background:#ff5f56"></div>
+          <div class="mf-dot" style="background:#ffbd2e"></div>
+          <div class="mf-dot" style="background:#27c93f"></div>
+          <span style="font-size:10px;color:#666;margin-left:8px;font-weight:500">Apresentação1 — Slidney</span>
+        </div>
+        <div class="mf-ribbon" style="background:#C43E1C">
+          <span class="mf-ri">ARQUIVO</span>
+          <span class="mf-ri" style="background:rgba(255,255,255,.2);padding:2px 8px;border-radius:3px">INÍCIO</span>
+          <span class="mf-ri">INSERIR</span>
+        </div>
+        <div class="mf-body" style="background:#3a3a3a;padding:8px;display:flex;gap:8px">
+          <div style="width:56px;display:flex;flex-direction:column;gap:4px">
+            <div style="background:#C43E1C;border-radius:4px;height:40px;border:2px solid #fff;padding:4px">
+              <div style="width:100%;height:6px;background:rgba(255,255,255,.8);border-radius:1px;margin-bottom:4px"></div>
+              <div style="width:80%;height:4px;background:rgba(255,255,255,.5);border-radius:1px"></div>
+            </div>
+            <div style="background:#555;border-radius:4px;height:40px;border:1px solid #666;padding:4px">
+              <div style="width:100%;height:6px;background:rgba(255,255,255,.4);border-radius:1px;margin-bottom:4px"></div>
+              <div style="width:60%;height:4px;background:rgba(255,255,255,.3);border-radius:1px"></div>
+            </div>
+          </div>
+          <div style="flex:1;background:#C43E1C;border-radius:6px;padding:16px 20px;display:flex;flex-direction:column;justify-content:center;min-height:100px">
+            <div style="width:75%;height:11px;background:rgba(255,255,255,.9);border-radius:2px;margin-bottom:10px"></div>
+            <div style="width:90%;height:7px;background:rgba(255,255,255,.55);border-radius:2px;margin-bottom:5px"></div>
+            <div style="width:65%;height:7px;background:rgba(255,255,255,.4);border-radius:2px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vacinaldo -->
+    <div class="deep-block flip reveal">
+      <div>
+        <div class="deep-eyebrow red">Vacinaldo — Segurança &amp; EDR</div>
+        <h3 class="deep-title">Proteja com inteligência.<br>Detecte com precisão.</h3>
+        <p class="deep-desc">O Vacinaldo combina análise heurística de arquivos com um motor EDR comportamental — cada ameaça é explicada com evidências, score de confiança bayesiano e classificação por técnica de ataque, tudo processado localmente sem dependências externas.</p>
+        <ul class="deep-feats red">
+          <li>EDR em tempo real: ProcessMonitor, NetworkMonitor, RegistryMonitor</li>
+          <li>Classificação de técnicas de ataque — 15 categorias comportamentais</li>
+          <li>Score de confiança bayesiano (0–100) com controle de falso positivo</li>
+          <li>Log de auditoria JSONL append-only imutável e à prova de adulteração</li>
+          <li>Proteção em tempo real com FileSystemWatcher</li>
+          <li>Roda no tray — sem janela ao iniciar, instância única via IPC</li>
+          <li>Quarentena automática com obfuscação XOR</li>
+        </ul>
+      </div>
+      <div class="mock-frame">
+        <div class="mf-bar" style="background:#1A1A2E">
+          <span style="font-size:14px">🛡</span>
+          <span style="font-size:11px;color:#fff;font-weight:700;margin-left:4px">Vacinaldo</span>
+          <span style="font-size:10px;color:rgba(255,255,255,.7);margin-left:8px">— Proteção do Sistema</span>
+              <span style="margin-left:auto;font-size:9px;color:#90caf9;font-weight:700">🔵 EDR</span>
+        </div>
+        <div style="display:grid;grid-template-columns:155px 1fr;height:200px">
+          <div style="background:#1a1a2e;padding:12px 0">
+            <div style="padding:9px 14px;font-size:10px;color:#666">🏠 Dashboard</div>
+            <div style="padding:9px 14px;font-size:10px;color:#666">🔍 Varredura</div>
+            <div style="padding:9px 14px;font-size:10px;color:#666">🔒 Quarentena</div>
+            <div style="padding:9px 14px;font-size:10px;color:#666">📋 Histórico</div>
+            <div style="padding:9px 14px;background:#C62828;border-left:3px solid #ff5252;font-size:10px;font-weight:700;color:#fff">🎯 EDR</div>
+          </div>
+          <div style="background:#fff;overflow:hidden">
+            <div style="background:#1A1A2E;padding:8px 12px">
+              <div style="font-size:10px;font-weight:700;color:#fff">EDR — Detecção e Resposta</div>
+              <div style="font-size:9px;color:#90caf9">EDR Comportamental · Auditoria JSONL</div>
+            </div>
+            <div style="padding:8px 10px;display:flex;gap:5px;border-bottom:1px solid #eee;background:#fafafa">
+              <span style="font-size:9px;font-weight:700;color:#C62828;padding:2px 7px;border-bottom:2px solid #C62828">Processos</span>
+              <span style="font-size:9px;color:#888;padding:2px 7px">Conexões</span>
+              <span style="font-size:9px;color:#888;padding:2px 7px">Timeline</span>
+              <span style="font-size:9px;color:#888;padding:2px 7px">Relatório</span>
+            </div>
+            <div style="padding:8px 10px;display:flex;flex-direction:column;gap:4px">
+              <div style="display:grid;grid-template-columns:90px 30px 55px 1fr;gap:4px;padding:4px 0;border-bottom:1px solid #f0f0f0">
+                <span style="font-size:8px;font-weight:700;color:#333">svchost.exe</span>
+                <span style="font-size:8px;color:#888">1234</span>
+                <span style="font-size:8px;font-weight:700;color:#e53935">⛔ Crítico</span>
+                <span style="font-size:8px;color:#666">T1036*…</span>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 30px 55px 1fr;gap:4px;padding:4px 0;border-bottom:1px solid #f0f0f0">
+                <span style="font-size:8px;font-weight:600;color:#333">powershell.exe</span>
+                <span style="font-size:8px;color:#888">8812</span>
+                <span style="font-size:8px;font-weight:700;color:#f57f17">🟡 Baixo</span>
+                <span style="font-size:8px;color:#666">T1059*</span>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 30px 55px 1fr;gap:4px;padding:4px 0">
+                <span style="font-size:8px;color:#333">explorer.exe</span>
+                <span style="font-size:8px;color:#888">412</span>
+                <span style="font-size:8px;color:#388e3c">✅ Info</span>
+                <span style="font-size:8px;color:#aaa">Normal</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EspiaDesk -->
+    <div class="deep-block reveal">
+      <div>
+        <div class="deep-eyebrow purple">EspiaDesk — Acesso Remoto</div>
+        <h3 class="deep-title">Acesse qualquer PC.<br>Com segurança total.</h3>
+        <p class="deep-desc">O EspiaDesk oferece acesso remoto completo e seguro integrado à sua suite Escritorio — sem servidores de terceiros, sem assinaturas. Conexão direta, criptografada ponta a ponta.</p>
+        <ul class="deep-feats purple">
+          <li>Streaming de tela com captura GDI+ e compressão JPEG adaptativa</li>
+          <li>Controle total de mouse e teclado via API nativa do sistema</li>
+          <li>Criptografia RSA 2048-bit para troca de chaves na autenticação</li>
+          <li>Sessão cifrada com AES-256 — senha protegida com SHA-256</li>
+          <li>Chat em tempo real e sincronização da área de transferência</li>
+          <li>Transferência de arquivos durante a sessão ativa</li>
+          <li>Histórico de conexões recentes e configuração de senha de acesso</li>
+        </ul>
+      </div>
+      <div class="mock-frame" style="background:#0d0a1a;border-color:rgba(168,85,247,.3)">
+        <div class="mf-bar" style="background:#150d30;border-bottom:1px solid rgba(168,85,247,.2)">
+          <div class="mf-dot" style="background:#ff5f56"></div>
+          <div class="mf-dot" style="background:#ffbd2e"></div>
+          <div class="mf-dot" style="background:#27c93f"></div>
+          <span style="font-size:10px;color:#a78bfa;margin-left:8px;font-weight:700">EspiaDesk</span>
+          <span style="margin-left:auto;font-size:9px;color:#6d28d9;font-weight:600">PCE</span>
+        </div>
+        <div class="mf-ribbon" style="background:#7B2D8B">
+          <span class="mf-ri">ARQUIVO</span>
+          <span class="mf-ri" style="background:rgba(255,255,255,.2);padding:2px 8px;border-radius:3px">INÍCIO</span>
+          <span class="mf-ri">SESSÃO</span>
+          <span class="mf-ri">TRANSFERIR</span>
+        </div>
+        <div style="background:#150d30;padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="background:#1e1340;border:1px solid rgba(168,85,247,.25);border-radius:6px;padding:10px">
+            <div style="font-size:7px;font-weight:700;color:#7B2D8B;letter-spacing:.06em;margin-bottom:6px">ESTE COMPUTADOR</div>
+            <div style="background:#7B2D8B;border-radius:4px;padding:7px;text-align:center">
+              <div style="font-size:14px;font-weight:900;color:#fff;letter-spacing:2px">927 461</div>
+              <div style="font-size:7px;color:rgba(255,255,255,.6)">Seu ID</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:5px">
+              <div style="width:5px;height:5px;border-radius:50%;background:#27c93f"></div>
+              <span style="font-size:7px;color:#4ade80;font-weight:600">Pronto</span>
+            </div>
+          </div>
+          <div style="background:#1e1340;border:1px solid rgba(168,85,247,.25);border-radius:6px;padding:10px">
+            <div style="font-size:7px;font-weight:700;color:#7B2D8B;letter-spacing:.06em;margin-bottom:6px">CONECTAR A</div>
+            <div style="background:#0f0a20;border:1px solid rgba(168,85,247,.3);border-radius:3px;padding:4px 6px;font-size:9px;color:#e9d5ff;margin-bottom:5px">192.168.1.42</div>
+            <div style="background:#7B2D8B;border-radius:3px;padding:5px;text-align:center">
+              <span style="font-size:8px;font-weight:700;color:#fff">🖥 Conectar</span>
+            </div>
+          </div>
+        </div>
+        <div style="background:#150d30;padding:8px 10px;display:flex;flex-direction:column;gap:3px;border-top:1px solid rgba(168,85,247,.15)">
+          <div style="font-size:7px;font-weight:700;color:#6d28d9;letter-spacing:.06em;margin-bottom:2px">SESSÃO REMOTA — 192.168.1.10</div>
+          <div style="background:#0f0a20;border-radius:4px;height:50px;border:1px solid rgba(168,85,247,.2);display:flex;align-items:center;justify-content:center">
+            <div style="text-align:center">
+              <div style="font-size:8px;color:#4c1d95">🖥 Tela remota em streaming…</div>
+              <div style="font-size:7px;color:#6d28d9;margin-top:2px">AES-256 · RSA 2048</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Zé Faxina -->
+    <div class="deep-block flip reveal">
+      <div>
+        <div class="deep-eyebrow amber">Zé Faxina — Limpeza do Sistema</div>
+        <h3 class="deep-title">Limpe tudo.<br>Recupere espaço.</h3>
+        <p class="deep-desc">O Zé Faxina é o limpador de sistema da suite — código aberto. Limpa temporários, cache de navegadores, registro e muito mais.</p>
+        <ul class="deep-feats amber">
+          <li>18 categorias de limpeza (sistema + principais navegadores)</li>
+          <li>Fluxo Analisar → Limpar com sumário de espaço</li>
+          <li>Scanner de registro: arquivos ausentes, desinstaladores e fontes</li>
+          <li>Gerenciador de inicialização — ativar/desativar programas</li>
+          <li>Desinstalador integrado com busca</li>
+          <li>Histórico persistente das últimas 50 limpezas</li>
+        </ul>
+      </div>
+      <div class="mock-frame">
+        <div class="mf-bar" style="background:#E65100">
+          <span style="font-size:16px">🧹</span>
+          <span style="font-size:11px;color:#fff;font-weight:700;margin-left:4px">Zé Faxina</span>
+          <span style="font-size:10px;color:rgba(255,255,255,.7);margin-left:8px">— Limpeza do Sistema</span>
+          <span style="margin-left:auto;font-size:9px;color:rgba(255,255,255,.6);font-weight:600">PCE</span>
+        </div>
+        <div style="display:grid;grid-template-columns:140px 1fr;height:180px">
+          <div style="background:#fafafa;border-right:1px solid #eee;padding:6px 0">
+            <div style="padding:8px 12px;background:#FFF3E0;border-left:3px solid #E65100;font-size:10px;font-weight:700;color:#E65100">🧹 Limpeza</div>
+            <div style="padding:7px 12px;font-size:10px;color:#666">🔧 Registro</div>
+            <div style="padding:7px 12px;font-size:10px;color:#666">🛠 Ferramentas</div>
+            <div style="padding:7px 12px;font-size:10px;color:#666">📋 Histórico</div>
+            <div style="padding:7px 12px;font-size:10px;color:#666">⚙ Opções</div>
+          </div>
+          <div style="padding:12px">
+            <div style="background:#FFF3E0;border-radius:6px;padding:8px;display:flex;justify-content:space-around;margin-bottom:10px">
+              <div style="text-align:center"><div style="font-size:16px;font-weight:800;color:#E65100">1.2 GB</div><div style="font-size:9px;color:#888">Espaço</div></div>
+              <div style="text-align:center"><div style="font-size:16px;font-weight:800;color:#E65100">347</div><div style="font-size:9px;color:#888">Arquivos</div></div>
+              <div style="text-align:center"><div style="font-size:16px;font-weight:800;color:#E65100">8</div><div style="font-size:9px;color:#888">Categorias</div></div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <div style="flex:1;background:#fff;border:1.5px solid #E65100;border-radius:5px;padding:6px;text-align:center;font-size:10px;font-weight:700;color:#E65100">🔍 Analisar</div>
+              <div style="flex:1;background:#E65100;border-radius:5px;padding:6px;text-align:center;font-size:10px;font-weight:700;color:#fff">🧹 Limpar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OPEN SOURCE ═══ -->
+<section id="opensource">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <span class="badge badge-dark">✦ Código Aberto</span>
+      <h2 class="section-title">Software livre de verdade.</h2>
+      <p class="section-sub">Sem assinatura, sem telemetria, sem propaganda. Escritorio PCE com 6 apps é 100% gratuito e sempre será.</p>
+    </div>
+    <div class="os-grid">
+      <div class="os-card reveal">
+        <div class="os-card-icon">🔓</div>
+        <div class="os-card-title">Licença MIT</div>
+        <p class="os-card-desc">Use, copie, modifique e distribua livremente. A licença mais permissiva do mundo.</p>
+      </div>
+      <div class="os-card reveal">
+        <div class="os-card-icon">💰</div>
+        <div class="os-card-title">Gratuito Para Sempre</div>
+        <p class="os-card-desc">Sem plano premium, sem trial. O PCE é o único plano — e é grátis.</p>
+      </div>
+      <div class="os-card reveal">
+        <div class="os-card-icon">🚫</div>
+        <div class="os-card-title">Sem Telemetria</div>
+        <p class="os-card-desc">Nenhum dado seu é coletado. Funciona 100% offline, sem conexão com servidores.</p>
+      </div>
+      <div class="os-card reveal">
+        <div class="os-card-icon">🤝</div>
+        <div class="os-card-title">Contribuições Abertas</div>
+        <p class="os-card-desc">Fork, issues e pull requests são bem-vindos. Construa junto com a comunidade.</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px" class="reveal">
+      <a href="https://github.com/edivanccastro/escritorio" target="_blank" class="btn btn-lg" style="background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.2);font-size:15px;padding:14px 32px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58 0-.28-.01-1.04-.01-2.04-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        Ver código-fonte no GitHub
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FORMATS ═══ -->
+<section id="formats" style="padding:80px 0">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto 48px">
+      <span class="badge badge-green">✦ Compatibilidade</span>
+      <h2 class="section-title">Abre tudo.<br>Salva tudo.</h2>
+      <p class="section-sub" style="margin:12px auto 0">Suporta os formatos mais utilizados no mercado — proprietários e abertos. Seus arquivos, nas suas mãos.</p>
+    </div>
+    <div class="fmt-grid">
+      <div class="fmt-card reveal">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="width:36px;height:36px;background:#dbeafe;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px">📝</div>
+          <div class="fmt-card-title" style="margin:0">Letrúcio</div>
+        </div>
+        <div class="fmt-chips">
+          <span class="fmt-chip fc-ms">.docx</span>
+          <span class="fmt-chip fc-odf">.odt</span>
+          <span class="fmt-chip fc-gen">.rtf</span>
+          <span class="fmt-chip fc-gen">.txt</span>
+        </div>
+      </div>
+      <div class="fmt-card reveal">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="width:36px;height:36px;background:#d1fae5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px">📊</div>
+          <div class="fmt-card-title" style="margin:0">Planílson</div>
+        </div>
+        <div class="fmt-chips">
+          <span class="fmt-chip fc-ms">.xlsx</span>
+          <span class="fmt-chip fc-odf">.ods</span>
+          <span class="fmt-chip fc-gen">.csv</span>
+        </div>
+      </div>
+      <div class="fmt-card reveal">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="width:36px;height:36px;background:#fee2e2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px">🎯</div>
+          <div class="fmt-card-title" style="margin:0">Slidney</div>
+        </div>
+        <div class="fmt-chips">
+          <span class="fmt-chip fc-ms">.pptx</span>
+          <span class="fmt-chip fc-odf">.odp</span>
+          <span class="fmt-chip fc-gen">.json</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:24px;margin-top:36px;flex-wrap:wrap" class="reveal">
+      <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#666">
+        <span style="width:12px;height:12px;background:#dbeafe;border-radius:3px;display:inline-block"></span> Formato Proprietário (.docx, .xlsx, .pptx)
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#666">
+        <span style="width:12px;height:12px;background:#d1fae5;border-radius:3px;display:inline-block"></span> Formato Aberto — ODF (.odt, .ods, .odp)
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#666">
+        <span style="width:12px;height:12px;background:#f3f4f6;border:1px solid #ddd;border-radius:3px;display:inline-block"></span> Formato Universal (.rtf, .csv, .txt, .json)
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DOWNLOAD ═══ -->
+<section id="download">
+  <div class="container">
+    <div class="download-box reveal">
+      <div class="download-title">Pronto para começar?</div>
+      <div class="download-pce">Escritorio — Professional Community Edition v1.0.0 · EDR Comportamental + Acesso Remoto</div>
+      <p class="download-sub">6 aplicativos em um instalador. EDR comportamental, proteção inteligente, limpeza, produtividade e acesso remoto seguro. Funciona offline, sem cadastro, sem assinatura, para sempre gratuito.</p>
+      <div class="download-actions">
+        <a href="dist/installer/escritorio-setup.exe" class="btn btn-white btn-xl">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Baixar Escritorio para Windows
+        </a>
+        <a href="https://github.com/edivanccastro/escritorio" target="_blank" class="btn btn-outline-white btn-xl">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58 0-.28-.01-1.04-.01-2.04-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          Ver no GitHub
+        </a>
+      </div>
+      <p class="download-note">Windows 10/11 · 64-bit · .NET 8 Runtime incluso · Licença MIT · EDR Comportamental · Acesso Remoto · Instalação seletiva por app</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <div class="logo-mark">E</div>
+          Escritorio
+        </a><br>
+        <span class="footer-pce">Professional Community Edition</span>
+        <p>Suite completa e gratuita para Windows com EDR comportamental e acesso remoto. Letrúcio, Planílson, Slidney, Vacinaldo, Zé Faxina e EspiaDesk — feito com ❤️ pela comunidade.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Aplicativos</h4>
+        <ul>
+          <li><a href="#deep">Letrúcio</a></li>
+          <li><a href="#deep">Planílson</a></li>
+          <li><a href="#deep">Slidney</a></li>
+          <li><a href="#deep">Vacinaldo</a></li>
+          <li><a href="#deep">Zé Faxina</a></li>
+          <li><a href="#espiadesk">EspiaDesk</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Projeto</h4>
+        <ul>
+          <li><a href="https://github.com/edivanccastro/escritorio" target="_blank">GitHub</a></li>
+          <li><a href="https://github.com/edivanccastro/escritorio/issues" target="_blank">Reportar Bug</a></li>
+          <li><a href="https://github.com/edivanccastro/escritorio/blob/main/LICENSE" target="_blank">Licença MIT</a></li>
+          <li><a href="https://github.com/edivanccastro/escritorio/releases" target="_blank">Releases</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Formatos</h4>
+        <ul>
+          <li><a href="#formats">.docx / .odt / .rtf</a></li>
+          <li><a href="#formats">.xlsx / .ods / .csv</a></li>
+          <li><a href="#formats">.pptx / .odp / .json</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Escritorio PCE — Distribuído sob a <strong style="color:#4ade80">Licença MIT</strong></p>
+      <span class="mit-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Professional Community Edition · MIT License
+      </span>
+    </div>
+  </div>
+
+        <!-- Disclaimer de marcas de terceiros -->
+        <div style="border-top:1px solid rgba(255,255,255,0.1);margin-top:32px;padding-top:20px;font-size:11px;color:rgba(255,255,255,0.4);line-height:1.8;text-align:center;">
+          Microsoft, Windows, Word, Excel, PowerPoint e .NET são marcas registradas da Microsoft Corporation.
+          MITRE ATT&amp;CK® é marca registrada da The MITRE Corporation.
+          Google Chrome, Mozilla Firefox e Microsoft Edge são marcas de seus respectivos titulares.
+          Todos os outros nomes de produtos e marcas são propriedade de seus respectivos donos.
+          Escritorio não é afiliado, patrocinado ou endossado por nenhuma das empresas acima.
+          Os formatos .docx, .xlsx e .pptx são baseados no padrão aberto ECMA-376 (OOXML).
+          Fonte Inter © Rasmus Andersson — SIL OFL 1.1.
+          * As técnicas T1036 e T1059 são classificações de segurança genéricas do setor.
+        </div></footer>
+
+<script>
+  function buildHeroRows() {
+    const data = [['Jan','1250','980','270'],['Fev','1480','1100','380'],['Mar','1620','1050','570'],['Abr','1390','990','400']];
+    const container = document.getElementById('hero-rows');
+    if (!container) return;
+    data.forEach((row, ri) => {
+      const div = document.createElement('div');
+      div.style.cssText = 'display:flex;gap:2px;margin-bottom:2px';
+      div.innerHTML = `<div style="width:28px;height:14px;background:#253050;border-radius:2px;display:flex;align-items:center;justify-content:center"><span style="font-size:7px;color:#8b949e;font-weight:600">${ri+1}</span></div>${row.map((v,ci) => `<div style="flex:1;height:14px;background:${ci===0?'#1e3a2f':'#1e2d4a'};border-radius:2px;display:flex;align-items:center;justify-content:center"><span style="font-size:7px;color:${ci===0?'#4ade80':'#94a3b8'};font-weight:600">${v}</span></div>`).join('')}`;
+      container.appendChild(div);
+    });
+  }
+
+  function buildSheetRows() {
+    const data = [['Produto','Qtd','Preço','Total'],['Escritorio','1','R$0,00','R$0,00'],['Planílson','200','R$0,00','R$0,00'],['Letrúcio','150','R$0,00','R$0,00'],['=SOMA(A1:A4)','','','']];
+    const container = document.getElementById('sheet-rows');
+    if (!container) return;
+    data.forEach((row, ri) => {
+      const div = document.createElement('div');
+      div.style.cssText = 'display:grid;grid-template-columns:28px repeat(6,1fr);border-bottom:1px solid #f0f0f0';
+      const isHeader = ri === 0, isFormula = ri === data.length - 1;
+      div.innerHTML = `<div style="height:18px;background:#e8ecf0;display:flex;align-items:center;justify-content:center"><span style="font-size:7px;color:#555;font-weight:600">${ri+1}</span></div>${row.map((v,ci) => `<div style="height:18px;background:${isHeader?'#f0f4f8':isFormula&&ci===0?'#e8f4ed':'#fff'};display:flex;align-items:center;padding:0 4px;border-right:1px solid #f0f0f0"><span style="font-size:7px;color:${isHeader?'#333':isFormula&&ci===0?'#065f46':'#444'};font-weight:${isHeader||isFormula?'700':'400'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%">${v}</span></div>`).join('')}<div style="height:18px;background:#fff;border-right:1px solid #f0f0f0"></div><div style="height:18px;background:#fff"></div>`;
+      container.appendChild(div);
+    });
+  }
+
+  function initReveal() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  }
+
+  function initNav() {
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.boxShadow = window.scrollY > 10 ? '0 2px 20px rgba(0,0,0,.08)' : 'none';
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    buildHeroRows(); buildSheetRows(); initReveal(); initNav();
+  });
+</script>
+</body>
+</html>
+
+

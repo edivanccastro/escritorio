@@ -1,0 +1,64 @@
+# ── Build outputs ─────────────────────────────────────────────────────────────
+bin/
+obj/
+dist/publish/
+dist/installer/
+
+# ── .NET ──────────────────────────────────────────────────────────────────────
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.env
+.venv
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+*.egg
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.vs/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ── Logs e temporários ────────────────────────────────────────────────────────
+*.log
+*.tmp
+*.temp
+*.cache
+
+# ── Certificados e segredos ───────────────────────────────────────────────────
+*.pfx
+*.p12
+*.pem
+*.key
+*.cer
+secrets.json
+appsettings.Production.json
+
+# ── Preview tools ─────────────────────────────────────────────────────────────
+tools/gen-icon/preview_256.png
+tools/gen-icon/preview.ico

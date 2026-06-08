@@ -1,0 +1,16 @@
+﻿<Application x:Class="Vacinaldo.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Escritorio.Shared;component/Theme/Ribbon.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Identidade visual do Vacinaldo (vermelho proteÃ§Ã£o) -->
+            <SolidColorBrush x:Key="AccentBrush"     Color="#C62828" />
+            <SolidColorBrush x:Key="AccentDarkBrush" Color="#8E0000" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+

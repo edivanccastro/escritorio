@@ -1,0 +1,335 @@
+﻿<Window x:Class="Letrucio.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Documento - Letrúcio"
+        Width="1320"
+        Height="820"
+        MinWidth="980"
+        MinHeight="640"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource CanvasBrush}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Barra de titulo + acesso rapido -->
+        <Border Grid.Row="0" Background="{DynamicResource AccentBrush}" Padding="10,5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Width="22" Height="22" CornerRadius="3" Background="White" Margin="0,0,8,0">
+                        <TextBlock Text="L" FontWeight="Bold" FontSize="14"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource AccentBrush}" />
+                    </Border>
+                    <Button Style="{StaticResource QuickAccessButton}" Content="&#xE7C3;" ToolTip="Novo" Click="New_OnClick" />
+                    <Button Style="{StaticResource QuickAccessButton}" Content="&#xE8E5;" ToolTip="Abrir" Click="Open_OnClick" />
+                    <Button Style="{StaticResource QuickAccessButton}" Content="&#xE74E;" ToolTip="Salvar" Click="Save_OnClick" />
+                    <Button Style="{StaticResource QuickAccessButton}" Content="&#xE7A7;" ToolTip="Desfazer" Click="Undo_OnClick" />
+                    <Button Style="{StaticResource QuickAccessButton}" Content="&#xE7A6;" ToolTip="Refazer" Click="Redo_OnClick" />
+                </StackPanel>
+                <TextBlock Grid.Column="1" Style="{StaticResource TitleBarText}"
+                           HorizontalAlignment="Center"
+                           Text="Documento - Letrúcio" />
+                <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource TitleBarText}" Text="Escritorio" Opacity="0.85" FontSize="12"/>
+                    <TextBlock Style="{StaticResource TitleBarText}" Text="Edição Comunitária" Opacity="0.6" FontSize="9"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Faixa de opcoes -->
+        <TabControl Grid.Row="1" Style="{StaticResource RibbonTabControl}" SelectedIndex="1">
+            <TabItem Style="{StaticResource RibbonTabItem}" Header="Arquivo">
+                <StackPanel Orientation="Horizontal" Height="96">
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Documento">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE7C3;" Content="Novo" Click="New_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE8E5;" Content="Abrir" Click="Open_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE74E;" Content="Salvar" Click="Save_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xEDE1;" Content="Salvar Como" Click="SaveAs_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE749;" Content="Imprimir" Click="Print_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Style="{StaticResource RibbonTabItem}" Header="Início">
+                <StackPanel Orientation="Horizontal" Height="96">
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Área de Transferência">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE77F;" Content="Colar"
+                                    Command="Paste" CommandTarget="{Binding ElementName=Editor}" />
+                            <StackPanel VerticalAlignment="Center">
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE8C6;" Content="Recortar"
+                                        Command="Cut" CommandTarget="{Binding ElementName=Editor}" />
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE8C8;" Content="Copiar"
+                                        Command="Copy" CommandTarget="{Binding ElementName=Editor}" />
+                                <ToggleButton x:Name="FormatPainterToggle" Style="{StaticResource RibbonLabeledToggle}"
+                                              Tag="&#xE790;" Content="Pincel" ToolTip="Pincel de Formatação"
+                                              Click="FormatPainter_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Fonte">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="2,2,2,4">
+                                <ComboBox x:Name="FontFamilyBox" Width="150" Height="24"
+                                          IsEditable="True" SelectionChanged="FontFamilyBox_OnSelectionChanged" />
+                                <ComboBox x:Name="FontSizeBox" Width="50" Height="24" Margin="4,0,0,0"
+                                          IsEditable="True" SelectionChanged="FontSizeBox_OnSelectionChanged" />
+                                <Button Style="{StaticResource RibbonIconButton}" Margin="4,0,0,0" FontSize="16"
+                                        Content="&#xE8E8;" ToolTip="Aumentar fonte" Click="GrowFont_OnClick" />
+                                <Button Style="{StaticResource RibbonIconButton}" FontSize="13"
+                                        Content="&#xE8E7;" ToolTip="Diminuir fonte" Click="ShrinkFont_OnClick" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="2,0">
+                                <ToggleButton x:Name="BoldToggle" Style="{StaticResource RibbonToggle}" Content="&#xE8DD;" ToolTip="Negrito (Ctrl+N)" Click="Bold_OnClick" />
+                                <ToggleButton x:Name="ItalicToggle" Style="{StaticResource RibbonToggle}" Content="&#xE8DB;" ToolTip="Itálico (Ctrl+I)" Click="Italic_OnClick" />
+                                <ToggleButton x:Name="UnderlineToggle" Style="{StaticResource RibbonToggle}" Content="&#xE8DC;" ToolTip="Sublinhado (Ctrl+S)" Click="Underline_OnClick" />
+                                <ToggleButton x:Name="StrikeToggle" Style="{StaticResource RibbonToggle}" ToolTip="Tachado" Click="Strikethrough_OnClick">
+                                    <TextBlock Text="abc" FontFamily="Segoe UI" FontSize="11" TextDecorations="Strikethrough" />
+                                </ToggleButton>
+                                <ToggleButton x:Name="SubToggle" Style="{StaticResource RibbonToggle}" ToolTip="Subscrito" Click="Subscript_OnClick">
+                                    <TextBlock FontFamily="Segoe UI" FontSize="12">X<Run BaselineAlignment="Subscript" FontSize="9">2</Run></TextBlock>
+                                </ToggleButton>
+                                <ToggleButton x:Name="SupToggle" Style="{StaticResource RibbonToggle}" ToolTip="Sobrescrito" Click="Superscript_OnClick">
+                                    <TextBlock FontFamily="Segoe UI" FontSize="12">X<Run BaselineAlignment="Superscript" FontSize="9">2</Run></TextBlock>
+                                </ToggleButton>
+                                <Border Style="{StaticResource RibbonSeparator}" />
+                                <Button x:Name="HighlightButton" Style="{StaticResource RibbonIconButton}" Content="&#xE7E6;" ToolTip="Cor de realce do texto" Click="Highlight_OnClick" />
+                                <Button x:Name="FontColorButton" Style="{StaticResource RibbonIconButton}" Content="&#xE8D3;" ToolTip="Cor da fonte" Click="FontColor_OnClick" />
+                                <Button Style="{StaticResource RibbonIconButton}" Content="&#xE75C;" ToolTip="Limpar formatação" Click="ClearFormatting_OnClick" />
+                                <Button x:Name="CaseButton" Style="{StaticResource RibbonIconButton}" FontFamily="Segoe UI" FontSize="12" Content="Aa" ToolTip="Maiúsculas e minúsculas" Click="ChangeCase_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Parágrafo">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="2,2,2,4">
+                                <ToggleButton Style="{StaticResource RibbonToggle}" Content="&#xE8FD;" ToolTip="Lista com marcadores"
+                                              Command="EditingCommands.ToggleBullets" CommandTarget="{Binding ElementName=Editor}" />
+                                <ToggleButton Style="{StaticResource RibbonToggle}" Content="&#xE8FE;" ToolTip="Lista numerada"
+                                              Command="EditingCommands.ToggleNumbering" CommandTarget="{Binding ElementName=Editor}" />
+                                <Border Style="{StaticResource RibbonSeparator}" />
+                                <Button Style="{StaticResource RibbonIconButton}" Content="&#xE72B;" ToolTip="Diminuir recuo"
+                                        Command="EditingCommands.DecreaseIndentation" CommandTarget="{Binding ElementName=Editor}" />
+                                <Button Style="{StaticResource RibbonIconButton}" Content="&#xE72A;" ToolTip="Aumentar recuo"
+                                        Command="EditingCommands.IncreaseIndentation" CommandTarget="{Binding ElementName=Editor}" />
+                                <Button x:Name="SpacingButton" Style="{StaticResource RibbonIconButton}" Content="&#xE742;" ToolTip="Espaçamento entre linhas" Click="LineSpacing_OnClick" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="2,0">
+                                <ToggleButton Style="{StaticResource RibbonToggle}" Content="&#xE8E4;" ToolTip="Alinhar à esquerda"
+                                              Command="EditingCommands.AlignLeft" CommandTarget="{Binding ElementName=Editor}" />
+                                <ToggleButton Style="{StaticResource RibbonToggle}" Content="&#xE8E3;" ToolTip="Centralizar"
+                                              Command="EditingCommands.AlignCenter" CommandTarget="{Binding ElementName=Editor}" />
+                                <ToggleButton Style="{StaticResource RibbonToggle}" Content="&#xE8E2;" ToolTip="Alinhar à direita"
+                                              Command="EditingCommands.AlignRight" CommandTarget="{Binding ElementName=Editor}" />
+                                <ToggleButton Style="{StaticResource RibbonToggle}" Content="&#xE8E5;" ToolTip="Justificar"
+                                              Command="EditingCommands.AlignJustify" CommandTarget="{Binding ElementName=Editor}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Estilos">
+                        <StackPanel VerticalAlignment="Center">
+                            <Button Style="{StaticResource RibbonButton}" Tag="&#xE8D2;" Content="Normal" Click="StyleNormal_OnClick" />
+                            <Button Style="{StaticResource RibbonButton}" Tag="&#xE8D2;" Content="Título 1" Click="StyleHeading1_OnClick" />
+                            <Button Style="{StaticResource RibbonButton}" Tag="&#xE8D2;" Content="Título 2" Click="StyleHeading2_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Edição">
+                        <StackPanel VerticalAlignment="Center">
+                            <Button Style="{StaticResource RibbonButton}" Tag="&#xE721;" Content="Localizar" Click="Find_OnClick" />
+                            <Button Style="{StaticResource RibbonButton}" Tag="&#xE8AC;" Content="Substituir" Click="Replace_OnClick" />
+                            <Button Style="{StaticResource RibbonButton}" Tag="&#xE8B3;" Content="Selecionar Tudo" Click="SelectAll_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Style="{StaticResource RibbonTabItem}" Header="Inserir">
+                <StackPanel Orientation="Horizontal" Height="96">
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Tabelas">
+                        <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE80A;" Content="Tabela" Click="InsertTable_OnClick" />
+                    </GroupBox>
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Ilustrações">
+                        <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE91B;" Content="Imagem" Click="InsertImage_OnClick" />
+                    </GroupBox>
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Símbolos">
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="SymbolButton" Style="{StaticResource RibbonButtonLarge}" Tag="&#xE8A1;" Content="Símbolo" Click="Symbol_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Texto">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE787;" Content="Data e Hora" Click="InsertDate_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE7A8;" Content="Quebra de Página" Click="InsertPageBreak_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Style="{StaticResource RibbonTabItem}" Header="Layout">
+                <StackPanel Orientation="Horizontal" Height="96">
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Configurar Página">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xEB9F;" Content="Cor da Página" Click="PageColor_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Parágrafo">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE742;" Content="Espaçamento" Click="LineSpacing_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Style="{StaticResource RibbonTabItem}" Header="Revisão">
+                <StackPanel Orientation="Horizontal" Height="96">
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Verificação">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE94B;" Content="Contar Palavras" Click="WordCount_OnClick" />
+                            <ToggleButton x:Name="SpellToggle" Style="{StaticResource RibbonLabeledToggle}" Tag="&#xE8C1;"
+                                          Content="Ortografia" Click="SpellCheck_OnClick" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Style="{StaticResource RibbonTabItem}" Header="Exibir">
+                <StackPanel Orientation="Horizontal" Height="96">
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Zoom">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Button Style="{StaticResource RibbonIconButton}" Content="&#xE71F;" ToolTip="Reduzir" Click="ZoomOut_OnClick" />
+                            <Slider x:Name="ZoomSlider" Width="130" Minimum="50" Maximum="200" Value="100"
+                                    VerticalAlignment="Center" TickFrequency="10" IsSnapToTickEnabled="True"
+                                    ValueChanged="ZoomSlider_OnValueChanged" />
+                            <Button Style="{StaticResource RibbonIconButton}" Content="&#xE8A3;" ToolTip="Ampliar" Click="ZoomIn_OnClick" />
+                            <Button Style="{StaticResource RibbonButton}" Tag="&#xE71E;" Content="Redefinir" Click="ZoomReset_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+        <!-- Area do documento (pagina sobre fundo cinza) -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Padding="0,24">
+            <Border x:Name="PageBorder" Width="780" MinHeight="1000" Background="White" Margin="0,0,0,24"
+                    HorizontalAlignment="Center"
+                    BorderBrush="#D0D0D0" BorderThickness="1">
+                <Border.LayoutTransform>
+                    <ScaleTransform x:Name="ZoomTransform" ScaleX="1" ScaleY="1" />
+                </Border.LayoutTransform>
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="14" ShadowDepth="0" Opacity="0.18" />
+                </Border.Effect>
+                <RichTextBox x:Name="Editor"
+                             Margin="64,72"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             FontFamily="Calibri"
+                             FontSize="14"
+                             AcceptsTab="True"
+                             SpellCheck.IsEnabled="False"
+                             SelectionChanged="Editor_OnSelectionChanged"
+                             VerticalScrollBarVisibility="Disabled" />
+            </Border>
+        </ScrollViewer>
+
+        <!-- Barra de status -->
+        <Border Grid.Row="3" Style="{StaticResource StatusBarStyle}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="StatusText" Grid.Column="0" Style="{StaticResource StatusBarText}" Text="Pronto" />
+                <TextBlock x:Name="WordCountText" Grid.Column="1" Style="{StaticResource StatusBarText}"
+                           Margin="0,0,18,0" Text="Palavras: 0" />
+                <TextBlock x:Name="ZoomText" Grid.Column="2" Style="{StaticResource StatusBarText}" Text="100%" />
+            </Grid>
+        </Border>
+
+        <!-- Popups -->
+        <Popup x:Name="FontColorPopup" StaysOpen="False" Placement="Bottom" PlacementTarget="{Binding ElementName=FontColorButton}" AllowsTransparency="True">
+            <Border Background="White" BorderBrush="#C8C8C8" BorderThickness="1" Padding="8" CornerRadius="3">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.25" />
+                </Border.Effect>
+                <StackPanel>
+                    <TextBlock Text="Cor da fonte" FontWeight="SemiBold" Margin="2,0,0,6" Foreground="#444" />
+                    <WrapPanel x:Name="FontColorGrid" Width="184" />
+                </StackPanel>
+            </Border>
+        </Popup>
+
+        <Popup x:Name="HighlightPopup" StaysOpen="False" Placement="Bottom" PlacementTarget="{Binding ElementName=HighlightButton}" AllowsTransparency="True">
+            <Border Background="White" BorderBrush="#C8C8C8" BorderThickness="1" Padding="8" CornerRadius="3">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.25" />
+                </Border.Effect>
+                <StackPanel>
+                    <TextBlock Text="Cor de realce" FontWeight="SemiBold" Margin="2,0,0,6" Foreground="#444" />
+                    <WrapPanel x:Name="HighlightGrid" Width="184" />
+                    <Button Content="Sem cor" Margin="2,6,2,0" Padding="6,3" HorizontalAlignment="Left" Click="HighlightNone_OnClick" />
+                </StackPanel>
+            </Border>
+        </Popup>
+
+        <Popup x:Name="SymbolPopup" StaysOpen="False" Placement="Bottom" PlacementTarget="{Binding ElementName=SymbolButton}" AllowsTransparency="True">
+            <Border Background="White" BorderBrush="#C8C8C8" BorderThickness="1" Padding="8" CornerRadius="3">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.25" />
+                </Border.Effect>
+                <StackPanel>
+                    <TextBlock Text="Símbolos" FontWeight="SemiBold" Margin="2,0,0,6" Foreground="#444" />
+                    <WrapPanel x:Name="SymbolGrid" Width="220" />
+                </StackPanel>
+            </Border>
+        </Popup>
+
+        <Popup x:Name="CasePopup" StaysOpen="False" Placement="Bottom" PlacementTarget="{Binding ElementName=CaseButton}" AllowsTransparency="True">
+            <Border Background="White" BorderBrush="#C8C8C8" BorderThickness="1" Padding="4" CornerRadius="3">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.25" />
+                </Border.Effect>
+                <StackPanel MinWidth="180">
+                    <Button Content="MAIÚSCULAS" Style="{StaticResource RibbonButton}" Click="CaseUpper_OnClick" />
+                    <Button Content="minúsculas" Style="{StaticResource RibbonButton}" Click="CaseLower_OnClick" />
+                    <Button Content="Primeira Letra De Cada Palavra" Style="{StaticResource RibbonButton}" Click="CaseTitle_OnClick" />
+                </StackPanel>
+            </Border>
+        </Popup>
+
+        <Popup x:Name="SpacingPopup" StaysOpen="False" Placement="Bottom" PlacementTarget="{Binding ElementName=SpacingButton}" AllowsTransparency="True">
+            <Border Background="White" BorderBrush="#C8C8C8" BorderThickness="1" Padding="4" CornerRadius="3">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.25" />
+                </Border.Effect>
+                <StackPanel MinWidth="120">
+                    <Button Content="1,0" Style="{StaticResource RibbonButton}" Tag="1.0" Click="SpacingOption_OnClick" />
+                    <Button Content="1,15" Style="{StaticResource RibbonButton}" Tag="1.15" Click="SpacingOption_OnClick" />
+                    <Button Content="1,5" Style="{StaticResource RibbonButton}" Tag="1.5" Click="SpacingOption_OnClick" />
+                    <Button Content="2,0" Style="{StaticResource RibbonButton}" Tag="2.0" Click="SpacingOption_OnClick" />
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</Window>
+

@@ -1,0 +1,542 @@
+﻿<Window x:Class="ZeFaxina.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ZÃ© Faxina"
+        Width="1100" Height="740"
+        MinWidth="900" MinHeight="580"
+        WindowStartupLocation="CenterScreen"
+        Background="White"
+        Loaded="Window_OnLoaded">
+
+    <Window.Resources>
+        <!-- BotÃ£o de navegaÃ§Ã£o lateral -->
+        <Style x:Key="NavBtn" TargetType="RadioButton">
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Foreground" Value="#444"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="GroupName" Value="Nav"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                BorderThickness="4,0,0,0" BorderBrush="Transparent"
+                                Padding="16,0">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#FFF3E0"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#FFF3E0"/>
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#E65100"/>
+                                <Setter Property="Foreground" Value="#E65100"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- BotÃ£o de aÃ§Ã£o laranja -->
+        <Style x:Key="OrangeBtn" TargetType="Button">
+            <Setter Property="Background" Value="#E65100"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="24,9"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#BF360C"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="bd" Property="Background" Value="#BDBDBD"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- BotÃ£o secundÃ¡rio -->
+        <Style x:Key="GhostBtn" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#E65100"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="18,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="BorderBrush" Value="#E65100"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#FFF3E0"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#BDBDBD"/>
+                                <Setter Property="Foreground" Value="#BDBDBD"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Sub-aba de Ferramentas (RadioButton estilo aba) -->
+        <Style x:Key="ToolTabBtn" TargetType="RadioButton">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#555"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                BorderThickness="0,0,0,3" BorderBrush="Transparent"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#FFF3E0"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#E65100"/>
+                                <Setter Property="Foreground" Value="#E65100"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- CheckBox do painel de seleÃ§Ã£o -->
+        <Style x:Key="CleanCheck" TargetType="CheckBox">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="0,4,0,4"/>
+            <Setter Property="Foreground" Value="#333"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <!-- CabeÃ§alho de grupo no painel -->
+        <Style x:Key="GroupHeader" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#E65100"/>
+            <Setter Property="Margin" Value="0,10,0,4"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="46"/>   <!-- Barra de tÃ­tulo -->
+            <RowDefinition Height="*"/>    <!-- Corpo -->
+            <RowDefinition Height="28"/>   <!-- Status bar -->
+        </Grid.RowDefinitions>
+
+        <!-- â•â• TÃTULO â•â• -->
+        <Border Grid.Row="0" Background="{StaticResource AccentBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="14,0">
+                    <TextBlock Text="ðŸ§¹" FontSize="20" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <TextBlock Text="ZÃ© Faxina" Style="{StaticResource TitleBarText}"
+                               FontWeight="Black" FontSize="16"/>
+                    <TextBlock Text=" â€” Limpeza do Sistema" Style="{StaticResource TitleBarText}"
+                               Opacity=".75" FontSize="13"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,16,0">
+                    <TextBlock Style="{StaticResource TitleBarText}" Text="Escritorio" Opacity=".7" FontSize="12"/>
+                    <TextBlock Style="{StaticResource TitleBarText}" Text="EdiÃ§Ã£o ComunitÃ¡ria" Opacity=".55" FontSize="9"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- â•â• CORPO â•â• -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="185"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- â”€â”€ NavegaÃ§Ã£o lateral â”€â”€ -->
+            <Border BorderBrush="#E0E0E0" BorderThickness="0,0,1,0" Background="#FAFAFA">
+                <StackPanel Margin="0,12,0,0">
+                    <RadioButton x:Name="NavClean"   Style="{StaticResource NavBtn}" IsChecked="True" Checked="Nav_Checked">
+                        <TextBlock><Run Text="ðŸ§¹  "/><Run Text="Limpeza"/></TextBlock>
+                    </RadioButton>
+                    <RadioButton x:Name="NavRegistry" Style="{StaticResource NavBtn}" Checked="Nav_Checked">
+                        <TextBlock><Run Text="ðŸ”§  "/><Run Text="Registro"/></TextBlock>
+                    </RadioButton>
+                    <RadioButton x:Name="NavTools"    Style="{StaticResource NavBtn}" Checked="Nav_Checked">
+                        <TextBlock><Run Text="ðŸ›   "/><Run Text="Ferramentas"/></TextBlock>
+                    </RadioButton>
+                    <RadioButton x:Name="NavHistory"  Style="{StaticResource NavBtn}" Checked="Nav_Checked">
+                        <TextBlock><Run Text="ðŸ“‹  "/><Run Text="HistÃ³rico"/></TextBlock>
+                    </RadioButton>
+                    <RadioButton x:Name="NavOptions"  Style="{StaticResource NavBtn}" Checked="Nav_Checked">
+                        <TextBlock><Run Text="âš™  "/><Run Text="OpÃ§Ãµes"/></TextBlock>
+                    </RadioButton>
+                    <TextBlock Text="v1.0.0 â€” MIT" FontSize="10" Foreground="#BDBDBD"
+                               Margin="20,16,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- â”€â”€ PÃ¡ginas â”€â”€ -->
+            <Grid Grid.Column="1">
+
+                <!-- â•â•â•â•â•â•â•â• LIMPEZA â•â•â•â•â•â•â•â• -->
+                <Grid x:Name="PageClean" Visibility="Visible">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="220"/>   <!-- Painel de seleÃ§Ã£o -->
+                        <ColumnDefinition Width="*"/>     <!-- Resultados -->
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Painel de seleÃ§Ã£o -->
+                    <Border BorderBrush="#E0E0E0" BorderThickness="0,0,1,0" Background="#FAFAFA">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="14,10">
+                            <StackPanel x:Name="CleanPanel"/>
+                        </ScrollViewer>
+                    </Border>
+
+                    <!-- Resultados + botÃµes -->
+                    <Grid Grid.Column="1" Margin="20,16,20,16">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- SumÃ¡rio -->
+                        <Border Grid.Row="0" Background="#FFF3E0" CornerRadius="8"
+                                Padding="16,10" Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="SummaryFiles" Text="â€”" FontSize="22" FontWeight="Black" Foreground="#E65100"/>
+                                    <TextBlock Text="Arquivos" FontSize="11" Foreground="#888"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock x:Name="SummarySize" Text="â€”" FontSize="22" FontWeight="Black" Foreground="#E65100"/>
+                                    <TextBlock Text="EspaÃ§o" FontSize="11" Foreground="#888"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock x:Name="SummaryCategories" Text="â€”" FontSize="22" FontWeight="Black" Foreground="#E65100"/>
+                                    <TextBlock Text="Categorias" FontSize="11" Foreground="#888"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Lista de resultados -->
+                        <Border Grid.Row="1" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="8">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Background="#F5F5F5" BorderBrush="#E0E0E0"
+                                        BorderThickness="0,0,0,1" Padding="10,7" CornerRadius="8,8,0,0">
+                                    <TextBlock Text="Resultados da AnÃ¡lise" FontSize="12"
+                                               FontWeight="SemiBold" Foreground="#555"/>
+                                </Border>
+                                <ListView x:Name="CleanResultList" Grid.Row="1"
+                                          BorderThickness="0" Background="Transparent">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Categoria" Width="200" DisplayMemberBinding="{Binding Label}"/>
+                                            <GridViewColumn Header="Grupo"     Width="130" DisplayMemberBinding="{Binding Group}"/>
+                                            <GridViewColumn Header="Arquivos"  Width="80"  DisplayMemberBinding="{Binding FilesText}"/>
+                                            <GridViewColumn Header="Tamanho"   Width="90"  DisplayMemberBinding="{Binding SizeText}"/>
+                                            <GridViewColumn Header="Status"    Width="120" DisplayMemberBinding="{Binding Status}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </Border>
+
+                        <!-- Barra de progresso -->
+                        <Border Grid.Row="2" Margin="0,10,0,0">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock x:Name="ProgressLabel" Text="Selecione categorias e clique em Analisar."
+                                               FontSize="11" Foreground="#666" VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1" x:Name="StopCleanBtn"
+                                            Content="â¹ Parar" Style="{StaticResource GhostBtn}"
+                                            Padding="10,4" FontSize="11" Visibility="Collapsed"
+                                            Click="StopClean_OnClick"/>
+                                </Grid>
+                                <ProgressBar x:Name="CleanProgressBar" Height="5" Margin="0,4,0,0"
+                                             IsIndeterminate="True" Visibility="Collapsed"
+                                             Foreground="#E65100" Background="#FFE0B2"/>
+                                <TextBlock x:Name="ProgressDetail" Text="" FontSize="10"
+                                           Foreground="#AAA" TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- BotÃµes Analisar / Limpar -->
+                        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Right">
+                            <Button x:Name="AnalyzeBtn" Style="{StaticResource GhostBtn}"
+                                    Content="ðŸ”  Analisar" Margin="0,0,10,0"
+                                    Click="Analyze_OnClick"/>
+                            <Button x:Name="CleanBtn" Style="{StaticResource OrangeBtn}"
+                                    Content="ðŸ§¹  Limpar Agora" IsEnabled="False"
+                                    Click="Clean_OnClick"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+                <!-- â•â•â•â•â•â•â•â• REGISTRO â•â•â•â•â•â•â•â• -->
+                <Grid x:Name="PageRegistry" Visibility="Collapsed" Margin="20,16,20,16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Limpeza do Registro" FontSize="20"
+                               FontWeight="Bold" Margin="0,0,0,6"/>
+                    <TextBlock Grid.Row="1" Foreground="#888" FontSize="12" Margin="0,0,0,14" TextWrapping="Wrap"
+                               Text="Verifica referÃªncias invÃ¡lidas no registro do Windows: arquivos ausentes, desinstaladores quebrados e fontes faltando. Corrija somente os itens que vocÃª reconhece."/>
+                    <Border Grid.Row="2" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="8">
+                        <ListView x:Name="RegistryIssueList" BorderThickness="0">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Chave" Width="300" DisplayMemberBinding="{Binding Key}"/>
+                                    <GridViewColumn Header="Valor" Width="160" DisplayMemberBinding="{Binding ValueName}"/>
+                                    <GridViewColumn Header="Tipo"  Width="120" DisplayMemberBinding="{Binding TypeLabel}"/>
+                                    <GridViewColumn Header="DescriÃ§Ã£o" Width="280" DisplayMemberBinding="{Binding Description}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Border>
+                    <Border Grid.Row="3" Margin="0,8,0,0">
+                        <StackPanel>
+                            <ProgressBar x:Name="RegProgressBar" Height="5" IsIndeterminate="True"
+                                         Visibility="Collapsed" Foreground="#E65100" Background="#FFE0B2"/>
+                            <TextBlock x:Name="RegProgressLabel" Text="" FontSize="11" Foreground="#888" Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,10,0,0">
+                        <Button Style="{StaticResource GhostBtn}" Content="ðŸ”  Verificar Registro"
+                                Margin="0,0,10,0" Click="ScanRegistry_OnClick"/>
+                        <Button Style="{StaticResource OrangeBtn}" x:Name="FixRegBtn"
+                                Content="ðŸ”§  Corrigir Selecionados" IsEnabled="False"
+                                Click="FixRegistry_OnClick"/>
+                        <TextBlock x:Name="RegResultLabel" VerticalAlignment="Center"
+                                   Margin="16,0,0,0" FontSize="12" Foreground="#666"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- â•â•â•â•â•â•â•â• FERRAMENTAS â•â•â•â•â•â•â•â• -->
+                <Grid x:Name="PageTools" Visibility="Collapsed" Margin="0,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!-- Sub-navegaÃ§Ã£o de ferramentas -->
+                    <Border BorderBrush="#E0E0E0" BorderThickness="0,0,0,1" Background="#FAFAFA">
+                        <StackPanel Orientation="Horizontal" Margin="16,0">
+                            <RadioButton x:Name="ToolTabStartup"  GroupName="Tools"
+                                         IsChecked="True" Checked="ToolTab_Checked"
+                                         Style="{StaticResource ToolTabBtn}" Content="InicializaÃ§Ã£o"/>
+                            <RadioButton x:Name="ToolTabUninstall" GroupName="Tools"
+                                         Checked="ToolTab_Checked"
+                                         Style="{StaticResource ToolTabBtn}" Content="Desinstalar"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- InicializaÃ§Ã£o -->
+                    <Grid x:Name="ToolPageStartup" Grid.Row="1" Margin="20,14,20,14">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Programas que iniciam com o Windows"
+                                   FontSize="13" Foreground="#666" Margin="0,0,0,10"/>
+                        <Border Grid.Row="1" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="8">
+                            <ListView x:Name="StartupList" BorderThickness="0">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Nome"    Width="220" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Comando" Width="320" DisplayMemberBinding="{Binding Command}"/>
+                                        <GridViewColumn Header="Local"   Width="130" DisplayMemberBinding="{Binding Location}"/>
+                                        <GridViewColumn Header="Estado"  Width="80"  DisplayMemberBinding="{Binding StateLabel}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Border>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0">
+                            <Button Style="{StaticResource GhostBtn}" Content="ðŸ”„ Atualizar"
+                                    Margin="0,0,10,0" Click="RefreshStartup_OnClick"/>
+                            <Button Style="{StaticResource OrangeBtn}" Content="â›” Desativar Selecionado"
+                                    Margin="0,0,10,0" Click="DisableStartup_OnClick"/>
+                            <Button Style="{StaticResource GhostBtn}" Content="âœ… Ativar Selecionado"
+                                    Click="EnableStartup_OnClick"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Desinstalar -->
+                    <Grid x:Name="ToolPageUninstall" Grid.Row="1" Visibility="Collapsed" Margin="20,14,20,14">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Programas Instalados"
+                                   FontSize="13" Foreground="#666" Margin="0,0,0,8"/>
+                        <Grid Grid.Row="1" Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="UninstallSearch" Height="28" VerticalContentAlignment="Center"
+                                     Padding="8,0" FontSize="12" TextChanged="UninstallSearch_Changed"
+                                     Tag="Pesquisar programasâ€¦"/>
+                            <Button Grid.Column="1" Style="{StaticResource GhostBtn}" Content="ðŸ”„ Atualizar"
+                                    Margin="8,0,0,0" Padding="12,4" FontSize="12" Click="RefreshPrograms_OnClick"/>
+                        </Grid>
+                        <Border Grid.Row="2" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="8">
+                            <ListView x:Name="ProgramList" BorderThickness="0">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Nome"       Width="260" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="VersÃ£o"     Width="100" DisplayMemberBinding="{Binding Version}"/>
+                                        <GridViewColumn Header="Publicador" Width="180" DisplayMemberBinding="{Binding Publisher}"/>
+                                        <GridViewColumn Header="Instalado"  Width="90"  DisplayMemberBinding="{Binding InstallDate}"/>
+                                        <GridViewColumn Header="Tamanho"    Width="90"  DisplayMemberBinding="{Binding SizeText}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Border>
+                        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0">
+                            <Button Style="{StaticResource OrangeBtn}" Content="ðŸ—‘ Desinstalar Selecionado"
+                                    Click="Uninstall_OnClick"/>
+                            <TextBlock x:Name="ProgramCountLabel" VerticalAlignment="Center"
+                                       Margin="14,0,0,0" FontSize="12" Foreground="#888"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+                <!-- â•â•â•â•â•â•â•â• HISTÃ“RICO â•â•â•â•â•â•â•â• -->
+                <Grid x:Name="PageHistory" Visibility="Collapsed" Margin="20,16,20,16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="HistÃ³rico de Limpezas" FontSize="20"
+                               FontWeight="Bold" Margin="0,0,0,12"/>
+                    <Button Grid.Row="1" Style="{StaticResource GhostBtn}" Content="ðŸ—‘ Limpar HistÃ³rico"
+                            HorizontalAlignment="Left" Margin="0,0,0,12" Click="ClearHistory_OnClick"/>
+                    <Border Grid.Row="2" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="8">
+                        <ListView x:Name="HistoryList" BorderThickness="0">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Data"       Width="160" DisplayMemberBinding="{Binding DateText}"/>
+                                    <GridViewColumn Header="Arquivos"   Width="90"  DisplayMemberBinding="{Binding FilesDeleted}"/>
+                                    <GridViewColumn Header="Liberado"   Width="100" DisplayMemberBinding="{Binding FreedText}"/>
+                                    <GridViewColumn Header="Categorias" Width="400" DisplayMemberBinding="{Binding Categories}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Border>
+                </Grid>
+
+                <!-- â•â•â•â•â•â•â•â• OPÃ‡Ã•ES â•â•â•â•â•â•â•â• -->
+                <ScrollViewer x:Name="PageOptions" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="20,16,20,16">
+                        <TextBlock Text="OpÃ§Ãµes" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+                        <Border Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1"
+                                CornerRadius="8" Padding="18,14" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Limpeza AutomÃ¡tica ao Iniciar" FontSize="14" FontWeight="SemiBold"/>
+                                <TextBlock Text="Executa anÃ¡lise rÃ¡pida ao abrir o ZÃ© Faxina" FontSize="12" Foreground="#888" Margin="0,4,0,10"/>
+                                <ToggleButton x:Name="AutoScanToggle" Style="{StaticResource RibbonToggle}"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1"
+                                CornerRadius="8" Padding="18,14" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Confirmar antes de Limpar" FontSize="14" FontWeight="SemiBold"/>
+                                <TextBlock Text="Exibe confirmaÃ§Ã£o antes de excluir arquivos" FontSize="12" Foreground="#888" Margin="0,4,0,10"/>
+                                <ToggleButton x:Name="ConfirmToggle" IsChecked="True" Style="{StaticResource RibbonToggle}"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1"
+                                CornerRadius="8" Padding="18,14" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Sobre o ZÃ© Faxina" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                                <TextBlock FontSize="12" Foreground="#555" LineHeight="20">
+                                    <Run Text="ZÃ© Faxina v1.0.0 â€” Limpeza profissional do sistema"/>
+                                    <LineBreak/>
+                                    <Run Text="Parte do suite Escritorio Â· LicenÃ§a MIT Â· Software Livre"/>
+                                    <LineBreak/>
+                                    <Run Text="Limpa: Temp, Prefetch, Lixeira, Cache de Miniaturas, Cache de Navegadores"/>
+                                    <LineBreak/>
+                                    <Run FontStyle="Italic" Foreground="#AAA"
+                                         Text="Use com cuidado os recursos de registro. FaÃ§a backup antes de corrigir entradas."/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+            </Grid>
+        </Grid>
+
+        <!-- â•â• STATUS BAR â•â• -->
+        <Border Grid.Row="2" Background="#F5F5F5" BorderBrush="#E0E0E0" BorderThickness="0,1,0,0">
+            <Grid Margin="14,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="StatusText" Text="Pronto" VerticalAlignment="Center"
+                           FontSize="11" Foreground="#666"/>
+                <TextBlock Grid.Column="1" x:Name="TotalFreedText"
+                           Text="Total liberado nesta sessÃ£o: 0 B"
+                           VerticalAlignment="Center" FontSize="11" Foreground="#E65100"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
+

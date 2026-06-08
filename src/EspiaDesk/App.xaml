@@ -1,0 +1,133 @@
+<Application x:Class="EspiaDesk.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Escritorio.Shared;component/Theme/Ribbon.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- ── Identidade visual EspiaDesk (roxo) ── -->
+            <SolidColorBrush x:Key="AccentBrush"     Color="#7B2D8B" />
+            <SolidColorBrush x:Key="AccentDarkBrush" Color="#561F62" />
+
+            <!-- ── Cores de UI que o Ribbon.xaml não define ── -->
+            <SolidColorBrush x:Key="PanelBrush"       Color="#FFFFFF" />
+            <SolidColorBrush x:Key="BorderBrush"       Color="#DCDCDC" />
+            <SolidColorBrush x:Key="ForegroundBrush"   Color="#1E1E1E" />
+            <SolidColorBrush x:Key="MutedBrush"        Color="#707070" />
+            <SolidColorBrush x:Key="InputBackBrush"    Color="#F7F7F7" />
+
+            <!-- ── TextBox moderno ── -->
+            <Style x:Key="ModernTextBox" TargetType="TextBox">
+                <Setter Property="Background"        Value="{StaticResource InputBackBrush}" />
+                <Setter Property="Foreground"        Value="{StaticResource ForegroundBrush}" />
+                <Setter Property="BorderBrush"       Value="{StaticResource BorderBrush}" />
+                <Setter Property="BorderThickness"   Value="1" />
+                <Setter Property="Padding"           Value="8,6" />
+                <Setter Property="FontSize"          Value="13" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border x:Name="bd"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="4"
+                                    Padding="{TemplateBinding Padding}">
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="bd" Property="BorderBrush"
+                                            Value="{DynamicResource AccentBrush}" />
+                                    <Setter TargetName="bd" Property="BorderThickness" Value="2" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bd" Property="BorderBrush"
+                                            Value="{DynamicResource AccentBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ── PasswordBox moderno ── -->
+            <Style x:Key="ModernPasswordBox" TargetType="PasswordBox">
+                <Setter Property="Background"        Value="{StaticResource InputBackBrush}" />
+                <Setter Property="Foreground"        Value="{StaticResource ForegroundBrush}" />
+                <Setter Property="BorderBrush"       Value="{StaticResource BorderBrush}" />
+                <Setter Property="BorderThickness"   Value="1" />
+                <Setter Property="Padding"           Value="8,6" />
+                <Setter Property="FontSize"          Value="13" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="PasswordBox">
+                            <Border x:Name="bd"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="4"
+                                    Padding="{TemplateBinding Padding}">
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="bd" Property="BorderBrush"
+                                            Value="{DynamicResource AccentBrush}" />
+                                    <Setter TargetName="bd" Property="BorderThickness" Value="2" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bd" Property="BorderBrush"
+                                            Value="{DynamicResource AccentBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ── Botão Accent (fundo roxo, texto branco) ── -->
+            <Style x:Key="AccentButton" TargetType="Button">
+                <Setter Property="Background"   Value="{DynamicResource AccentBrush}" />
+                <Setter Property="Foreground"   Value="White" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding"      Value="16,7" />
+                <Setter Property="FontSize"     Value="12" />
+                <Setter Property="Cursor"       Value="Hand" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="bd"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="4"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bd" Property="Background"
+                                            Value="{DynamicResource AccentDarkBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="bd" Property="Opacity" Value="0.85" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="bd" Property="Opacity" Value="0.5" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

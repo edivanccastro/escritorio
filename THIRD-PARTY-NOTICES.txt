@@ -1,0 +1,108 @@
+THIRD-PARTY NOTICES — Escritorio Suite
+=======================================
+
+Este produto inclui software de terceiros licenciado sob os termos abaixo.
+Esses componentes são redistribuídos conforme permitido por suas respectivas licenças.
+
+-------------------------------------------------------------------------------
+1. DocumentFormat.OpenXml (Open XML SDK)
+   Versão: 3.5.1
+   Autor:  Microsoft Corporation
+   Fonte:  https://github.com/dotnet/Open-XML-SDK
+   Licença: MIT License
+
+   Copyright (c) Microsoft Corporation. All rights reserved.
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+-------------------------------------------------------------------------------
+2. .NET Runtime 8
+   Autor:  Microsoft Corporation e colaboradores
+   Fonte:  https://github.com/dotnet/runtime
+   Licença: MIT License
+
+   Copyright (c) .NET Foundation and Contributors. All rights reserved.
+
+   Mesmos termos MIT acima.
+
+   NOTICES: https://github.com/dotnet/runtime/blob/main/THIRD-PARTY-NOTICES.TXT
+
+-------------------------------------------------------------------------------
+3. System.Drawing.Common
+   Versão: 8.0.0 (produção) / 8.0.6 (ferramentas)
+   Autor:  Microsoft Corporation e colaboradores
+   Fonte:  https://github.com/dotnet/runtime
+   Licença: MIT License
+
+   Mesmos termos MIT acima. Uso restrito à plataforma Windows conforme
+   documentado em https://aka.ms/systemdrawingnonwindows
+
+-------------------------------------------------------------------------------
+3a. DocumentFormat.OpenXml.Framework (dependência transitiva)
+   Versão: 3.5.1
+   Autor:  Microsoft Corporation
+   Fonte:  https://github.com/dotnet/Open-XML-SDK
+   Licença: MIT License — mesmos termos do item 1 acima.
+
+-------------------------------------------------------------------------------
+3b. Microsoft.Win32.SystemEvents (dependência transitiva)
+   Versão: 8.0.0
+   Autor:  Microsoft Corporation e colaboradores
+   Fonte:  https://github.com/dotnet/winforms
+   Licença: MIT License — mesmos termos MIT acima.
+
+-------------------------------------------------------------------------------
+4. Inter (Fonte Web — site)
+   Autor:  Rasmus Andersson
+   Fonte:  https://github.com/rsms/inter
+   Licença: SIL Open Font License 1.1 (OFL)
+
+   Esta Licença de Fonte não se aplica a nenhum documento produzido usando
+   as Fontes ou seus derivados. É permitido usar, estudar, copiar, mesclar,
+   embutir, modificar, redistribuir e vender cópias modificadas e não
+   modificadas das Fontes, desde que os Termos e Condições desta licença
+   sejam atendidos e que a licença seja incluída em cada cópia.
+
+   Texto completo: https://scripts.sil.org/OFL
+
+-------------------------------------------------------------------------------
+5. Inno Setup
+   Autor:  Jordan Russell, Martijn Laan e colaboradores
+   Fonte:  https://jrsoftware.org/isinfo.php
+   Licença: Inno Setup License
+
+   O uso do Inno Setup para criar instaladores é gratuito, incluindo uso
+   comercial. O código-fonte do Inno Setup é distribuído sob licença
+   própria disponível em: https://jrsoftware.org/files/is/license.txt
+
+-------------------------------------------------------------------------------
+
+ISENÇÃO DE RESPONSABILIDADE
+----------------------------
+
+Escritorio não é afiliado, endossado ou patrocinado por nenhum dos
+titulares de direitos listados acima. Todos os nomes de produtos e
+marcas registradas são propriedade de seus respectivos donos.
+
+Os formatos de arquivo .docx, .xlsx e .pptx são parte do padrão aberto
+ECMA-376 / ISO/IEC 29500 e são implementados via Microsoft Open XML SDK,
+redistribuído sob licença MIT conforme item 1 acima.
+
+Escritorio não fornece garantias de compatibilidade total com qualquer
+produto específico de terceiros.

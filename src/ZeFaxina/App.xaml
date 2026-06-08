@@ -1,0 +1,16 @@
+﻿<Application x:Class="ZeFaxina.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Escritorio.Shared;component/Theme/Ribbon.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <!-- Identidade visual: laranja limpeza -->
+            <SolidColorBrush x:Key="AccentBrush"     Color="#E65100" />
+            <SolidColorBrush x:Key="AccentDarkBrush" Color="#BF360C" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+

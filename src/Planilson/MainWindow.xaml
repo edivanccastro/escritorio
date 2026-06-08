@@ -1,0 +1,253 @@
+﻿<Window x:Class="Planilson.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Planilha1 - Planílson"
+        Width="1280"
+        Height="800"
+        MinWidth="900"
+        MinHeight="600"
+        WindowStartupLocation="CenterScreen"
+        Background="White"
+        Loaded="Window_OnLoaded">
+    <Window.Resources>
+        <!-- Cabecalho de coluna da grade -->
+        <Style x:Key="GridColumnHeader" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#F3F3F3" />
+            <Setter Property="Foreground" Value="#444444" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="MinHeight" Value="21" />
+            <Setter Property="BorderBrush" Value="#D4D4D4" />
+            <Setter Property="BorderThickness" Value="0,0,1,1" />
+            <Setter Property="SeparatorBrush" Value="#D4D4D4" />
+        </Style>
+
+        <!-- Cabecalho de linha da grade -->
+        <Style x:Key="GridRowHeader" TargetType="DataGridRowHeader">
+            <Setter Property="Background" Value="#F3F3F3" />
+            <Setter Property="Foreground" Value="#444444" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="BorderBrush" Value="#D4D4D4" />
+            <Setter Property="BorderThickness" Value="0,0,1,1" />
+            <Setter Property="SeparatorBrush" Value="#D4D4D4" />
+        </Style>
+
+        <!-- Celula da grade (selecao verde, sem foco azul) -->
+        <Style x:Key="GridCell" TargetType="DataGridCell">
+            <Setter Property="Foreground" Value="#1A1A1A" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border x:Name="cellBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="4,1"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="cellBorder" Property="Background" Value="#DCEBCF" />
+                                <Setter TargetName="cellBorder" Property="BorderBrush" Value="#217346" />
+                                <Setter TargetName="cellBorder" Property="BorderThickness" Value="1" />
+                                <Setter Property="Foreground" Value="#1A1A1A" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Barra de titulo + acesso rapido -->
+        <Border Grid.Row="0" Background="{DynamicResource AccentBrush}" Padding="10,5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Width="22" Height="22" CornerRadius="3" Background="White" Margin="0,0,8,0">
+                        <TextBlock Text="P" FontWeight="Bold" FontSize="14"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource AccentBrush}" />
+                    </Border>
+                    <Button Style="{StaticResource QuickAccessButton}" Content="&#xE74E;" ToolTip="Salvar" Click="Save_OnClick" />
+                </StackPanel>
+                <TextBlock Grid.Column="1" Style="{StaticResource TitleBarText}"
+                           HorizontalAlignment="Center" Text="Planilha1 - Planílson" />
+                <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource TitleBarText}" Text="Escritorio" Opacity="0.85" FontSize="12"/>
+                    <TextBlock Style="{StaticResource TitleBarText}" Text="Edição Comunitária" Opacity="0.6" FontSize="9"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Faixa de opcoes -->
+        <TabControl Grid.Row="1" Style="{StaticResource RibbonTabControl}" SelectedIndex="1">
+            <TabItem Style="{StaticResource RibbonTabItem}" Header="Arquivo">
+                <StackPanel Orientation="Horizontal" Height="96">
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Planilha">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE7C3;" Content="Novo" Click="New_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE8E5;" Content="Abrir" Click="Open_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE74E;" Content="Salvar" Click="Save_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Style="{StaticResource RibbonTabItem}" Header="Início">
+                <StackPanel Orientation="Horizontal" Height="96">
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Área de Transferência">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE77F;" Content="Colar" Click="Paste_OnClick" />
+                            <StackPanel VerticalAlignment="Center">
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE8C6;" Content="Recortar" Click="Cut_OnClick" />
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE8C8;" Content="Copiar" Click="Copy_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Alinhamento">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Button Style="{StaticResource RibbonIconButton}" Content="&#xE8E4;" ToolTip="Esquerda" Click="AlignLeft_OnClick" />
+                            <Button Style="{StaticResource RibbonIconButton}" Content="&#xE8E3;" ToolTip="Centro" Click="AlignCenter_OnClick" />
+                            <Button Style="{StaticResource RibbonIconButton}" Content="&#xE8E2;" ToolTip="Direita" Click="AlignRight_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Número">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="2,2,2,2">
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE1D6;" Content="Moeda" Click="FormatCurrency_OnClick" />
+                                <Button Style="{StaticResource RibbonButton}" Content="%" Click="FormatPercent_OnClick" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="2,2,2,2">
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE94F;" Content="Milhar" Click="FormatThousands_OnClick" />
+                                <Button Style="{StaticResource RibbonButton}" Content="Geral" Click="FormatGeneral_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Células">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE710;" Content="Inserir Linha" Click="AddRow_OnClick" />
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE74D;" Content="Excluir Linha" Click="DeleteRow_OnClick" />
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE75C;" Content="Limpar" Click="ClearCell_OnClick" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE710;" Content="Inserir Coluna" Click="AddColumn_OnClick" />
+                                <Button Style="{StaticResource RibbonButton}" Tag="&#xE74D;" Content="Excluir Coluna" Click="DeleteColumn_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Edição">
+                        <StackPanel VerticalAlignment="Center">
+                            <Button Style="{StaticResource RibbonButton}" Tag="&#xE74A;" Content="Classificar A → Z" Click="SortAscending_OnClick" />
+                            <Button Style="{StaticResource RibbonButton}" Tag="&#xE74B;" Content="Classificar Z → A" Click="SortDescending_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Style="{StaticResource RibbonTabItem}" Header="Fórmulas">
+                <StackPanel Orientation="Horizontal" Height="96">
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Funções">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE948;" Content="Soma" Click="FuncSum_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE9D2;" Content="Média" Click="FuncAverage_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE74A;" Content="Máximo" Click="FuncMax_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE74B;" Content="Mínimo" Click="FuncMin_OnClick" />
+                            <Button Style="{StaticResource RibbonButtonLarge}" Tag="&#xE8EF;" Content="Contar" Click="FuncCount_OnClick" />
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Style="{StaticResource RibbonGroup}" Header="Referência">
+                        <TextBlock Width="190" TextWrapping="Wrap" FontSize="11" Foreground="#666" VerticalAlignment="Center"
+                                   Text="Selecione as células e clique numa função, ou digite =SOMA(A1:A5) na barra de fórmulas." />
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+        <!-- Barra de formulas -->
+        <Border Grid.Row="2" Background="#FBFBFB" BorderBrush="{StaticResource RibbonBorderBrush}"
+                BorderThickness="0,0,0,1" Padding="8,5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" BorderBrush="{StaticResource RibbonBorderBrush}" BorderThickness="1"
+                        Background="White" Margin="0,0,6,0">
+                    <TextBlock x:Name="CellNameText" Text="A1" VerticalAlignment="Center"
+                               HorizontalAlignment="Center" FontWeight="SemiBold" />
+                </Border>
+                <TextBlock Grid.Column="1" Text="fx" FontStyle="Italic" FontWeight="SemiBold"
+                           VerticalAlignment="Center" Margin="0,0,8,0" Foreground="#666" />
+                <TextBox x:Name="FormulaBox" Grid.Column="2" Height="24" VerticalContentAlignment="Center"
+                         KeyDown="FormulaBox_OnKeyDown" />
+                <Button Grid.Column="3" Content="Aplicar" Padding="14,3" Margin="6,0,0,0" Click="ApplyFormula_OnClick" />
+            </Grid>
+        </Border>
+
+        <!-- Grade estilo Excel -->
+        <DataGrid x:Name="Grid" Grid.Row="3"
+                  AutoGenerateColumns="True"
+                  CanUserAddRows="False"
+                  CanUserResizeRows="False"
+                  HeadersVisibility="All"
+                  SelectionUnit="Cell"
+                  SelectionMode="Extended"
+                  GridLinesVisibility="All"
+                  RowHeaderWidth="42"
+                  RowHeight="20"
+                  ColumnWidth="64"
+                  FontFamily="Calibri"
+                  FontSize="12"
+                  Background="White"
+                  RowBackground="White"
+                  BorderBrush="#D4D4D4"
+                  BorderThickness="0"
+                  HorizontalGridLinesBrush="#D4D4D4"
+                  VerticalGridLinesBrush="#D4D4D4"
+                  ColumnHeaderStyle="{StaticResource GridColumnHeader}"
+                  RowHeaderStyle="{StaticResource GridRowHeader}"
+                  CellStyle="{StaticResource GridCell}"
+                  LoadingRow="Grid_OnLoadingRow"
+                  SelectedCellsChanged="Grid_OnSelectedCellsChanged"
+                  CellEditEnding="Grid_OnCellEditEnding" />
+
+        <!-- Barra de status -->
+        <Border Grid.Row="4" Style="{StaticResource StatusBarStyle}">
+            <Grid>
+                <TextBlock x:Name="StatusText" Style="{StaticResource StatusBarText}" Text="Pronto" />
+                <TextBlock x:Name="SumText" Style="{StaticResource StatusBarText}"
+                           HorizontalAlignment="Right" Text="Soma: 0" />
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

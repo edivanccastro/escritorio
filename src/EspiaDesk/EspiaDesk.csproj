@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>EspiaDesk</AssemblyName>
+    <RootNamespace>EspiaDesk</RootNamespace>
+    <Product>EspiaDesk</Product>
+    <AssemblyTitle>EspiaDesk - Acesso Remoto</AssemblyTitle>
+    <Company>Escritorio</Company>
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <ApplicationIcon>Assets\espiadisk.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+    <ProjectReference Include="..\Escritorio.Shared\Escritorio.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\espiadisk.ico" />
+  </ItemGroup>
+
+</Project>
